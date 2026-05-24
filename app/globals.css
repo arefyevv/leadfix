@@ -156,6 +156,272 @@ button { cursor: pointer; }
 .hero__proof { color: rgba(174, 183, 178, .72); }
 .form-error, .checkout-error { color: #ffb4a8; min-height: 20px; }
 
+.landing-flow {
+  display: grid;
+  gap: 26px;
+  padding: 0 20px 86px;
+}
+
+.landing-section {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 54px);
+  background: rgba(247, 248, 244, .045);
+  border: 1px solid rgba(247, 248, 244, .1);
+  border-radius: 34px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+  backdrop-filter: blur(18px);
+}
+
+.section-kicker {
+  width: fit-content;
+  margin: 0 auto 18px;
+  padding: 8px 12px;
+  color: #bff4dc;
+  background: rgba(47, 208, 140, .1);
+  border: 1px solid rgba(47, 208, 140, .22);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.section-head {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-head--split {
+  grid-template-columns: 1.15fr .85fr;
+  align-items: end;
+  max-width: none;
+  text-align: left;
+}
+
+.section-head--split h2,
+.section-head--split p {
+  justify-self: start;
+}
+
+.section-head h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: .98;
+  letter-spacing: 0;
+}
+
+.section-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(16px, 1.55vw, 20px);
+  line-height: 1.45;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.landing-card {
+  position: relative;
+  min-height: 190px;
+  padding: 20px;
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(247, 248, 244, .08), rgba(247, 248, 244, .045));
+  border: 1px solid rgba(247, 248, 244, .12);
+  border-radius: 24px;
+  text-align: left;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.landing-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(47, 208, 140, .34);
+  background: linear-gradient(180deg, rgba(47, 208, 140, .1), rgba(247, 248, 244, .05));
+}
+
+.landing-card h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.landing-card p {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.card-index {
+  display: block;
+  margin-bottom: 44px;
+  color: rgba(191, 244, 220, .78);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.check-card {
+  min-height: 168px;
+}
+
+.check-marker {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 34px;
+  background: radial-gradient(circle at 50% 50%, var(--accent) 0 28%, rgba(47, 208, 140, .16) 30% 100%);
+  border: 1px solid rgba(47, 208, 140, .3);
+  border-radius: 50%;
+}
+
+.showcase-layout {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(24px, 5vw, 54px);
+  align-items: center;
+}
+
+.showcase-layout .section-head {
+  justify-items: start;
+  text-align: left;
+}
+
+.showcase-metrics {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.report-mockup {
+  min-height: 430px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(47, 208, 140, .12), transparent 34%),
+    rgba(8, 10, 9, .82);
+  border: 1px solid rgba(247, 248, 244, .14);
+  border-radius: 30px;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, .38);
+}
+
+.mockup-top {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.mockup-top span {
+  width: 10px;
+  height: 10px;
+  background: rgba(247, 248, 244, .2);
+  border-radius: 50%;
+}
+
+.mockup-score {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: end;
+  padding: 20px;
+  background: rgba(247, 248, 244, .07);
+  border: 1px solid rgba(247, 248, 244, .1);
+  border-radius: 22px;
+}
+
+.mockup-score strong {
+  color: var(--accent);
+  font-size: 76px;
+  line-height: .82;
+}
+
+.mockup-score p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.mockup-bars {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 20px;
+  background: rgba(247, 248, 244, .05);
+  border-radius: 22px;
+}
+
+.mockup-bars i {
+  display: block;
+  height: 12px;
+  background: linear-gradient(90deg, var(--accent), #bff4dc);
+  border-radius: 999px;
+}
+
+.mockup-issues {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.mockup-issues span {
+  padding: 14px 16px;
+  color: var(--ink);
+  background: rgba(247, 248, 244, .07);
+  border: 1px solid rgba(247, 248, 244, .09);
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+.landing-pricing .pricing-card {
+  min-height: 220px;
+}
+
+.faq-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+.faq-item {
+  background: rgba(16, 19, 18, .34);
+  border: 1px solid rgba(247, 248, 244, .1);
+  border-radius: 20px;
+  text-align: left;
+}
+
+.faq-item summary {
+  padding: 20px 22px;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 22px 20px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 .url-pill, .meta-pill, .payment-placeholder {
   max-width: min(100%, 700px);
   overflow: hidden;
@@ -338,8 +604,12 @@ button { cursor: pointer; }
   .nav { width: 100%; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
   .header__button { display: none; }
   .hero, .analysis, .report, .checkout, .full-report { padding: 164px 18px 36px; }
+  .landing-flow { padding: 0 18px 56px; }
+  .landing-section { padding: 26px 18px; border-radius: 26px; }
   .hero__title { white-space: normal; }
-  .site-form, .report-top, .checkout-layout, .audit-list, .pricing-grid, .summary-grid, .issue-grid, .quick-grid, .mobile-layout, .roadmap, .screenshot-grid, .locked-grid { grid-template-columns: 1fr; }
+  .site-form, .report-top, .checkout-layout, .audit-list, .pricing-grid, .summary-grid, .issue-grid, .quick-grid, .mobile-layout, .roadmap, .screenshot-grid, .locked-grid, .audience-grid, .check-grid, .showcase-layout, .section-head--split, .showcase-metrics { grid-template-columns: 1fr; }
   .report-grid, .insight-grid { grid-template-columns: 1fr; }
+  .section-head--split, .showcase-layout .section-head { text-align: center; justify-items: center; }
+  .section-head--split h2, .section-head--split p { justify-self: center; }
   .breakdown-row { grid-template-columns: 1fr; gap: 8px; }
 }

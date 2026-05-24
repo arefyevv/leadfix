@@ -5,6 +5,7 @@ import { CheckoutScreen } from "@/components/CheckoutScreen";
 import { FullReport } from "@/components/FullReport";
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
+import { LandingSections } from "@/components/LandingSections";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PreviewReport } from "@/components/PreviewReport";
 import type { MockAnalysis, Screen } from "@/components/types";
@@ -121,7 +122,10 @@ export default function LeadFixPage() {
       <Header onAuditClick={resetAudit} />
       <main>
         {screen === "hero" && (
-          <HeroSection url={urlInput} error={error} onUrlChange={setUrlInput} onSubmit={handleHeroSubmit} />
+          <>
+            <HeroSection url={urlInput} error={error} onUrlChange={setUrlInput} onSubmit={handleHeroSubmit} />
+            <LandingSections />
+          </>
         )}
 
         {screen === "loading" && <LoadingScreen url={urlInput} steps={loadingSteps} stepIndex={loadingIndex} />}
