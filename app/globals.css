@@ -3683,12 +3683,12 @@ button { cursor: pointer; }
 
 .landing-pricing .pricing-card {
   position: relative;
-  min-height: 560px;
-  display: grid;
-  grid-template-rows: auto auto auto auto 1fr auto auto;
-  align-content: start;
-  gap: 16px;
-  padding: 38px 34px 30px;
+  min-height: 720px;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  gap: 14px;
+  padding: 36px 30px 28px;
   overflow: hidden;
   color: #0f172a;
   background: #ffffff;
@@ -3709,7 +3709,7 @@ button { cursor: pointer; }
 
 .landing-pricing .pricing-card--recommended,
 .landing-pricing .pricing-card.is-selected {
-  min-height: 620px;
+  min-height: 780px;
   color: #ffffff;
   background:
     radial-gradient(circle at 82% 0%, rgba(255, 255, 255, .22), transparent 32%),
@@ -3762,8 +3762,8 @@ button { cursor: pointer; }
 .landing-pricing .pricing-card strong {
   margin-top: 14px;
   color: inherit;
-  font-size: clamp(38px, 3.4vw, 52px);
-  line-height: .95;
+  font-size: clamp(28px, 2.5vw, 38px);
+  line-height: 1.03;
   letter-spacing: -.03em;
 }
 
@@ -3780,13 +3780,38 @@ button { cursor: pointer; }
   color: rgba(255, 255, 255, .78);
 }
 
+.landing-pricing .pricing-card__group {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.landing-pricing .pricing-card__group > span,
+.landing-pricing .pricing-card__fit > span {
+  color: rgba(15, 23, 42, .52);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.landing-pricing .pricing-card--recommended .pricing-card__group > span,
+.landing-pricing .pricing-card.is-selected .pricing-card__group > span,
+.landing-pricing .pricing-card--recommended .pricing-card__fit > span,
+.landing-pricing .pricing-card.is-selected .pricing-card__fit > span {
+  color: rgba(255, 255, 255, .66);
+}
+
 .landing-pricing .pricing-card ul {
   display: grid;
-  gap: 14px;
-  margin: 18px 0 0;
-  padding: 28px 0 0;
-  border-top: 1px solid rgba(15, 23, 42, .08);
+  gap: 10px;
+  margin: 0;
+  padding: 18px 0 0;
   list-style: none;
+}
+
+.landing-pricing .pricing-card__group:first-of-type ul {
+  border-top: 1px solid rgba(15, 23, 42, .08);
 }
 
 .landing-pricing .pricing-card--recommended ul,
@@ -3796,10 +3821,10 @@ button { cursor: pointer; }
 
 .landing-pricing .pricing-card li {
   position: relative;
-  min-height: 24px;
-  padding-left: 34px;
+  min-height: 22px;
+  padding-left: 30px;
   color: rgba(15, 23, 42, .72);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.35;
 }
 
@@ -3807,9 +3832,9 @@ button { cursor: pointer; }
   content: "";
   position: absolute;
   left: 0;
-  top: -1px;
-  width: 22px;
-  height: 22px;
+  top: -2px;
+  width: 20px;
+  height: 20px;
   background: #2fd08c;
   border-radius: 7px;
   box-shadow: 0 8px 18px rgba(47, 208, 140, .22);
@@ -3818,8 +3843,8 @@ button { cursor: pointer; }
 .landing-pricing .pricing-card li::after {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 5px;
+  left: 7px;
+  top: 4px;
   width: 5px;
   height: 9px;
   border: solid #ffffff;
@@ -3846,7 +3871,7 @@ button { cursor: pointer; }
   min-height: 56px;
   display: grid;
   place-items: center;
-  margin-top: 22px;
+  margin-top: auto;
   color: #ffffff;
   background: #2563eb;
   border-radius: 999px;
@@ -3860,8 +3885,33 @@ button { cursor: pointer; }
   background: #ffffff;
 }
 
+.landing-pricing .pricing-card__fit {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 14px;
+  background: rgba(15, 23, 42, .035);
+  border-radius: 18px;
+}
+
+.landing-pricing .pricing-card__fit p {
+  max-width: none;
+  color: rgba(15, 23, 42, .62);
+  font-size: 13px;
+}
+
+.landing-pricing .pricing-card--recommended .pricing-card__fit,
+.landing-pricing .pricing-card.is-selected .pricing-card__fit {
+  background: rgba(255, 255, 255, .12);
+}
+
+.landing-pricing .pricing-card--recommended .pricing-card__fit p,
+.landing-pricing .pricing-card.is-selected .pricing-card__fit p {
+  color: rgba(255, 255, 255, .78);
+}
+
 .landing-pricing .pricing-card small {
-  display: block;
+  display: none;
   margin-top: 8px;
   color: rgba(15, 23, 42, .42);
   font-size: 12px;

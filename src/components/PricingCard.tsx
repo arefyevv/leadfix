@@ -6,14 +6,9 @@ type PricingCardProps = {
   onSelect: (planName: string) => void;
 };
 
-const planFeatures: Record<string, string[]> = {
-  Экспресс: ["Краткий разбор лендинга", "PDF-отчёт", "3 главные ошибки", "Quick wins на 1 день"],
-  Стандарт: ["Полный аудит сайта", "Рекомендации по исправлению", "Приоритеты внедрения", "PDF + roadmap"],
-  Эксперт: ["Полный аудит + PDF", "Созвон и разбор", "План доработок", "Ответы на вопросы"]
-};
-
 export function PricingCard({ plan, selected, onSelect }: PricingCardProps) {
-  const features = planFeatures[plan.name] ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт", "Приоритеты"];
+  const features = plan.features ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт"];
+  const format = plan.format ?? ["web-отчёт"];
 
   return (
     <button
@@ -21,20 +16,40 @@ export function PricingCard({ plan, selected, onSelect }: PricingCardProps) {
       type="button"
       onClick={() => onSelect(plan.name)}
     >
-      {plan.recommended && <span className="pricing-card__badge">Рекомендуем</span>}
+      {plan.recommended && <span className="pricing-card__badge">Оптимальный выбор</span>}
       <span className="pricing-card__icon" aria-hidden="true">
         LF
       </span>
       <h3>{plan.name}</h3>
       <strong>{plan.price}</strong>
       <p>{plan.description}</p>
-      <ul>
-        {features.map((feature) => (
-          <li key={feature}>{feature}</li>
-        ))}
-      </ul>
+
+      <div className="pricing-card__group">
+        <span>Что входит</span>
+        <ul>
+          {features.map((feature) => (
+            <li key={feature}>{feature}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="pricing-card__group pricing-card__group--muted">
+        <span>Формат</span>
+        <ul>
+          {format.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      {plan.audience && (
+        <div className="pricing-card__fit">
+          <span>Кому подходит</span>
+          <p>{plan.audience}</p>
+        </div>
+      )}
+
       <span className="pricing-card__cta">Выбрать тариф</span>
-      <small>Без подключения оплаты</small>
     </button>
   );
 }
