@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type HeroSectionProps = {
   url: string;
@@ -19,6 +19,18 @@ const navItems = [
 
 export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNavScrolled, setIsNavScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsNavScrolled(window.scrollY > 24);
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function closeMobileMenu() {
     setIsMenuOpen(false);
@@ -27,7 +39,10 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
   return (
     <section className="hero hero--reference screen" id="audit" aria-labelledby="leadfix-hero-title">
       <div className="hero-poster reference-hero">
-        <header className="laptop-nav" aria-label="LeadFix hero navigation">
+        <header
+          className={isNavScrolled ? "laptop-nav is-scrolled" : "laptop-nav"}
+          aria-label="LeadFix hero navigation"
+        >
           <button
             className="mobile-menu-button"
             type="button"
