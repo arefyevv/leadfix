@@ -45,7 +45,8 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           </div>
 
           <h1 className="hero__title" id="leadfix-hero-title">
-            Найдём, где ваш лендинг теряет заявки
+            <span>Найдём, где ваш лендинг</span>
+            <span>теряет заявки</span>
           </h1>
 
           <p className="hero__subtitle">
