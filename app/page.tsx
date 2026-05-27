@@ -119,7 +119,7 @@ export default function LeadFixPage() {
 
   return (
     <>
-      <Header onAuditClick={resetAudit} />
+      {screen !== "hero" && <Header onAuditClick={resetAudit} />}
       <main>
         {screen === "hero" && (
           <>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type HeaderProps = {
   onAuditClick: () => void;
@@ -8,6 +8,18 @@ type HeaderProps = {
 
 export function Header({ onAuditClick }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 24);
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function handleAuditClick() {
     setMenuOpen(false);
@@ -15,7 +27,7 @@ export function Header({ onAuditClick }: HeaderProps) {
   }
 
   return (
-    <header className="header">
+    <header className={`header ${scrolled || menuOpen ? "is-scrolled" : ""}`}>
       <div className="brand">
         <button className="logo" type="button" onClick={handleAuditClick}>
           LeadFix
