@@ -35,7 +35,7 @@ button { cursor: pointer; }
 
 .header {
   position: fixed;
-  z-index: 10;
+  z-index: 10000;
   top: 24px;
   left: 50%;
   width: min(calc(100% - 48px), 1320px);
@@ -2658,7 +2658,7 @@ button { cursor: pointer; }
 
 /* LeadFix pixel reference pass */
 .hero--reference {
-  isolation: isolate;
+  isolation: auto;
   padding: 0;
   background: #07101c;
 }
@@ -2705,7 +2705,7 @@ button { cursor: pointer; }
   top: 28px;
   left: clamp(18px, 6.2vw, 92px);
   right: clamp(18px, 6.2vw, 92px);
-  z-index: 50;
+  z-index: 10000;
   width: auto;
   max-width: none;
   margin: 0;
@@ -3139,6 +3139,10 @@ button { cursor: pointer; }
 }
 
 /* Final Hero behavior: fixed nav, mobile dropdown, unified search icon. */
+.hero--reference {
+  isolation: auto;
+}
+
 .hero--reference.screen {
   animation: heroReferenceFade .45s ease both;
   transform: none;
@@ -3154,7 +3158,7 @@ button { cursor: pointer; }
   top: 28px;
   left: clamp(18px, 6.2vw, 92px);
   right: clamp(18px, 6.2vw, 92px);
-  z-index: 100;
+  z-index: 10000;
   padding: 0;
   border-radius: 18px;
   transition: padding .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease, backdrop-filter .22s ease;
