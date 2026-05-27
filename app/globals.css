@@ -63,7 +63,11 @@ button { cursor: pointer; }
 .nav { display: flex; align-items: center; gap: 22px; margin-left: auto; }
 .nav a { color: var(--dark-muted); font-size: 15px; text-decoration: none; }
 .nav a:hover { color: var(--dark-ink); }
-.header__button, .report-button, .checkout-submit, .pdf-button {
+.menu-toggle,
+.nav__audit {
+  display: none;
+}
+.header__button, .nav__audit, .report-button, .checkout-submit, .pdf-button {
   border: 0;
   outline: none;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
@@ -76,6 +80,11 @@ button { cursor: pointer; }
   border-radius: 999px;
   font-size: 15px;
   font-weight: 700;
+}
+.header__button:active,
+.nav__audit:active,
+.menu-toggle:active {
+  transform: translateY(1px);
 }
 
 .hero, .analysis, .report, .checkout, .full-report {
@@ -672,10 +681,85 @@ button { cursor: pointer; }
 .final-cta h3 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; }
 
 @media (max-width: 760px) {
-  .header { top: 12px; width: calc(100% - 24px); flex-wrap: wrap; justify-content: center; padding: 12px; }
-  .brand { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px; text-align: center; }
-  .brand__descriptor { width: 100%; font-size: 13px; }
-  .nav { width: 100%; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .header {
+    top: 12px;
+    width: calc(100% - 24px);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 20px;
+  }
+  .brand { justify-content: flex-start; gap: 8px; min-width: 0; }
+  .brand__descriptor {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px;
+    background: rgba(16, 19, 18, .08);
+    border: 1px solid rgba(17, 24, 21, .1);
+    border-radius: 14px;
+  }
+  .menu-toggle span {
+    width: 18px;
+    height: 2px;
+    display: block;
+    background: var(--dark-ink);
+    border-radius: 999px;
+  }
+  .nav {
+    grid-column: 1 / -1;
+    max-height: 0;
+    width: 100%;
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .74);
+    border: 0 solid rgba(17, 24, 21, .08);
+    border-radius: 18px;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: max-height .24s ease, opacity .2s ease, padding .2s ease, border-width .2s ease;
+  }
+  .nav.is-open {
+    max-height: 320px;
+    padding: 8px;
+    border-width: 1px;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+  .nav a,
+  .nav__audit {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 12px;
+    font-size: 15px;
+  }
+  .nav a:hover {
+    background: rgba(16, 19, 18, .05);
+  }
+  .nav__audit {
+    justify-content: center;
+    color: #101312;
+    background: var(--accent);
+    font-weight: 800;
+  }
   .header__button { display: none; }
   .hero, .analysis, .report, .checkout, .full-report { padding: 164px 18px 36px; }
   .landing-flow { padding: 0 18px 56px; }
