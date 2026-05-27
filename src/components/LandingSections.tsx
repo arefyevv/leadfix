@@ -50,7 +50,7 @@ const faq = [
 export function LandingSections() {
   return (
     <div className="landing-flow">
-      <section className="landing-section" id="for">
+      <section className="landing-section" id="audience">
         <div className="section-kicker">Для кого</div>
         <div className="section-head">
           <h2>Когда сайт уже есть, но заявки не убеждают</h2>

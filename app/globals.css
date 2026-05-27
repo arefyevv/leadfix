@@ -3531,3 +3531,109 @@ button { cursor: pointer; }
     font-size: 14px;
   }
 }
+
+/* Audience block: asymmetric card layout like the reference. */
+.audience-grid {
+  grid-template-columns: 1.18fr .94fr 1.18fr;
+  grid-template-rows: repeat(2, minmax(178px, auto));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.audience-card {
+  min-height: 178px;
+  padding: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(47, 208, 140, .12), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(16, 16, 20, .07);
+  border-radius: 28px;
+  box-shadow: 0 20px 54px rgba(16, 24, 40, .07);
+}
+
+.audience-card:nth-child(1),
+.audience-card:nth-child(4) {
+  min-height: 374px;
+  grid-row: span 2;
+}
+
+.audience-card:nth-child(2),
+.audience-card:nth-child(3) {
+  min-height: 178px;
+}
+
+.audience-card:nth-child(4) {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.audience-card .card-index {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  margin: 0 0 34px;
+  color: #0b2a42;
+  background: #dff7ec;
+  border: 1px solid rgba(47, 208, 140, .26);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.audience-card h3 {
+  max-width: 260px;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.audience-card p {
+  max-width: 330px;
+  font-size: 15px;
+}
+
+.audience-card::after {
+  content: "";
+  position: absolute;
+  right: -34px;
+  bottom: -42px;
+  width: 164px;
+  height: 164px;
+  opacity: .36;
+  background:
+    radial-gradient(circle, rgba(47, 208, 140, .36) 0 18%, transparent 19%),
+    conic-gradient(from 15deg, rgba(47, 208, 140, .2), rgba(71, 124, 255, .14), rgba(47, 208, 140, .2));
+  border-radius: 42px;
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 900px) {
+  .audience-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .audience-card:nth-child(1),
+  .audience-card:nth-child(4) {
+    min-height: 250px;
+    grid-row: auto;
+  }
+
+  .audience-card:nth-child(4) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .audience-card,
+  .audience-card:nth-child(1),
+  .audience-card:nth-child(4) {
+    min-height: 210px;
+  }
+}
