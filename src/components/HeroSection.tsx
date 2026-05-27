@@ -40,18 +40,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
 
         <div className="hero__inner">
           <div className="hero__label">
-            <span>LeadFix</span>
-            <i />
+            <span className="hero__label-icon" aria-hidden="true" />
             <span>AI-аудитор продающей способности сайтов</span>
           </div>
 
           <h1 className="hero__title" id="leadfix-hero-title">
-            Найдём, где ваш сайт теряет заявки
+            Найдём, где ваш лендинг теряет заявки
           </h1>
 
           <p className="hero__subtitle">
-            Анализируем оффер, CTA, доверие, структуру и мобильную версию. Показываем конкретные ошибки и что исправить
-            в первую очередь.
+            Анализируем оффер, CTA, доверие, структуру и мобильную версию с помощью ИИ-инструментов. Показываем
+            конкретные ошибки и что исправить в первую очередь.
           </p>
 
           <form className="site-form" onSubmit={onSubmit} noValidate>

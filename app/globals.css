@@ -2303,19 +2303,38 @@ button { cursor: pointer; }
 }
 
 .hero--reference .hero__label::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  display: block;
-  background: #4387ff;
-  border-radius: 999px;
-  box-shadow: 0 0 0 4px rgba(67, 135, 255, .2);
+  display: none;
 }
 
 .hero--reference .hero__label i {
   width: 1px;
   height: 16px;
   background: rgba(255, 255, 255, .14);
+}
+
+.hero--reference .hero__label-icon {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  flex: 0 0 auto;
+  border: 2px solid #63a1ff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(67, 135, 255, .14), 0 0 18px rgba(67, 135, 255, .5);
+  animation: leadfixSearchGlow 2.6s ease-in-out infinite;
+}
+
+.hero--reference .hero__label-icon::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  width: 7px;
+  height: 2px;
+  background: #63a1ff;
+  border-radius: 999px;
+  transform: rotate(45deg);
+  transform-origin: left center;
 }
 
 .hero--reference .hero__title {
@@ -2760,11 +2779,12 @@ button { cursor: pointer; }
   padding: 0 24px;
   color: #06130d;
   background: linear-gradient(180deg, #49e6a2 0%, #2fd08c 100%);
+  background-size: 220% 100%;
   box-shadow:
     0 12px 28px rgba(47, 208, 140, .28),
     inset 0 1px 0 rgba(255, 255, 255, .38);
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-  animation: leadfixCtaPulse 3.2s ease-in-out infinite;
+  animation: leadfixCtaFlash 2.8s ease-in-out infinite;
 }
 
 .hero--reference .site-form button:hover {
@@ -2775,9 +2795,31 @@ button { cursor: pointer; }
     inset 0 1px 0 rgba(255, 255, 255, .42);
 }
 
-@keyframes leadfixCtaPulse {
-  0%, 100% { box-shadow: 0 12px 28px rgba(47, 208, 140, .28), inset 0 1px 0 rgba(255, 255, 255, .38); }
-  50% { box-shadow: 0 16px 38px rgba(47, 208, 140, .42), inset 0 1px 0 rgba(255, 255, 255, .44); }
+@keyframes leadfixCtaFlash {
+  0%, 100% {
+    background-position: 0% 50%;
+    box-shadow: 0 12px 28px rgba(47, 208, 140, .28), inset 0 1px 0 rgba(255, 255, 255, .38);
+  }
+  44% {
+    background-position: 0% 50%;
+    box-shadow: 0 12px 28px rgba(47, 208, 140, .28), inset 0 1px 0 rgba(255, 255, 255, .38);
+  }
+  56% {
+    background-position: 100% 50%;
+    box-shadow: 0 18px 42px rgba(47, 208, 140, .46), inset 0 1px 0 rgba(255, 255, 255, .52);
+    filter: brightness(1.06);
+  }
+}
+
+@keyframes leadfixSearchGlow {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 0 4px rgba(67, 135, 255, .14), 0 0 18px rgba(67, 135, 255, .45);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 0 0 6px rgba(67, 135, 255, .1), 0 0 24px rgba(67, 135, 255, .62);
+  }
 }
 
 .hero--reference .laptop-dashboard {
