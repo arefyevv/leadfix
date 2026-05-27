@@ -2607,8 +2607,8 @@ button { cursor: pointer; }
 /* LeadFix pixel reference pass */
 .hero--reference {
   isolation: isolate;
-  padding: clamp(20px, 3.2vw, 40px) clamp(20px, 3.2vw, 40px) 0;
-  background: #ffffff;
+  padding: 0;
+  background: #07101c;
 }
 
 .hero--reference .hero-poster.reference-hero {
@@ -2616,7 +2616,7 @@ button { cursor: pointer; }
   width: 100%;
   padding: 28px clamp(28px, 6.2vw, 92px) 0;
   margin: 0 auto;
-  border-radius: 22px 22px 34px 34px;
+  border-radius: 0 0 34px 34px;
   background:
     radial-gradient(circle at 50% 39%, rgba(64, 126, 226, .82), rgba(30, 77, 148, .42) 34%, transparent 59%),
     radial-gradient(circle at 50% 70%, rgba(32, 87, 180, .72), transparent 38%),
@@ -2969,13 +2969,13 @@ button { cursor: pointer; }
 
 @media (max-width: 760px) {
   .hero--reference {
-    padding: 12px 12px 0;
+    padding: 0;
   }
 
   .hero--reference .hero-poster.reference-hero {
     width: 100%;
     padding: 18px 14px 0;
-    border-radius: 18px 18px 26px 26px;
+    border-radius: 0 0 26px 26px;
   }
 
   .hero--reference .laptop-nav {
