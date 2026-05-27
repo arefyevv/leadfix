@@ -69,7 +69,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
         <div className="hero__inner">
           <div className="hero__label">
             <span className="hero__label-icon" aria-hidden="true" />
-            <span>AI-аудитор продающей способности сайтов</span>
+            <span>Экспресс-аудит сайтов под заявки</span>
           </div>
 
           <h1 className="hero__title" id="leadfix-hero-title">
@@ -88,13 +88,13 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               onChange={(event) => onUrlChange(event.target.value)}
               type="url"
               inputMode="url"
-              placeholder="vash-sajt.ru"
+              placeholder="https://vash-sajt.ru"
               aria-label="Адрес сайта"
             />
-            <button type="submit">Найти проблемы</button>
+            <button type="submit">Найти ошибки</button>
           </form>
 
-          <p className="hero__proof">Уже нашли 243 проблемы конверсии</p>
+          <p className="hero__proof">Бесплатно покажем первые ошибки за 1 минуту</p>
           <p className="form-error" aria-live="polite">
             {error}
           </p>

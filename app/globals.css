@@ -2859,7 +2859,7 @@ button { cursor: pointer; }
 .hero--reference .laptop-dashboard {
   width: min(calc(100% - 92px), 1088px);
   min-height: 414px;
-  margin-top: 68px;
+  margin-top: 42px;
   margin-bottom: -88px;
   padding: 18px;
   border-width: 16px;
@@ -3139,6 +3139,16 @@ button { cursor: pointer; }
 }
 
 /* Final Hero behavior: fixed nav, mobile dropdown, unified search icon. */
+.hero--reference.screen {
+  animation: heroReferenceFade .45s ease both;
+  transform: none;
+}
+
+@keyframes heroReferenceFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .hero--reference .laptop-nav {
   position: fixed;
   top: 28px;
@@ -3152,9 +3162,9 @@ button { cursor: pointer; }
 }
 
 .hero--reference .hero__label-icon {
-  width: 13px;
-  height: 13px;
-  border: 1.6px solid #63a1ff;
+  width: 11px;
+  height: 11px;
+  border: 1.4px solid #63a1ff;
   border-radius: 50%;
   box-shadow: 0 0 0 3px rgba(67, 135, 255, .12), 0 0 14px rgba(67, 135, 255, .42);
   animation: leadfixSearchTilt 3s ease-in-out infinite;
@@ -3168,8 +3178,8 @@ button { cursor: pointer; }
 .hero--reference .hero__label-icon::after {
   right: -4px;
   bottom: -2px;
-  width: 6px;
-  height: 1.6px;
+  width: 5px;
+  height: 1.4px;
   background: #63a1ff;
   transform: rotate(45deg);
 }
