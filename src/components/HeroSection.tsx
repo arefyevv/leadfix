@@ -1,4 +1,6 @@
-import type { FormEvent } from "react";
+"use client";
+
+import { FormEvent, useState } from "react";
 
 type HeroSectionProps = {
   url: string;
@@ -8,7 +10,7 @@ type HeroSectionProps = {
 };
 
 const navItems = [
-  { label: "Для кого?", href: "#audience" },
+  { label: "Для кого", href: "#audience" },
   { label: "Что проверяем", href: "#checks" },
   { label: "Тарифы", href: "#pricing" },
   { label: "Пример аудита", href: "#showcase" },
@@ -16,17 +18,29 @@ const navItems = [
 ];
 
 export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function closeMobileMenu() {
+    setIsMenuOpen(false);
+  }
+
   return (
     <section className="hero hero--reference screen" id="audit" aria-labelledby="leadfix-hero-title">
       <div className="hero-poster reference-hero">
         <header className="laptop-nav" aria-label="LeadFix hero navigation">
-          <button className="mobile-menu-button" type="button" aria-label="Открыть меню">
+          <button
+            className="mobile-menu-button"
+            type="button"
+            aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((current) => !current)}
+          >
             <span />
             <span />
             <span />
           </button>
 
-          <a className="laptop-logo" href="#audit" aria-label="LeadFix">
+          <a className="laptop-logo" href="#audit" aria-label="LeadFix" onClick={closeMobileMenu}>
             <span>LF</span>
             <b>LeadFix</b>
           </a>
@@ -39,9 +53,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
             ))}
           </nav>
 
-          <a className="laptop-cta" href="#audit">
+          <a className="laptop-cta" href="#audit" onClick={closeMobileMenu}>
             Проверить сайт
           </a>
+
+          <nav className={isMenuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">
+            {navItems.map((item) => (
+              <a href={item.href} key={item.label} onClick={closeMobileMenu}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </header>
 
         <div className="hero__inner">
@@ -51,7 +73,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           </div>
 
           <h1 className="hero__title" id="leadfix-hero-title">
-            <span>Найдём, где ваш лендинг</span>
+            <span>Найдём, где ваш лендинг </span>
             <span>теряет заявки</span>
           </h1>
 
@@ -66,7 +88,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               onChange={(event) => onUrlChange(event.target.value)}
               type="url"
               inputMode="url"
-              placeholder="https://example.ru"
+              placeholder="vash-sajt.ru"
               aria-label="Адрес сайта"
             />
             <button type="submit">Найти проблемы</button>
