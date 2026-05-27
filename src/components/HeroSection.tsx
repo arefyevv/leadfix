@@ -8,10 +8,10 @@ type HeroSectionProps = {
 };
 
 const navItems = [
-  { label: "Что делаем?", href: "#checks" },
   { label: "Для кого?", href: "#audience" },
+  { label: "Что проверяем", href: "#checks" },
   { label: "Тарифы", href: "#pricing" },
-  { label: "Примеры аудита", href: "#showcase" },
+  { label: "Пример аудита", href: "#showcase" },
   { label: "FAQ", href: "#faq" }
 ];
 
@@ -20,6 +20,12 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
     <section className="hero hero--reference screen" id="audit" aria-labelledby="leadfix-hero-title">
       <div className="hero-poster reference-hero">
         <header className="laptop-nav" aria-label="LeadFix hero navigation">
+          <button className="mobile-menu-button" type="button" aria-label="Открыть меню">
+            <span />
+            <span />
+            <span />
+          </button>
+
           <a className="laptop-logo" href="#audit" aria-label="LeadFix">
             <span>LF</span>
             <b>LeadFix</b>

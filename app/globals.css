@@ -2194,6 +2194,10 @@ button { cursor: pointer; }
   padding: 0;
 }
 
+.hero--reference .mobile-menu-button {
+  display: none;
+}
+
 .hero--reference .laptop-logo {
   display: flex;
   align-items: center;
@@ -2318,10 +2322,16 @@ button { cursor: pointer; }
   height: 13px;
   display: inline-block;
   flex: 0 0 auto;
+}
+
+.hero--reference .hero__label-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border: 1.6px solid #63a1ff;
   border-radius: 50%;
   box-shadow: 0 0 0 3px rgba(67, 135, 255, .12), 0 0 14px rgba(67, 135, 255, .42);
-  animation: leadfixSearchDrift 2.8s ease-in-out infinite;
+  animation: leadfixSearchOrbit 3.6s ease-in-out infinite;
 }
 
 .hero--reference .hero__label-icon::after {
@@ -2586,6 +2596,29 @@ button { cursor: pointer; }
     display: none;
   }
 
+  .hero--reference .mobile-menu-button {
+    display: inline-grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    align-content: center;
+    justify-content: center;
+    padding: 11px 10px;
+    background: rgba(255, 255, 255, .075);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 11px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+  }
+
+  .hero--reference .mobile-menu-button span {
+    width: 18px;
+    height: 2px;
+    display: block;
+    background: rgba(255, 255, 255, .86);
+    border-radius: 999px;
+  }
+
   .hero--reference .hero__inner {
     margin-top: 64px;
   }
@@ -2788,6 +2821,7 @@ button { cursor: pointer; }
   box-shadow:
     0 12px 28px rgba(47, 208, 140, .28),
     inset 0 1px 0 rgba(255, 255, 255, .38);
+  font-weight: 650;
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
@@ -2816,9 +2850,10 @@ button { cursor: pointer; }
   68%, 100% { left: 112%; opacity: 0; }
 }
 
-@keyframes leadfixSearchDrift {
-  0%, 100% { transform: translateX(-1px); }
-  50% { transform: translateX(2px); }
+@keyframes leadfixSearchOrbit {
+  0%, 100% { transform: translateX(-1.5px) translateY(0); }
+  45% { transform: translateX(2px) translateY(-1px); }
+  70% { transform: translateX(1px) translateY(1px); }
 }
 
 .hero--reference .laptop-dashboard {
@@ -3023,11 +3058,26 @@ button { cursor: pointer; }
     top: 16px;
     left: 14px;
     right: 14px;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 10px;
+  }
+
+  .hero--reference .laptop-logo {
+    justify-self: start;
+  }
+
+  .hero--reference .laptop-cta {
+    grid-column: 4;
   }
 
   .hero--reference .laptop-cta {
     min-height: 40px;
     padding: 0 14px;
+  }
+
+  .hero--reference .mobile-menu-button {
+    justify-self: start;
+    min-height: 40px;
   }
 
   .hero--reference .hero__inner {
