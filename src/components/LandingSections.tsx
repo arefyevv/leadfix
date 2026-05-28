@@ -10,12 +10,30 @@ const audiences = [
 ];
 
 const auditChecks = [
-  "Первый экран",
-  "Оффер",
-  "CTA",
-  "Доверие",
-  "Формы",
-  "Мобильная версия"
+  {
+    title: "Оффер и первый экран",
+    description: "Понимает ли посетитель за 5 секунд: что вы предлагаете; для кого это; почему выбрать именно вас."
+  },
+  {
+    title: "CTA и формы",
+    description: "Проверяем: заметны ли кнопки; есть ли призыв к действию; насколько легко оставить заявку."
+  },
+  {
+    title: "Доверие",
+    description: "Анализируем: кейсы; отзывы; цифры; гарантии; подтверждение экспертности."
+  },
+  {
+    title: "Структура и UX",
+    description: "Смотрим: логичность блоков; читаемость; визуальную перегрузку; насколько сайт ведёт к заявке."
+  },
+  {
+    title: "Mobile-версия",
+    description: "Проверяем: удобство на телефоне; размеры текста и кнопок; проблемы адаптации; скорость восприятия."
+  },
+  {
+    title: "Потери конверсии",
+    description: "Находим: критичные ошибки; слабые места; элементы, которые могут снижать количество заявок."
+  }
 ];
 
 const scenarios = [
@@ -138,10 +156,13 @@ export function LandingSections() {
           </div>
 
           <div className="audit-accordion">
-            {auditChecks.map((title, index) => (
-              <details className="audit-accordion__item" key={title} open={index === 0}>
-                <summary>{title}</summary>
-                <p>Описание добавим позже.</p>
+            {auditChecks.map((item, index) => (
+              <details className="audit-accordion__item" key={item.title} open={index === 0}>
+                <summary>
+                  <span>{String(index + 1).padStart(2, "0")}.</span>
+                  <b>{item.title}</b>
+                </summary>
+                <p>{item.description}</p>
               </details>
             ))}
           </div>

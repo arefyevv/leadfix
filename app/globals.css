@@ -4001,33 +4001,51 @@ button { cursor: pointer; }
 
 .audit-accordion {
   display: grid;
-  gap: 12px;
+  gap: 0;
+  background: #ffffff;
+  border-top: 1px solid rgba(15, 23, 42, .09);
+  border-bottom: 1px solid rgba(15, 23, 42, .09);
 }
 
 .audit-accordion__item {
-  overflow: hidden;
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, .08);
-  border-radius: 20px;
-  box-shadow: 0 18px 46px rgba(15, 23, 42, .05);
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(15, 23, 42, .09);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .audit-accordion__item summary {
-  min-height: 76px;
-  display: flex;
+  min-height: 86px;
+  display: grid;
+  grid-template-columns: 72px 1fr 34px;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 0 24px;
+  gap: 22px;
+  padding: 0;
   color: #0f172a;
   cursor: pointer;
-  font-size: clamp(20px, 2vw, 28px);
-  font-weight: 760;
+  font-size: clamp(17px, 1.35vw, 21px);
+  font-weight: 650;
   list-style: none;
 }
 
 .audit-accordion__item summary::-webkit-details-marker {
   display: none;
+}
+
+.audit-accordion__item summary > span {
+  color: #0f172a;
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 680;
+  letter-spacing: -.02em;
+}
+
+.audit-accordion__item summary b {
+  color: #111827;
+  font-size: clamp(17px, 1.35vw, 21px);
+  font-weight: 650;
+  line-height: 1.2;
 }
 
 .audit-accordion__item summary::after {
@@ -4041,7 +4059,7 @@ button { cursor: pointer; }
   background: #e8fff3;
   border: 1px solid rgba(47, 208, 140, .2);
   border-radius: 999px;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
 }
 
@@ -4050,11 +4068,17 @@ button { cursor: pointer; }
 }
 
 .audit-accordion__item p {
-  margin: -8px 0 0;
-  padding: 0 24px 24px;
+  max-width: 620px;
+  margin: -16px 0 0 94px;
+  padding: 0 46px 26px 0;
   color: rgba(15, 23, 42, .58);
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.5;
+}
+
+#audit-checks .section-head h2 {
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: 650;
 }
 
 @media (max-width: 900px) {
@@ -4068,5 +4092,14 @@ button { cursor: pointer; }
 
   .audit-visual-placeholder__screen {
     min-height: 290px;
+  }
+
+  .audit-accordion__item summary {
+    grid-template-columns: 54px 1fr 32px;
+    gap: 14px;
+  }
+
+  .audit-accordion__item p {
+    margin-left: 68px;
   }
 }
