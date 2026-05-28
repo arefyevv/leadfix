@@ -1,5 +1,6 @@
 import { MetricCard } from "./MetricCard";
 import { PricingCard } from "./PricingCard";
+import { ReportShowcase } from "./ReportShowcase";
 import type { Plan } from "./types";
 
 const audiences = [
@@ -121,7 +122,8 @@ const faq = [
   ["Можно ли гарантировать рост заявок?", "Нет. Аудит показывает потенциальные точки потери заявок и рекомендации, но рост зависит от трафика, ниши, предложения и внедрения."],
   ["Когда я получу отчет?", "В текущем прототипе отчет показывается сразу после сценария проверки. В реальном продукте срок будет зависеть от выбранного тарифа."],
   ["Подойдет ли для лендинга на Tilda?", "Да. LeadFix подходит для лендингов на Tilda, Taplink, конструкторов и кастомных сайтов."],
-  ["Что будет в PDF?", "Оценка продающей способности, критичные проблемы, quick wins и рекомендации по офферу, CTA, доверию, формам и мобильной версии."]
+  ["Что будет в PDF?", "Оценка продающей способности, критичные проблемы, quick wins и рекомендации по офферу, CTA, доверию, формам и мобильной версии."],
+  ["Можно проверить несколько страниц?", "Да. В подписке можно проверять несколько лендингов, сравнивать результаты и повторно смотреть страницу после правок."]
 ];
 
 export function LandingSections() {
@@ -194,7 +196,9 @@ export function LandingSections() {
         </div>
       </section>
 
-      <section className="landing-section result-showcase" id="cases">
+      <ReportShowcase />
+
+      <section className="landing-section result-showcase legacy-result-showcase" id="cases-legacy">
         <div className="section-kicker">Как выглядит результат</div>
         <div className="showcase-layout">
           <div className="section-head">
