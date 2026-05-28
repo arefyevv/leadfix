@@ -118,6 +118,27 @@ export function ReportShowcase() {
               </aside>
             </div>
           </div>
+
+          <aside className="audit-side-mockup" aria-label="Краткий экран рекомендаций">
+            <div className="audit-side-mockup__head">
+              <span>Fix priority</span>
+              <strong>Next 24h</strong>
+            </div>
+            <div className="audit-side-mockup__score">
+              <b>+32%</b>
+              <span>potential uplift</span>
+            </div>
+            <div className="audit-side-mockup__list">
+              <p><i /> Переписать оффер</p>
+              <p><i /> Поднять главный CTA</p>
+              <p><i /> Добавить доверие у формы</p>
+            </div>
+            <div className="audit-side-mockup__phone">
+              <span />
+              <b>Mobile UX</b>
+              <small>2 friction points</small>
+            </div>
+          </aside>
         </div>
 
         <div className="report-showcase__cards" aria-label="Типы анализа в отчёте">
