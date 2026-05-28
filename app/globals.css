@@ -5274,7 +5274,33 @@ button { cursor: pointer; }
   margin-top: 0;
 }
 
+/* Pricing and FAQ final layout tweaks. */
+#pricing .section-head {
+  max-width: none !important;
+}
+
+#pricing .section-head h2 {
+  white-space: nowrap;
+}
+
+#faq {
+  width: min(100%, 1180px) !important;
+}
+
+#faq .section-head {
+  max-width: 780px;
+}
+
+#faq .faq-list {
+  width: 100%;
+  max-width: none;
+}
+
 @media (max-width: 760px) {
+  #pricing .section-head h2 {
+    white-space: normal;
+  }
+
   .leadfix-footer {
     width: min(100% - 28px, 1180px);
     grid-template-columns: 1fr;
