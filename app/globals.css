@@ -4021,9 +4021,9 @@ button { cursor: pointer; }
 .audit-accordion__item summary {
   min-height: 86px;
   display: grid;
-  grid-template-columns: 72px 1fr 34px;
+  grid-template-columns: 52px 1fr 30px;
   align-items: center;
-  gap: 22px;
+  gap: 12px;
   padding: 0;
   color: #0f172a;
   cursor: pointer;
@@ -4052,16 +4052,17 @@ button { cursor: pointer; }
 
 .audit-accordion__item summary::after {
   content: "+";
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  color: #0f2a1d;
-  background: #e8fff3;
-  border: 1px solid rgba(47, 208, 140, .2);
+  color: rgba(15, 23, 42, .72);
+  background: transparent;
+  border: 0;
   border-radius: 999px;
-  font-size: 20px;
+  font-size: 22px;
+  font-weight: 300;
   line-height: 1;
 }
 
@@ -4071,8 +4072,8 @@ button { cursor: pointer; }
 
 .audit-accordion__item p {
   max-width: 620px;
-  margin: -16px 0 0 94px;
-  padding: 0 46px 26px 0;
+  margin: -6px 0 0 64px;
+  padding: 0 38px 28px 0;
   color: rgba(15, 23, 42, .58);
   font-size: 15px;
   line-height: 1.5;
@@ -4109,11 +4110,12 @@ button { cursor: pointer; }
   }
 
   .audit-accordion__item summary {
-    grid-template-columns: 54px 1fr 32px;
-    gap: 14px;
+    grid-template-columns: 42px 1fr 30px;
+    gap: 10px;
   }
 
   .audit-accordion__item p {
-    margin-left: 68px;
+    margin-left: 52px;
+    padding-right: 0;
   }
 }

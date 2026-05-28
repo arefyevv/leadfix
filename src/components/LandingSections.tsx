@@ -157,9 +157,9 @@ export function LandingSections() {
 
           <div className="audit-accordion">
             {auditChecks.map((item, index) => (
-              <details className="audit-accordion__item" key={item.title} open={index === 0}>
+              <details className="audit-accordion__item" key={item.title} name="audit-checks" open={index === 0}>
                 <summary>
-                  <span>{String(index + 1).padStart(2, "0")}.</span>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
                   <b>{item.title}</b>
                 </summary>
                 <p>{item.description}</p>
