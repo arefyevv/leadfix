@@ -16,10 +16,11 @@
 }
 
 * { box-sizing: border-box; }
-html { min-height: 100%; scroll-behavior: smooth; }
+html { min-height: 100%; scroll-behavior: smooth; overflow-x: clip; }
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: clip;
   color: var(--dark-ink);
   background: var(--paper);
   font-family: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -443,6 +444,7 @@ button { cursor: pointer; }
   display: grid;
   gap: 0;
   padding: 44px 20px 0;
+  overflow-x: clip;
   color: var(--dark-ink);
   background: var(--paper);
 }
@@ -3943,7 +3945,7 @@ button { cursor: pointer; }
   display: grid;
   grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
   gap: clamp(28px, 5vw, 64px);
-  align-items: center;
+  align-items: start;
   margin-top: 52px;
 }
 
@@ -4002,7 +4004,7 @@ button { cursor: pointer; }
 .audit-accordion {
   display: grid;
   gap: 0;
-  background: #ffffff;
+  background: transparent;
   border-top: 1px solid rgba(15, 23, 42, .09);
   border-bottom: 1px solid rgba(15, 23, 42, .09);
 }
@@ -4036,8 +4038,8 @@ button { cursor: pointer; }
 
 .audit-accordion__item summary > span {
   color: #0f172a;
-  font-size: clamp(22px, 2.2vw, 32px);
-  font-weight: 680;
+  font-size: clamp(17px, 1.35vw, 21px);
+  font-weight: 650;
   letter-spacing: -.02em;
 }
 
@@ -4074,6 +4076,18 @@ button { cursor: pointer; }
   color: rgba(15, 23, 42, .58);
   font-size: 15px;
   line-height: 1.5;
+}
+
+@supports selector(::details-content) {
+  .audit-accordion__item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size .32s ease, content-visibility .32s ease allow-discrete;
+  }
+
+  .audit-accordion__item[open]::details-content {
+    block-size: auto;
+  }
 }
 
 #audit-checks .section-head h2 {
