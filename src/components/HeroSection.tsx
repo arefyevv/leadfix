@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useEffect, useState } from "react";
 
@@ -10,10 +10,10 @@ type HeroSectionProps = {
 };
 
 const navItems = [
-  { label: "Для кого", href: "#audience" },
-  { label: "Что проверяем", href: "#audit-checks" },
-  { label: "Тарифы", href: "#pricing" },
-  { label: "Пример аудита", href: "#showcase" },
+  { label: "Р”Р»СЏ РєРѕРіРѕ", href: "#audience" },
+  { label: "Р§С‚Рѕ РїСЂРѕРІРµСЂСЏРµРј", href: "#audit-checks" },
+  { label: "РўР°СЂРёС„С‹", href: "#pricing" },
+  { label: "РџСЂРёРјРµСЂ Р°СѓРґРёС‚Р°", href: "#cases" },
   { label: "FAQ", href: "#faq" }
 ];
 
@@ -45,7 +45,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
         <button
           className="mobile-menu-button"
           type="button"
-          aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-label={isMenuOpen ? "Р—Р°РєСЂС‹С‚СЊ РјРµРЅСЋ" : "РћС‚РєСЂС‹С‚СЊ РјРµРЅСЋ"}
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen((current) => !current)}
         >
@@ -59,7 +59,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <b>LeadFix</b>
         </a>
 
-        <nav className="laptop-menu" aria-label="Навигация">
+        <nav className="laptop-menu" aria-label="РќР°РІРёРіР°С†РёСЏ">
           {navItems.map((item, index) => (
             <a href={item.href} key={item.label} className={index === 0 ? "is-active" : undefined}>
               {item.label}
@@ -68,10 +68,10 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
         </nav>
 
         <a className="laptop-cta" href="#audit" onClick={closeMobileMenu}>
-          Проверить сайт
+          РџСЂРѕРІРµСЂРёС‚СЊ СЃР°Р№С‚
         </a>
 
-        <nav className={isMenuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">
+        <nav className={isMenuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="РњРѕР±РёР»СЊРЅРѕРµ РјРµРЅСЋ">
           {navItems.map((item) => (
             <a href={item.href} key={item.label} onClick={closeMobileMenu}>
               {item.label}
@@ -85,17 +85,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="hero__inner">
             <div className="hero__label">
               <span className="hero__label-icon" aria-hidden="true" />
-              <span>Экспресс-аудит сайтов под заявки</span>
+              <span>Р­РєСЃРїСЂРµСЃСЃ-Р°СѓРґРёС‚ СЃР°Р№С‚РѕРІ РїРѕРґ Р·Р°СЏРІРєРё</span>
             </div>
 
             <h1 className="hero__title" id="leadfix-hero-title">
-              <span>Найдём, где ваш лендинг </span>
-              <span>теряет заявки</span>
+              <span>РќР°Р№РґС‘Рј, РіРґРµ РІР°С€ Р»РµРЅРґРёРЅРі </span>
+              <span>С‚РµСЂСЏРµС‚ Р·Р°СЏРІРєРё</span>
             </h1>
 
             <p className="hero__subtitle">
-              Анализируем оффер, CTA, доверие, структуру и мобильную версию с помощью ИИ-инструментов. Показываем
-              конкретные ошибки и что исправить в первую очередь.
+              РђРЅР°Р»РёР·РёСЂСѓРµРј РѕС„С„РµСЂ, CTA, РґРѕРІРµСЂРёРµ, СЃС‚СЂСѓРєС‚СѓСЂСѓ Рё РјРѕР±РёР»СЊРЅСѓСЋ РІРµСЂСЃРёСЋ СЃ РїРѕРјРѕС‰СЊСЋ РР-РёРЅСЃС‚СЂСѓРјРµРЅС‚РѕРІ. РџРѕРєР°Р·С‹РІР°РµРј
+              РєРѕРЅРєСЂРµС‚РЅС‹Рµ РѕС€РёР±РєРё Рё С‡С‚Рѕ РёСЃРїСЂР°РІРёС‚СЊ РІ РїРµСЂРІСѓСЋ РѕС‡РµСЂРµРґСЊ.
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
@@ -105,12 +105,12 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                 type="url"
                 inputMode="url"
                 placeholder="https://vash-sajt.ru"
-                aria-label="Адрес сайта"
+                aria-label="РђРґСЂРµСЃ СЃР°Р№С‚Р°"
               />
-              <button type="submit">Найти ошибки</button>
+              <button type="submit">РќР°Р№С‚Рё РѕС€РёР±РєРё</button>
             </form>
 
-            <p className="hero__proof">Бесплатно покажем первые ошибки за 1 минуту</p>
+            <p className="hero__proof">Р‘РµСЃРїР»Р°С‚РЅРѕ РїРѕРєР°Р¶РµРј РїРµСЂРІС‹Рµ РѕС€РёР±РєРё Р·Р° 1 РјРёРЅСѓС‚Сѓ</p>
             <p className="form-error" aria-live="polite">
               {error}
             </p>
@@ -196,3 +196,4 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
     </>
   );
 }
+

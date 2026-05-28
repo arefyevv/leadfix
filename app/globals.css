@@ -5310,3 +5310,83 @@ button { cursor: pointer; }
     justify-content: flex-start;
   }
 }
+
+/* Global landing rhythm, anchors, CTA and footer polish. */
+.landing-flow > .landing-section:not(.report-showcase):not(.landing-final) {
+  width: min(100% - 40px, 1180px) !important;
+  padding-top: clamp(58px, 6.5vw, 88px) !important;
+  padding-bottom: clamp(58px, 6.5vw, 88px) !important;
+}
+
+#audience,
+#audit-checks,
+#cases,
+#pricing,
+#faq {
+  scroll-margin-top: 104px;
+}
+
+.laptop-cta,
+.landing-final__button,
+.report-showcase__cta a,
+.hero--reference .site-form button,
+#pricing .pricing-card__cta {
+  white-space: nowrap;
+}
+
+.laptop-cta {
+  min-width: max-content;
+}
+
+#faq {
+  width: min(100% - 40px, 1180px) !important;
+}
+
+#faq .faq-list {
+  width: 100% !important;
+}
+
+.landing-final {
+  width: min(100% - 40px, 1180px) !important;
+  min-height: 0 !important;
+  margin: clamp(42px, 5vw, 72px) auto 0 !important;
+  padding: clamp(54px, 6vw, 78px) clamp(20px, 5vw, 64px) !important;
+  border-radius: 38px !important;
+  overflow: hidden;
+}
+
+.landing-final .section-head h2 {
+  font-size: clamp(34px, 4.2vw, 58px) !important;
+}
+
+.landing-final .section-head p {
+  max-width: 580px !important;
+}
+
+.leadfix-footer {
+  margin-top: clamp(24px, 3vw, 42px) !important;
+}
+
+@media (max-width: 760px) {
+  .landing-flow > .landing-section:not(.report-showcase):not(.landing-final),
+  #faq,
+  .landing-final {
+    width: min(100% - 28px, 1180px) !important;
+  }
+
+  .landing-flow > .landing-section:not(.report-showcase):not(.landing-final) {
+    padding-top: 52px !important;
+    padding-bottom: 52px !important;
+  }
+
+  .landing-final {
+    padding: 50px 18px !important;
+    border-radius: 28px !important;
+  }
+
+  .landing-final__button {
+    max-width: 100%;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+}
