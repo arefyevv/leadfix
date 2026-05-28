@@ -11,7 +11,7 @@ type HeroSectionProps = {
 
 const navItems = [
   { label: "Для кого", href: "#audience" },
-  { label: "Что проверяем", href: "#checks" },
+  { label: "Что проверяем", href: "#audit-checks" },
   { label: "Тарифы", href: "#pricing" },
   { label: "Пример аудита", href: "#showcase" },
   { label: "FAQ", href: "#faq" }

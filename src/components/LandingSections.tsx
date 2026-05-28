@@ -10,12 +10,12 @@ const audiences = [
 ];
 
 const auditChecks = [
-  ["Оффер", "Понятна ли выгода за первые секунды и не приходится ли пользователю додумывать смысл."],
-  ["CTA", "Объясняет ли кнопка следующий шаг и видна ли она в ключевых местах страницы."],
-  ["Доверие", "Есть ли доказательства до формы: кейсы, цифры, гарантии, понятный формат работы."],
-  ["Формы", "Не мешают ли поля, ошибки, подписи и микротекст отправке заявки."],
-  ["Мобильная версия", "Удобно ли прочитать оффер, нажать CTA и оставить заявку с телефона."],
-  ["Структура страницы", "Логично ли экран за экраном ведет пользователя к целевому действию."]
+  "Первый экран",
+  "Оффер",
+  "CTA",
+  "Доверие",
+  "Формы",
+  "Мобильная версия"
 ];
 
 const scenarios = [
@@ -123,14 +123,28 @@ export function LandingSections() {
           <h2>Не общий разбор сайта, а точки потери конверсии</h2>
           <p>Каждый блок отчета привязан к решению: что мешает заявке и что исправить в первую очередь.</p>
         </div>
-        <div className="check-grid">
-          {auditChecks.map(([title, text]) => (
-            <article className="landing-card check-card" key={title}>
-              <div className="check-marker" />
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
+        <div className="audit-accordion-layout">
+          <div className="audit-visual-placeholder" aria-hidden="true">
+            <div className="audit-visual-placeholder__top">
+              <span />
+              <span />
+              <span />
+            </div>
+            <div className="audit-visual-placeholder__screen">
+              <i />
+              <i />
+              <i />
+            </div>
+          </div>
+
+          <div className="audit-accordion">
+            {auditChecks.map((title, index) => (
+              <details className="audit-accordion__item" key={title} open={index === 0}>
+                <summary>{title}</summary>
+                <p>Описание добавим позже.</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
