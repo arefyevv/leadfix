@@ -4347,3 +4347,16 @@ button { cursor: pointer; }
     min-height: 188px !important;
   }
 }
+
+/* Tighten the transition from audience to audit checks. */
+#audience {
+  padding-bottom: clamp(34px, 4vw, 54px) !important;
+}
+
+#audit-checks {
+  padding-top: clamp(34px, 4vw, 54px) !important;
+}
+
+#audit-checks .audit-accordion-layout {
+  margin-top: 38px !important;
+}
