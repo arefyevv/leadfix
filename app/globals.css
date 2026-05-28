@@ -5485,3 +5485,71 @@ button { cursor: pointer; }
     padding-right: 0 !important;
   }
 }
+
+/* Footer spacing and report hover focus. */
+.leadfix-footer {
+  margin-top: clamp(64px, 7vw, 110px) !important;
+}
+
+.report-showcase__stage .audit-report-mockup__top div,
+.report-showcase__stage .audit-report-mockup__top button,
+.report-showcase__stage .audit-report-score,
+.report-showcase__stage .audit-report-metrics article,
+.report-showcase__stage .audit-report-issue,
+.report-showcase__stage .audit-report-roadmap,
+.report-showcase__stage .audit-side-mockup__head,
+.report-showcase__stage .audit-side-mockup__score,
+.report-showcase__stage .audit-side-mockup__list,
+.report-showcase__stage .audit-side-mockup__phone {
+  transition:
+    opacity .24s ease,
+    filter .24s ease,
+    transform .24s ease,
+    border-color .24s ease,
+    box-shadow .24s ease;
+}
+
+.report-showcase__stage.is-highlighting .audit-report-mockup__top div,
+.report-showcase__stage.is-highlighting .audit-report-mockup__top button,
+.report-showcase__stage.is-highlighting .audit-report-score,
+.report-showcase__stage.is-highlighting .audit-report-metrics article,
+.report-showcase__stage.is-highlighting .audit-report-issue,
+.report-showcase__stage.is-highlighting .audit-report-roadmap,
+.report-showcase__stage.is-highlighting .audit-side-mockup__head,
+.report-showcase__stage.is-highlighting .audit-side-mockup__score,
+.report-showcase__stage.is-highlighting .audit-side-mockup__list,
+.report-showcase__stage.is-highlighting .audit-side-mockup__phone {
+  opacity: .38 !important;
+  filter: blur(3px) saturate(.65) !important;
+}
+
+.report-showcase__stage.is-offer .audit-area-offer,
+.report-showcase__stage.is-cta .audit-area-cta,
+.report-showcase__stage.is-trust .audit-area-trust,
+.report-showcase__stage.is-mobile .audit-area-mobile,
+.report-showcase__stage.is-wins .audit-area-wins {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: translateY(-2px);
+  border-color: rgba(47, 208, 140, .62) !important;
+  box-shadow: 0 20px 46px rgba(47, 208, 140, .2), 0 0 0 1px rgba(47, 208, 140, .22) !important;
+}
+
+@media (max-width: 760px) {
+  .leadfix-footer {
+    margin-top: 58px !important;
+  }
+
+  .report-showcase__stage.is-highlighting .audit-report-mockup__top div,
+  .report-showcase__stage.is-highlighting .audit-report-mockup__top button,
+  .report-showcase__stage.is-highlighting .audit-report-score,
+  .report-showcase__stage.is-highlighting .audit-report-metrics article,
+  .report-showcase__stage.is-highlighting .audit-report-issue,
+  .report-showcase__stage.is-highlighting .audit-report-roadmap,
+  .report-showcase__stage.is-highlighting .audit-side-mockup__head,
+  .report-showcase__stage.is-highlighting .audit-side-mockup__score,
+  .report-showcase__stage.is-highlighting .audit-side-mockup__list,
+  .report-showcase__stage.is-highlighting .audit-side-mockup__phone {
+    filter: blur(2px) saturate(.72) !important;
+  }
+}
