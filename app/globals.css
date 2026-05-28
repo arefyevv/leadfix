@@ -4179,16 +4179,21 @@ button { cursor: pointer; }
   color: #4e7bf2 !important;
 }
 
+#audience .card-index {
+  background: #f1f3f7 !important;
+  border-color: rgba(16, 16, 20, .06) !important;
+}
+
 #audience .audience-grid {
   grid-template-columns: 1fr 1fr 1.25fr !important;
-  grid-template-rows: repeat(2, 218px) !important;
+  grid-template-rows: repeat(2, 250px) !important;
   gap: 18px !important;
   align-items: stretch;
 }
 
 #audience .audience-card {
-  height: 218px !important;
-  min-height: 218px !important;
+  height: 250px !important;
+  min-height: 250px !important;
   background: #ffffff !important;
   border-color: rgba(16, 16, 20, .08) !important;
   box-shadow: none !important;
@@ -4256,7 +4261,7 @@ button { cursor: pointer; }
 
 #audience .audience-note h3 {
   margin: 0;
-  color: #4e7bf2;
+  color: var(--dark-ink);
   font-size: 18px;
   line-height: 1.1;
   font-weight: 600;
@@ -4288,7 +4293,7 @@ button { cursor: pointer; }
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background: #4e7bf2;
+  background: var(--accent);
 }
 
 #audience .audience-note li::after {
@@ -4324,7 +4329,7 @@ button { cursor: pointer; }
   }
 
   #audience .audience-card {
-    height: 218px !important;
+    height: 250px !important;
   }
 
   #audience .audience-note {
