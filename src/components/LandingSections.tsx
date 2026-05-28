@@ -135,6 +135,14 @@ export function LandingSections() {
         </div>
       </section>
 
+      <section className="landing-section scenario-text-section">
+        <div className="scenario-text-list">
+          {scenarios.map(([, text]) => (
+            <p key={text}>{text}</p>
+          ))}
+        </div>
+      </section>
+
       <section className="landing-section" id="audit-checks">
         <div className="section-kicker">Что проверяет аудит</div>
         <div className="section-head">
