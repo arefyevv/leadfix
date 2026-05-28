@@ -9,6 +9,15 @@ const audiences = [
   ["Веб-студиям", "Использовать аудит как входной продукт перед доработкой сайта или редизайном."]
 ];
 
+const audienceUseCases = [
+  "Проверить посадочную страницу до того, как бюджет начнет сливать заявки.",
+  "Понять, какие блоки реально мешают конверсии, а не менять сайт вслепую.",
+  "Показать клиенту конкретные причины, почему текущий сайт просит улучшений.",
+  "Быстро найти очевидные проблемы в оффере, CTA, доверии и мобильной версии.",
+  "Проверить типовые ошибки лендинга без долгой ручной экспертизы.",
+  "Получить понятный список задач для дизайнера, маркетолога или разработчика."
+];
+
 const auditChecks = [
   {
     title: "Оффер и первый экран",
@@ -126,12 +135,17 @@ export function LandingSections() {
         </div>
         <div className="audience-grid">
           {audiences.map(([title, text], index) => (
-            <article className="landing-card audience-card" key={title}>
+            <article className={`landing-card audience-card audience-card--${index + 1}`} key={title}>
               <span className="card-index">{String(index + 1).padStart(2, "0")}</span>
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
           ))}
+          <article className="audience-note" aria-label="Сценарии использования">
+            {audienceUseCases.map((text) => (
+              <p key={text}>{text}</p>
+            ))}
+          </article>
         </div>
       </section>
 

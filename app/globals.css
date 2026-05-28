@@ -4172,3 +4172,108 @@ button { cursor: pointer; }
     grid-template-columns: 1fr;
   }
 }
+
+/* Audience section final layout. */
+#audience .section-kicker,
+#audience .card-index {
+  color: #4e7bf2 !important;
+}
+
+#audience .audience-grid {
+  grid-template-columns: 1fr 1fr 1.25fr !important;
+  grid-template-rows: repeat(2, minmax(214px, auto)) !important;
+  gap: 18px !important;
+  align-items: stretch;
+}
+
+#audience .audience-card {
+  min-height: 214px !important;
+  background: #ffffff !important;
+  border-color: rgba(16, 16, 20, .08) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: border-color .18s ease, background-color .18s ease !important;
+}
+
+#audience .audience-card:hover {
+  background: #ffffff !important;
+  border-color: rgba(78, 123, 242, .26) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#audience .audience-card::after {
+  display: none !important;
+}
+
+#audience .audience-card--1 {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+
+#audience .audience-card--2 {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+
+#audience .audience-card--3 {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+}
+
+#audience .audience-card--4 {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+}
+
+#audience .audience-note {
+  grid-column: 3 !important;
+  grid-row: 1 / span 2 !important;
+  min-height: 100%;
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 34px);
+  background: #ffffff;
+  border: 1px solid rgba(16, 16, 20, .08);
+  border-radius: 28px;
+  box-shadow: none;
+}
+
+#audience .audience-note p {
+  margin: 0;
+  color: rgba(16, 16, 20, .66);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.scenario-text-section {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  #audience .audience-grid {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto !important;
+  }
+
+  #audience .audience-card,
+  #audience .audience-card--1,
+  #audience .audience-card--2,
+  #audience .audience-card--3,
+  #audience .audience-card--4,
+  #audience .audience-note {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  #audience .audience-note {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #audience .audience-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
