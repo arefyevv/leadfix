@@ -142,9 +142,12 @@ export function LandingSections() {
             </article>
           ))}
           <article className="audience-note" aria-label="Сценарии использования">
-            {audienceUseCases.map((text) => (
-              <p key={text}>{text}</p>
-            ))}
+            <h3>Сценарии</h3>
+            <ul>
+              {audienceUseCases.map((text) => (
+                <li key={text}>{text}</li>
+              ))}
+            </ul>
           </article>
         </div>
       </section>
