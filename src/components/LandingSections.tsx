@@ -207,7 +207,6 @@ export function LandingSections() {
                   className="audit-accordion__item"
                   key={item.title}
                   open={isOpen}
-                  onMouseEnter={() => setOpenAuditIndex(index)}
                 >
                   <summary
                     onClick={(event) => {
