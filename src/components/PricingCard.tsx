@@ -18,7 +18,7 @@ export function PricingCard({ plan, selected, onSelect }: PricingCardProps) {
     >
       {plan.recommended && <span className="pricing-card__badge">Оптимальный выбор</span>}
       <span className="pricing-card__icon" aria-hidden="true">
-        LF
+        <img src="/leadfix-logo.png" alt="" />
       </span>
       <h3>{plan.name}</h3>
       <strong>{plan.price}</strong>

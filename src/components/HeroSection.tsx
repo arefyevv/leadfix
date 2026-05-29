@@ -55,8 +55,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
         </button>
 
         <a className="laptop-logo" href="#audit" aria-label="LeadFix" onClick={closeMobileMenu}>
-          <span>LF</span>
-          <b>LeadFix</b>
+          <img src="/leadfix-logo.png" alt="LeadFix" />
         </a>
 
         <nav className="laptop-menu" aria-label="Основная навигация">
@@ -119,8 +118,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="laptop-dashboard" aria-hidden="true">
             <aside className="dashboard-sidebar">
               <div className="dashboard-brand">
-                <span>LF</span>
-                <b>LeadFix</b>
+                <img src="/leadfix-logo.png" alt="LeadFix" />
               </div>
               <small>Main Menu</small>
               <p className="is-selected">Dashboard</p>

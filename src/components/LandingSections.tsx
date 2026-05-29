@@ -271,7 +271,7 @@ export function LandingSections() {
 
       <footer className="leadfix-footer">
         <div className="leadfix-footer__brand">
-          <span>LF</span>
+          <img src="/leadfix-logo.png" alt="LeadFix" />
           <div>
             <strong>LeadFix</strong>
             <p>AI-аудитор продающей способности сайтов</p>

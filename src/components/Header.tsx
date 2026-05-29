@@ -30,7 +30,7 @@ export function Header({ onAuditClick }: HeaderProps) {
     <header className={`header ${scrolled || menuOpen ? "is-scrolled" : ""}`}>
       <div className="brand">
         <button className="logo" type="button" onClick={handleAuditClick}>
-          LeadFix
+          <img src="/leadfix-logo.png" alt="LeadFix" />
         </button>
         <span className="brand__descriptor">Аудитор продающей способности сайтов</span>
       </div>
