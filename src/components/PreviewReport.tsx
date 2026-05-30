@@ -15,11 +15,11 @@ type Category = {
 };
 
 const lockedSections = [
-  "Подробный анализ оффера",
-  "Рекомендации по CTA",
+  "Подробный анализ главного предложения",
+  "Рекомендации по кнопкам действия",
   "Анализ доверия",
   "Рекомендации по формам",
-  "Mobile UX",
+  "Мобильная версия",
   "Roadmap исправлений",
   "PDF-версия отчёта"
 ];
@@ -37,7 +37,7 @@ function getSummary(analysis: AuditAnalysis) {
   const firstIssue = previewReport.insights[0]?.title.toLocaleLowerCase("ru-RU");
 
   if (issuesCount === 0) {
-    return "Базовые элементы продающей страницы присутствуют: явных критичных ошибок в HTML не найдено. Следующий шаг: проверить визуальную и мобильную версии, и убедиться, что оффер достаточно конкретен для вашей аудитории.";
+    return "Базовые элементы продающей страницы присутствуют: явных критичных ошибок в коде страницы не найдено. Следующий шаг: проверить визуальную и мобильную версии, и убедиться, что главное предложение достаточно конкретно для вашей аудитории.";
   }
 
   const opening =
@@ -79,7 +79,7 @@ function getManualCheck(insight: AuditInsight) {
 
   if (title.includes("cta") || title.includes("призыв")) return "Видна ли основная кнопка на первом экране и понятен ли результат клика.";
   if (title.includes("форм") || title.includes("контакт")) return "Можно ли оставить заявку за 30 секунд с телефона.";
-  if (title.includes("довер")) return "Есть ли рядом с CTA реальные кейсы, отзывы, цифры или гарантии.";
+  if (title.includes("довер")) return "Есть ли рядом с основной кнопкой реальные кейсы, отзывы, цифры или гарантии.";
   if (title.includes("h1") || title.includes("title")) return "Понятны ли за 5 секунд услуга, аудитория и основная выгода.";
   if (title.includes("текст") || title.includes("description")) return "Отвечает ли страница на главные вопросы клиента до формы.";
   return "Проверьте элемент на мобильном и десктопном экранах глазами нового посетителя.";
@@ -90,12 +90,12 @@ function getCategories(analysis: AuditAnalysis): Category[] {
 
   return [
     {
-      name: "Оффер",
+      name: "Главное предложение",
       status: analysis.h1.length > 0 ? "Хорошо" : "Критично",
-      comment: analysis.h1.length > 0 ? "Главный заголовок найден. Его конкретику нужно оценить вручную." : "На странице не найден H1 с главным предложением."
+      comment: analysis.h1.length > 0 ? "Главный заголовок найден. Его конкретику нужно оценить вручную." : "На странице не найден главный заголовок с предложением."
     },
     {
-      name: "CTA",
+      name: "Кнопки действия",
       status: analysis.ctaSignals.length > 0 ? "Хорошо" : "Критично",
       comment: analysis.ctaSignals.length > 0 ? "Найдены явные призывы к действию." : "Не найден понятный призыв к следующему шагу."
     },
@@ -112,7 +112,7 @@ function getCategories(analysis: AuditAnalysis): Category[] {
     {
       name: "Мобильная версия",
       status: "Требует внимания",
-      comment: "Требуется ручная проверка адаптации, читаемости и доступности CTA."
+      comment: "Требуется ручная проверка адаптации, читаемости и доступности основной кнопки."
     },
     {
       name: "Структура",
@@ -137,7 +137,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
       <div className="report__inner preview-report__inner">
         <header className="preview-report__header">
           <div>
-            <p className="preview-report__eyebrow">LeadFix Preview Report</p>
+            <p className="preview-report__eyebrow">Краткий отчёт LeadFix</p>
             <h1>Предварительный аудит сайта</h1>
             <p>Это краткая версия отчёта. Полные рекомендации доступны после оплаты.</p>
           </div>
@@ -154,7 +154,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
           <div className="preview-score__comment">
             <span className="preview-score__status">{getScoreInterpretation(previewReport.score)}</span>
-            <p>Оценка собрана по базовым HTML-сигналам: офферу, CTA, контактам, доверию и структуре контента.</p>
+            <p>Оценка собрана по базовым элементам страницы: главному предложению, кнопкам действия, контактам, доверию и структуре текста.</p>
           </div>
           <div className="preview-score__metrics">
             <div><strong>{previewReport.criticalIssues}</strong><span>Критично</span></div>
@@ -164,7 +164,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
         </section>
 
         <section className="preview-report__section preview-summary">
-          <p className="preview-report__eyebrow">Executive Summary</p>
+          <p className="preview-report__eyebrow">Краткий вывод</p>
           <h2>Что важно исправить в первую очередь</h2>
           <p>{getSummary(analysis)}</p>
         </section>
@@ -200,7 +200,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           ) : (
             <div className="preview-empty">
               <h3>Базовые ошибки не найдены</h3>
-              <p>Для точной оценки оффера, визуальной и мобильной версии нужна расширенная проверка.</p>
+              <p>Для точной оценки главного предложения, визуальной и мобильной версии нужна расширенная проверка.</p>
             </div>
           )}
         </section>
@@ -222,7 +222,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
                   </span>
                 </div>
                 <p>{category.comment}</p>
-                <span className="preview-category__locked-score">Score категории: доступно в полном отчёте</span>
+                <span className="preview-category__locked-score">Оценка категории: доступно в полном отчёте</span>
               </article>
             ))}
           </div>
