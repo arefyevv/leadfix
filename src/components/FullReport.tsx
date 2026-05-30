@@ -1,7 +1,7 @@
-import type { MockAnalysis } from "./types";
+import type { AuditAnalysis } from "@/types/audit";
 
 type FullReportProps = {
-  analysis: MockAnalysis;
+  analysis: AuditAnalysis;
   reportDate: string;
 };
 
@@ -32,9 +32,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
         <section className="report-block">
           <h3>Summary</h3>
           <div className="summary-grid">
-            <div className="summary-card"><strong>61/100</strong><span>Общая оценка</span></div>
+            <div className="summary-card"><strong>{analysis.previewReport.score}/100</strong><span>Общая оценка</span></div>
             <div className="summary-card"><strong>+32%</strong><span>Потенциал роста</span></div>
-            <div className="summary-card"><strong>2</strong><span>Критичных проблем</span></div>
+            <div className="summary-card"><strong>{analysis.previewReport.criticalIssues}</strong><span>Критичных проблем</span></div>
             <div className="summary-card"><strong>4</strong><span>Quick wins</span></div>
           </div>
         </section>

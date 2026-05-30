@@ -8,7 +8,8 @@ import { HeroSection } from "@/components/HeroSection";
 import { LandingSections } from "@/components/LandingSections";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PreviewReport } from "@/components/PreviewReport";
-import type { MockAnalysis, Screen } from "@/components/types";
+import type { Screen } from "@/components/types";
+import type { AnalyzeResponse, AuditAnalysis } from "@/types/audit";
 
 const loadingSteps = [
   "Открываем сайт",
@@ -26,24 +27,10 @@ function normalizeClientUrl(value: string) {
   return new URL(withProtocol).href;
 }
 
-function createMockAnalysis(url: string): MockAnalysis {
-  return {
-    url,
-    title: "Mock analyzed page",
-    description: "Mock conversion audit data",
-    h1: "Найдём, где ваш сайт теряет заявки.",
-    heroText: "AI + правила конверсии: за 5 минут найдём слабый оффер, CTA, доверие, формы и мобильные проблемы.",
-    buttons: ["Найти проблемы", "Получить полный аудит"],
-    hasForm: true,
-    desktopScreenshot: "",
-    mobileScreenshot: ""
-  };
-}
-
 export default function LeadFixPage() {
   const [screen, setScreen] = useState<Screen>("hero");
   const [urlInput, setUrlInput] = useState("");
-  const [analysis, setAnalysis] = useState<MockAnalysis | null>(null);
+  const [analysis, setAnalysis] = useState<AuditAnalysis | null>(null);
   const [error, setError] = useState("");
   const [loadingIndex, setLoadingIndex] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState("Стандарт");
@@ -60,7 +47,7 @@ export default function LeadFixPage() {
     }).format(new Date());
   }, []);
 
-  function handleHeroSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleHeroSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setLoadingIndex(0);
@@ -75,19 +62,41 @@ export default function LeadFixPage() {
     }
 
     setUrlInput(normalizedUrl);
-    setAnalysis(createMockAnalysis(normalizedUrl));
+    setAnalysis(null);
     setScreen("loading");
 
     let index = 0;
     const timer = window.setInterval(() => {
       index += 1;
       setLoadingIndex(Math.min(index, loadingSteps.length - 1));
-
-      if (index >= loadingSteps.length - 1) {
-        window.clearInterval(timer);
-        window.setTimeout(() => setScreen("preview"), 650);
-      }
     }, 850);
+
+    try {
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: normalizedUrl })
+      });
+      const data = (await response.json()) as AnalyzeResponse | { error?: string };
+
+      if (!response.ok || !("analysis" in data)) {
+        throw new Error("error" in data ? data.error : undefined);
+      }
+
+      setLoadingIndex(loadingSteps.length - 1);
+      setUrlInput(data.analysis.url);
+      setAnalysis(data.analysis);
+      setScreen("preview");
+    } catch (requestError) {
+      setScreen("hero");
+      setError(
+        requestError instanceof Error && requestError.message
+          ? requestError.message
+          : "Не удалось открыть сайт. Проверьте адрес или попробуйте позже."
+      );
+    } finally {
+      window.clearInterval(timer);
+    }
   }
 
   function resetAudit() {
