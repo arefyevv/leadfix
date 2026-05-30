@@ -1408,6 +1408,23 @@ button { cursor: pointer; }
   margin-left: auto;
   font-size: 17px;
 }
+.route-error {
+  gap: 16px;
+  max-width: 720px;
+}
+.route-error h1,
+.route-error p {
+  margin: 0;
+}
+.route-error h1 {
+  color: var(--ink);
+  font-size: clamp(36px, 6vw, 62px);
+  line-height: 1;
+}
+.route-error p {
+  color: var(--muted);
+  line-height: 1.55;
+}
 
 @media (max-width: 980px) {
   .preview-score { grid-template-columns: minmax(220px, .7fr) 1fr; }
