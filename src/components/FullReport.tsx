@@ -153,157 +153,155 @@ function getDetailedIssues(analysis: AuditAnalysis): DetailedIssue[] {
 export function FullReport({ analysis, reportDate }: FullReportProps) {
   const categories = getCategories(analysis);
   const detailedIssues = getDetailedIssues(analysis);
+  const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
 
   return (
     <section className="full-report full-audit screen">
-      <div className="full-report__inner full-audit__inner">
-        <header className="full-audit__header">
-          <div>
+      <div className="full-report__inner full-audit__layout">
+        <aside className="full-audit-sidebar">
+          <section className="full-audit-sidebar__site">
             <p className="full-audit__eyebrow">Полный отчёт LeadFix</p>
-            <h1>Полный аудит продающей способности</h1>
-            <p>Приоритеты исправлений и рекомендации для дизайнера, маркетолога или подрядчика.</p>
-            <div className="full-audit__details">
-              <div><b>Дата аудита</b><span>{reportDate}</span></div>
-              <div><b>Сайт</b><span>{analysis.url}</span></div>
-              <div><b>Ниша</b><span>Не определена</span></div>
+            <h1>Аудит сайта</h1>
+            <div className="full-audit-sidebar__meta">
+              <div><span>Дата аудита</span><b>{reportDate}</b></div>
+              <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
+              <div><span>H1 сайта</span><b>{siteHeading}</b></div>
             </div>
-          </div>
-          <div className="full-audit__header-actions">
-            <button className="pdf-button" type="button">Скачать PDF</button>
-            <button className="telegram-button" type="button">Отправить в Telegram</button>
-          </div>
-        </header>
+            <div className="full-audit-sidebar__actions">
+              <button className="pdf-button" type="button">Скачать PDF</button>
+              <button className="telegram-button" type="button">Отправить в Telegram</button>
+            </div>
+          </section>
 
-        <section className="full-audit__score">
-          <div>
-            <p className="full-audit__eyebrow">Итоговая оценка</p>
+          <section className="full-audit-sidebar__score">
+            <p className="full-audit__eyebrow">Общая оценка</p>
             <strong>{analysis.previewReport.score}<small>/100</small></strong>
-          </div>
-          <div>
             <h2>{getScoreLabel(analysis.previewReport.score)}</h2>
             <p>{getSummary(analysis)}</p>
-          </div>
-          <dl>
-            <div><dt>Критично</dt><dd>{analysis.previewReport.criticalIssues}</dd></div>
-            <div><dt>Важно</dt><dd>{analysis.previewReport.mediumIssues}</dd></div>
-            <div><dt>Быстрые правки</dt><dd>{quickWins.length}</dd></div>
-          </dl>
-        </section>
+            <dl>
+              <div><dt>Критично</dt><dd>{analysis.previewReport.criticalIssues}</dd></div>
+              <div><dt>Важно</dt><dd>{analysis.previewReport.mediumIssues}</dd></div>
+              <div><dt>Quick wins</dt><dd>{quickWins.length}</dd></div>
+            </dl>
+          </section>
+        </aside>
 
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Краткий вывод" title="Главный вывод" />
-          <div className="full-audit__summary">
-            <p>{getSummary(analysis)}</p>
-            <div>
-              <b>Первый приоритет</b>
-              <span>Усилить главное предложение и первую кнопку действия, затем добавить доказательства результата перед формой.</span>
+        <main className="full-audit-content">
+          <header className="full-audit-content__hero">
+            <p className="full-audit__eyebrow">Аудит продающей способности</p>
+            <h2>Что мешает сайту приносить больше заявок</h2>
+            <p>Разбор ключевых точек потери конверсии и последовательный план исправлений.</p>
+            <div className="full-audit-content__hero-metrics">
+              <div><span>Первый приоритет</span><b>Оффер и CTA</b></div>
+              <div><span>Потенциал роста</span><b>+32%</b></div>
+              <div><span>План внедрения</span><b>7–14 дней</b></div>
             </div>
-          </div>
-        </section>
+          </header>
 
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Порядок работ" title="Приоритетный план исправлений" />
-          <div className="full-audit__priority-grid">
-            <PriorityColumn label="01 / Сначала" tone="critical" items={["Главное предложение первого экрана", "Основная кнопка и следующий шаг", "Доступность формы или контактов"]} />
-            <PriorityColumn label="02 / Затем" tone="attention" items={["Кейсы и цифры результата", "Отзывы рядом с точкой решения", "Сценарий мобильной заявки"]} />
-            <PriorityColumn label="03 / После" tone="good" items={["Дополнительные кнопки по странице", "Заголовок и описание для поисковиков", "Сравнительный тест формулировок"]} />
-          </div>
-        </section>
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Порядок работ" title="Карта приоритетов" />
+            <div className="full-audit__priority-grid">
+              <PriorityColumn label="01 / Сначала" tone="critical" items={["Главное предложение первого экрана", "Основная кнопка и следующий шаг", "Доступность формы или контактов"]} />
+              <PriorityColumn label="02 / Затем" tone="attention" items={["Кейсы и цифры результата", "Отзывы рядом с точкой решения", "Сценарий мобильной заявки"]} />
+              <PriorityColumn label="03 / После" tone="good" items={["Дополнительные кнопки по странице", "Заголовок и описание для поисковиков", "Сравнительный тест формулировок"]} />
+            </div>
+          </section>
 
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Разбор сайта" title="Разбор по категориям" />
-          <div className="full-audit__categories">
-            {categories.map((category) => (
-              <article className="full-audit-category" key={category.title}>
-                <div className="full-audit-category__top">
-                  <h3>{category.title}</h3>
-                  <strong>{category.score}<small>/100</small></strong>
-                </div>
-                <span className={`full-audit__status status-${category.status === "Хорошо" ? "good" : category.status === "Критично" ? "critical" : "attention"}`}>{category.status}</span>
-                <p>{category.summary}</p>
-                <ul>{category.findings.map((finding) => <li key={finding}>{finding}</li>)}</ul>
-                <div className="full-audit-category__recommendation"><b>Рекомендация</b><span>{category.recommendation}</span></div>
-              </article>
-            ))}
-          </div>
-        </section>
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Разбор сайта" title="Разбор по категориям" />
+            <div className="full-audit__categories">
+              {categories.map((category) => (
+                <article className="full-audit-category" key={category.title}>
+                  <div className="full-audit-category__top">
+                    <h3>{category.title}</h3>
+                    <strong>{category.score}<small>/100</small></strong>
+                  </div>
+                  <span className={`full-audit__status status-${category.status === "Хорошо" ? "good" : category.status === "Критично" ? "critical" : "attention"}`}>{category.status}</span>
+                  <p>{category.summary}</p>
+                  <ul>{category.findings.map((finding) => <li key={finding}>{finding}</li>)}</ul>
+                  <div className="full-audit-category__recommendation"><b>Рекомендация</b><span>{category.recommendation}</span></div>
+                </article>
+              ))}
+            </div>
+          </section>
 
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Подробные замечания" title="Ключевые проблемы" />
-          <div className="full-audit__issues">
-            {detailedIssues.map((issue, index) => (
-              <article className={issue.priority === "Критично" ? "full-audit-issue is-critical" : "full-audit-issue"} key={`${issue.title}-${index}`}>
-                <div className="full-audit-issue__index">{String(index + 1).padStart(2, "0")}</div>
-                <div className="full-audit-issue__body">
-                  <div className="full-audit-issue__head">
-                    <div>
-                      <span>{issue.category}</span>
-                      <h3>{issue.title}</h3>
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Подробные замечания" title="Ключевые проблемы" />
+            <div className="full-audit__issues">
+              {detailedIssues.map((issue, index) => (
+                <article className={issue.priority === "Критично" ? "full-audit-issue is-critical" : "full-audit-issue"} key={`${issue.title}-${index}`}>
+                  <div className="full-audit-issue__index">{String(index + 1).padStart(2, "0")}</div>
+                  <div className="full-audit-issue__body">
+                    <div className="full-audit-issue__head">
+                      <div>
+                        <span>{issue.category}</span>
+                        <h3>{issue.title}</h3>
+                      </div>
+                      <b>{issue.priority}</b>
                     </div>
-                    <b>{issue.priority}</b>
+                    <div className="full-audit-issue__grid">
+                      <div><b>Что не так</b><p>{issue.problem}</p></div>
+                      <div><b>Почему влияет на заявки</b><p>{issue.impact}</p></div>
+                      <div><b>Что исправить</b><p>{issue.fix}</p></div>
+                      <div><b>Пример улучшения</b><p>{issue.example}</p></div>
+                    </div>
                   </div>
-                  <div className="full-audit-issue__grid">
-                    <div><b>Что не так</b><p>{issue.problem}</p></div>
-                    <div><b>Почему влияет на заявки</b><p>{issue.impact}</p></div>
-                    <div><b>Что исправить</b><p>{issue.fix}</p></div>
-                    <div><b>Пример улучшения</b><p>{issue.example}</p></div>
-                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Быстрые правки" title="Что можно улучшить за 1 день" />
+            <div className="full-audit__quick-wins">
+              {quickWins.map((item, index) => <div key={item}><strong>{String(index + 1).padStart(2, "0")}</strong><span>{item}</span></div>)}
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Мобильная версия" title="Проверка мобильного сценария" />
+            <div className="full-audit__mobile">
+              <div className="phone-preview" aria-label="Схема мобильной версии">
+                <div className="phone-screen">
+                  <div className="phone-line" />
+                  <div className="phone-line phone-line--short" />
+                  <div className="phone-line" />
+                  <div className="phone-cta" />
+                  <div className="phone-line" />
+                  <div className="phone-line phone-line--short" />
                 </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Быстрые правки" title="Что можно улучшить за 1 день" />
-          <div className="full-audit__quick-wins">
-            {quickWins.map((item, index) => <div key={item}><strong>{String(index + 1).padStart(2, "0")}</strong><span>{item}</span></div>)}
-          </div>
-        </section>
-
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="Мобильная версия" title="Проверка мобильного сценария" />
-          <div className="full-audit__mobile">
-            <div className="phone-preview" aria-label="Схема мобильной версии">
-              <div className="phone-screen">
-                <div className="phone-line" />
-                <div className="phone-line phone-line--short" />
-                <div className="phone-line" />
-                <div className="phone-cta" />
-                <div className="phone-line" />
-                <div className="phone-line phone-line--short" />
+              </div>
+              <div>
+                <p>Автоматическая проверка кода страницы не заменяет визуальную проверку адаптива. Перед запуском рекламы вручную пройдите путь заявки на телефоне.</p>
+                <ul>
+                  <li>Проверьте первый экран на ширине 360 пикселей.</li>
+                  <li>Убедитесь, что основная кнопка видна без лишней прокрутки.</li>
+                  <li>Проверьте размеры кнопок и удобство полей формы.</li>
+                  <li>Убедитесь, что контакты доступны в один клик.</li>
+                </ul>
               </div>
             </div>
-            <div>
-              <p>Автоматическая проверка кода страницы не заменяет визуальную проверку адаптива. Перед запуском рекламы вручную пройдите путь заявки на телефоне.</p>
-              <ul>
-                <li>Проверьте первый экран на ширине 360 пикселей.</li>
-                <li>Убедитесь, что основная кнопка видна без лишней прокрутки.</li>
-                <li>Проверьте размеры кнопок и удобство полей формы.</li>
-                <li>Убедитесь, что контакты доступны в один клик.</li>
-              </ul>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="План внедрения" title="План работ на 7–14 дней" />
+            <div className="full-audit__timeline">
+              {implementationPlan.map(([period, title, description]) => (
+                <article key={period}><strong>{period}</strong><h3>{title}</h3><p>{description}</p></article>
+              ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="full-audit__section">
-          <SectionHeading eyebrow="План внедрения" title="План работ на 7–14 дней" />
-          <div className="full-audit__timeline">
-            {implementationPlan.map(([period, title, description]) => (
-              <article key={period}><strong>{period}</strong><h3>{title}</h3><p>{description}</p></article>
-            ))}
-          </div>
-        </section>
-
-        <section className="full-audit__cta">
-          <p className="full-audit__eyebrow">Внедрение</p>
-          <h2>Нужна помощь с исправлениями?</h2>
-          <p>Передайте отчёт вашей команде или закажите доработку сайта по готовому плану.</p>
-          <div className="final-cta__actions">
-            <button className="report-button report-button--primary" type="button">Заказать доработку сайта</button>
-            <button className="report-button report-button--secondary" type="button">Получить консультацию</button>
-          </div>
-        </section>
+          <section className="full-audit__cta">
+            <p className="full-audit__eyebrow">Внедрение</p>
+            <h2>Нужна помощь с исправлениями?</h2>
+            <p>Передайте отчёт вашей команде или закажите доработку сайта по готовому плану.</p>
+            <div className="final-cta__actions">
+              <button className="report-button report-button--primary" type="button">Заказать доработку сайта</button>
+              <button className="report-button report-button--secondary" type="button">Получить консультацию</button>
+            </div>
+          </section>
+        </main>
       </div>
     </section>
   );
