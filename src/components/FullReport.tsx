@@ -33,13 +33,6 @@ const quickWins = [
   "Сократить форму до минимального набора полей"
 ];
 
-const implementationPlan = [
-  ["День 1", "Быстрые правки", "Главное предложение, кнопка действия, пояснения и порядок блоков первого экрана."],
-  ["Дни 2–4", "Доверие и формы", "Кейсы, цифры, отзывы, гарантии и упрощение заявки."],
-  ["Дни 5–7", "Мобильная версия", "Проверка адаптива, размеров кнопок и доступности контактов."],
-  ["Дни 8–14", "Тестирование", "Запуск трафика, замер конверсии и итерация по данным."]
-];
-
 function getScoreLabel(score: number) {
   if (score <= 40) return "Слабая продающая способность";
   if (score <= 70) return "Есть точки потери заявок";
@@ -180,7 +173,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <div className="full-audit-content__hero-metrics">
               <div><span>Первый приоритет</span><b>Оффер и CTA</b></div>
               <div><span>Потенциал роста</span><b>+32%</b></div>
-              <div><span>План внедрения</span><b>7–14 дней</b></div>
             </div>
           </header>
 
@@ -269,24 +261,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </section>
 
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="План внедрения" title="План работ на 7–14 дней" />
-            <div className="full-audit__timeline">
-              {implementationPlan.map(([period, title, description]) => (
-                <article key={period}><strong>{period}</strong><h3>{title}</h3><p>{description}</p></article>
-              ))}
-            </div>
-          </section>
-
-          <section className="full-audit__cta">
-            <p className="full-audit__eyebrow">Внедрение</p>
-            <h2>Нужна помощь с исправлениями?</h2>
-            <p>Передайте отчёт вашей команде или закажите доработку сайта по готовому плану.</p>
-            <div className="final-cta__actions">
-              <button className="report-button report-button--primary" type="button">Заказать доработку сайта</button>
-              <button className="report-button report-button--secondary" type="button">Получить консультацию</button>
-            </div>
-          </section>
         </main>
       </div>
     </section>
