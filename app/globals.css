@@ -6390,6 +6390,7 @@ button { cursor: pointer; }
   gap: 14px;
 }
 .full-audit-content__hero,
+.full-audit-content__score,
 .full-audit-content .full-audit__section,
 .full-audit-content .full-audit__cta {
   width: 100%;
@@ -6407,6 +6408,59 @@ button { cursor: pointer; }
   background:
     radial-gradient(circle at 92% 12%, rgba(78, 215, 161, .24), transparent 28%),
     linear-gradient(135deg, rgba(13, 51, 98, .96), rgba(17, 67, 129, .94));
+}
+.full-audit-content__score {
+  display: grid;
+  grid-template-columns: minmax(170px, .55fr) minmax(260px, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+}
+.full-audit-content__score strong {
+  display: block;
+  color: #248b63;
+  font-size: clamp(72px, 8vw, 104px);
+  line-height: .88;
+  letter-spacing: -.08em;
+}
+.full-audit-content__score strong small {
+  color: #93a1b3;
+  font-size: .28em;
+  letter-spacing: -.04em;
+}
+.full-audit-content__score h2 {
+  margin: 0;
+  color: #16233d;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.04;
+}
+.full-audit-content__score p:not(.full-audit__eyebrow) {
+  margin: 10px 0 0;
+  color: #69758d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.full-audit-content__score dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(78px, 1fr));
+  gap: 7px;
+  margin: 0;
+}
+.full-audit-content__score dl div {
+  min-height: 90px;
+  padding: 12px;
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+.full-audit-content__score dt {
+  color: #7b8799;
+  font-size: 11px;
+}
+.full-audit-content__score dd {
+  margin: 8px 0 0;
+  color: #16233d;
+  font-size: 30px;
+  font-weight: 800;
 }
 .full-audit-content__hero h2 {
   max-width: 760px;
@@ -6517,7 +6571,13 @@ button { cursor: pointer; }
   }
   .full-audit-sidebar {
     position: static;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, .9fr);
+    display: block;
+  }
+  .full-audit-content__score {
+    grid-template-columns: minmax(170px, .55fr) minmax(260px, 1fr);
+  }
+  .full-audit-content__score dl {
+    grid-column: 1 / -1;
   }
 }
 
@@ -6531,6 +6591,7 @@ button { cursor: pointer; }
   .full-audit-sidebar__site,
   .full-audit-sidebar__score,
   .full-audit-content__hero,
+  .full-audit-content__score,
   .full-audit-content .full-audit__section,
   .full-audit-content .full-audit__cta {
     padding: 20px;
@@ -6541,5 +6602,11 @@ button { cursor: pointer; }
   }
   .full-audit-content__hero-metrics {
     grid-template-columns: 1fr;
+  }
+  .full-audit-content__score {
+    grid-template-columns: 1fr;
+  }
+  .full-audit-content__score dl {
+    grid-column: auto;
   }
 }

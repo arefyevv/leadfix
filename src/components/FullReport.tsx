@@ -160,8 +160,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
       <div className="full-report__inner full-audit__layout">
         <aside className="full-audit-sidebar">
           <section className="full-audit-sidebar__site">
-            <p className="full-audit__eyebrow">Полный отчёт LeadFix</p>
-            <h1>Аудит сайта</h1>
             <div className="full-audit-sidebar__meta">
               <div><span>Дата аудита</span><b>{reportDate}</b></div>
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
@@ -171,18 +169,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <button className="pdf-button" type="button">Скачать PDF</button>
               <button className="telegram-button" type="button">Отправить в Telegram</button>
             </div>
-          </section>
-
-          <section className="full-audit-sidebar__score">
-            <p className="full-audit__eyebrow">Общая оценка</p>
-            <strong>{analysis.previewReport.score}<small>/100</small></strong>
-            <h2>{getScoreLabel(analysis.previewReport.score)}</h2>
-            <p>{getSummary(analysis)}</p>
-            <dl>
-              <div><dt>Критично</dt><dd>{analysis.previewReport.criticalIssues}</dd></div>
-              <div><dt>Важно</dt><dd>{analysis.previewReport.mediumIssues}</dd></div>
-              <div><dt>Quick wins</dt><dd>{quickWins.length}</dd></div>
-            </dl>
           </section>
         </aside>
 
@@ -198,13 +184,20 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </header>
 
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Порядок работ" title="Карта приоритетов" />
-            <div className="full-audit__priority-grid">
-              <PriorityColumn label="01 / Сначала" tone="critical" items={["Главное предложение первого экрана", "Основная кнопка и следующий шаг", "Доступность формы или контактов"]} />
-              <PriorityColumn label="02 / Затем" tone="attention" items={["Кейсы и цифры результата", "Отзывы рядом с точкой решения", "Сценарий мобильной заявки"]} />
-              <PriorityColumn label="03 / После" tone="good" items={["Дополнительные кнопки по странице", "Заголовок и описание для поисковиков", "Сравнительный тест формулировок"]} />
+          <section className="full-audit-content__score">
+            <div>
+              <p className="full-audit__eyebrow">Общая оценка</p>
+              <strong>{analysis.previewReport.score}<small>/100</small></strong>
             </div>
+            <div>
+              <h2>{getScoreLabel(analysis.previewReport.score)}</h2>
+              <p>{getSummary(analysis)}</p>
+            </div>
+            <dl>
+              <div><dt>Критично</dt><dd>{analysis.previewReport.criticalIssues}</dd></div>
+              <div><dt>Важно</dt><dd>{analysis.previewReport.mediumIssues}</dd></div>
+              <div><dt>Quick wins</dt><dd>{quickWins.length}</dd></div>
+            </dl>
           </section>
 
           <section className="full-audit__section">
@@ -248,13 +241,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                   </div>
                 </article>
               ))}
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Быстрые правки" title="Что можно улучшить за 1 день" />
-            <div className="full-audit__quick-wins">
-              {quickWins.map((item, index) => <div key={item}><strong>{String(index + 1).padStart(2, "0")}</strong><span>{item}</span></div>)}
             </div>
           </section>
 
@@ -309,8 +295,4 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return <div className="full-audit__section-heading"><p className="full-audit__eyebrow">{eyebrow}</p><h2>{title}</h2></div>;
-}
-
-function PriorityColumn({ label, items, tone }: { label: string; items: string[]; tone: "critical" | "attention" | "good" }) {
-  return <article className={`full-audit__priority is-${tone}`}><h3>{label}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></article>;
 }

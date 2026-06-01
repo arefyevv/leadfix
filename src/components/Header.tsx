@@ -2,11 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-type HeaderProps = {
-  onAuditClick: () => void;
-};
+const navItems = [
+  { label: "Для кого", href: "/#audience" },
+  { label: "Что проверяем", href: "/#audit-checks" },
+  { label: "Тарифы", href: "/#pricing" },
+  { label: "Пример аудита", href: "/#cases" },
+  { label: "FAQ", href: "/#faq" }
+];
 
-export function Header({ onAuditClick }: HeaderProps) {
+export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -21,25 +25,19 @@ export function Header({ onAuditClick }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function handleAuditClick() {
+  function closeMobileMenu() {
     setMenuOpen(false);
-    onAuditClick();
   }
 
   return (
-    <header className={`header ${scrolled || menuOpen ? "is-scrolled" : ""}`}>
-      <div className="brand">
-        <button className="logo" type="button" onClick={handleAuditClick}>
-          <img src="/leadfix-logo.png" alt="LeadFix" />
-        </button>
-        <span className="brand__descriptor">Аудитор продающей способности сайтов</span>
-      </div>
-
+    <header
+      className={scrolled ? "laptop-nav leadfix-fixed-nav is-scrolled" : "laptop-nav leadfix-fixed-nav"}
+      aria-label="Навигация LeadFix"
+    >
       <button
-        className="menu-toggle"
+        className="mobile-menu-button"
         type="button"
-        aria-label="Открыть меню"
-        aria-controls="site-nav"
+        aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((current) => !current)}
       >
@@ -48,18 +46,29 @@ export function Header({ onAuditClick }: HeaderProps) {
         <span />
       </button>
 
-      <nav className={`nav ${menuOpen ? "is-open" : ""}`} id="site-nav" aria-label="Навигация">
-        <a href="#for" onClick={() => setMenuOpen(false)}>Для кого?</a>
-        <a href="#pricing" onClick={() => setMenuOpen(false)}>Тарифы</a>
-        <a href="#cases" onClick={() => setMenuOpen(false)}>Кейсы</a>
-        <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
-        <button className="nav__audit" type="button" onClick={handleAuditClick}>
-          Проверить сайт
-        </button>
+      <a className="laptop-logo" href="/#audit" aria-label="LeadFix" onClick={closeMobileMenu}>
+        <img src="/leadfix-logo.png" alt="LeadFix" />
+      </a>
+
+      <nav className="laptop-menu" aria-label="Основная навигация">
+        {navItems.map((item, index) => (
+          <a href={item.href} key={item.label} className={index === 0 ? "is-active" : undefined}>
+            {item.label}
+          </a>
+        ))}
       </nav>
-      <button className="header__button" type="button" onClick={handleAuditClick}>
+
+      <a className="laptop-cta" href="/#audit" onClick={closeMobileMenu}>
         Проверить сайт
-      </button>
+      </a>
+
+      <nav className={menuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">
+        {navItems.map((item) => (
+          <a href={item.href} key={item.label} onClick={closeMobileMenu}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }

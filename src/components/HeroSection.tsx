@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
+import { Header } from "@/components/Header";
 
 type HeroSectionProps = {
   url: string;
@@ -9,75 +10,10 @@ type HeroSectionProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-const navItems = [
-  { label: "Для кого", href: "#audience" },
-  { label: "Что проверяем", href: "#audit-checks" },
-  { label: "Тарифы", href: "#pricing" },
-  { label: "Пример аудита", href: "#cases" },
-  { label: "FAQ", href: "#faq" }
-];
-
 export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNavScrolled, setIsNavScrolled] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      setIsNavScrolled(window.scrollY > 24);
-    }
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  function closeMobileMenu() {
-    setIsMenuOpen(false);
-  }
-
   return (
     <>
-      <header
-        className={isNavScrolled ? "laptop-nav leadfix-fixed-nav is-scrolled" : "laptop-nav leadfix-fixed-nav"}
-        aria-label="Навигация LeadFix"
-      >
-        <button
-          className="mobile-menu-button"
-          type="button"
-          aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen((current) => !current)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-
-        <a className="laptop-logo" href="#audit" aria-label="LeadFix" onClick={closeMobileMenu}>
-          <img src="/leadfix-logo.png" alt="LeadFix" />
-        </a>
-
-        <nav className="laptop-menu" aria-label="Основная навигация">
-          {navItems.map((item, index) => (
-            <a href={item.href} key={item.label} className={index === 0 ? "is-active" : undefined}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <a className="laptop-cta" href="#audit" onClick={closeMobileMenu}>
-          Проверить сайт
-        </a>
-
-        <nav className={isMenuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">
-          {navItems.map((item) => (
-            <a href={item.href} key={item.label} onClick={closeMobileMenu}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-      </header>
+      <Header />
 
       <section className="hero hero--reference screen" id="audit" aria-labelledby="leadfix-hero-title">
         <div className="hero-poster reference-hero">

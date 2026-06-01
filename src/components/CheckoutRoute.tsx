@@ -38,7 +38,7 @@ export function CheckoutRoute() {
 
   return (
     <>
-      <Header onAuditClick={() => router.push("/")} />
+      <Header />
       <main>
         {url ? (
           <CheckoutScreen

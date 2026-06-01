@@ -44,7 +44,7 @@ export function FullReportRoute() {
 
   return (
     <>
-      <Header onAuditClick={() => router.push("/")} />
+      <Header />
       <main>
         {error ? (
           <section className="analysis screen">
