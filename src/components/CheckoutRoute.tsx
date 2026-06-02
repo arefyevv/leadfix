@@ -4,12 +4,15 @@ import { FormEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckoutScreen } from "@/components/CheckoutScreen";
 import { Header } from "@/components/Header";
+import { auditPlans } from "@/components/plans";
 import { normalizeClientUrl } from "@/lib/clientAudit";
 
 export function CheckoutRoute() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [selectedPlan, setSelectedPlan] = useState("Стандарт");
+  const planParam = searchParams.get("plan") ?? "";
+  const initialPlan = auditPlans.some((plan) => plan.name === planParam) ? planParam : "Стандарт";
+  const [selectedPlan, setSelectedPlan] = useState(initialPlan);
   const [email, setEmail] = useState("");
   const [telegram, setTelegram] = useState("");
   const [error, setError] = useState("");
@@ -33,34 +36,27 @@ export function CheckoutRoute() {
 
     setError("");
     setSuccess(true);
-    window.setTimeout(() => router.push(`/full-report?url=${encodeURIComponent(url)}`), 650);
+    if (url) {
+      window.setTimeout(() => router.push(`/full-report?url=${encodeURIComponent(url)}`), 650);
+    }
   }
 
   return (
     <>
       <Header />
       <main>
-        {url ? (
-          <CheckoutScreen
-            url={url}
-            selectedPlan={selectedPlan}
-            email={email}
-            telegram={telegram}
-            error={error}
-            success={success}
-            onPlanChange={setSelectedPlan}
-            onEmailChange={setEmail}
-            onTelegramChange={setTelegram}
-            onSubmit={handleSubmit}
-          />
-        ) : (
-          <section className="analysis screen">
-            <div className="analysis__inner route-error">
-              <h1>Не указан сайт для аудита</h1>
-              <button className="report-button report-button--primary" type="button" onClick={() => router.push("/")}>Проверить сайт</button>
-            </div>
-          </section>
-        )}
+        <CheckoutScreen
+          url={url}
+          selectedPlan={selectedPlan}
+          email={email}
+          telegram={telegram}
+          error={error}
+          success={success}
+          onPlanChange={setSelectedPlan}
+          onEmailChange={setEmail}
+          onTelegramChange={setTelegram}
+          onSubmit={handleSubmit}
+        />
       </main>
     </>
   );

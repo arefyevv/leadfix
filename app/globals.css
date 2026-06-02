@@ -7227,11 +7227,12 @@ button { cursor: pointer; }
 #pricing .landing-pricing .pricing-card {
   position: relative !important;
   display: grid !important;
-  grid-template-rows: auto auto auto minmax(auto, 1fr) 46px !important;
+  grid-template-rows: auto auto auto auto auto !important;
+  align-content: start !important;
   min-height: 0 !important;
   height: auto !important;
   padding: 16px !important;
-  gap: 10px !important;
+  gap: 8px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
   border-radius: 14px !important;
@@ -7239,6 +7240,7 @@ button { cursor: pointer; }
   box-shadow: none !important;
   transform: none !important;
   transition: border-color .2s ease, box-shadow .2s ease !important;
+  cursor: default !important;
 }
 
 #pricing .landing-pricing .pricing-card:hover {
@@ -7253,8 +7255,8 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card__intro {
   display: grid !important;
-  grid-template-rows: 24px 48px 56px !important;
-  gap: 10px !important;
+  grid-template-rows: 24px 48px minmax(46px, auto) !important;
+  gap: 8px !important;
   margin-top: 20px !important;
 }
 
@@ -7279,14 +7281,14 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card p {
   color: #69758d !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
   line-height: 1.4 !important;
 }
 
 #pricing .landing-pricing .pricing-card__group {
   display: grid !important;
   gap: 8px !important;
-  margin-top: 4px !important;
+  margin-top: 0 !important;
 }
 
 #pricing .landing-pricing .pricing-card__group > span,
@@ -7311,7 +7313,7 @@ button { cursor: pointer; }
   min-height: auto !important;
   padding-left: 16px !important;
   color: #56657c !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
   line-height: 1.32 !important;
 }
 
@@ -7342,7 +7344,7 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card__fit p {
   color: #69758d !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
 }
 
 #pricing .landing-pricing .pricing-card__cta {
@@ -7351,13 +7353,15 @@ button { cursor: pointer; }
   place-items: center !important;
   align-self: end !important;
   width: 100% !important;
-  margin-top: auto !important;
+  margin-top: 8px !important;
   color: #34445e !important;
   border-radius: 9px !important;
   background: #edf2f7 !important;
   box-shadow: inset 0 0 0 1px #dce5ef !important;
   font-size: 13px !important;
   font-weight: 800 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
 }
 
 #pricing .landing-pricing .pricing-card--recommended,

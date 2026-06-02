@@ -11,14 +11,10 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
   const features = plan.features ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт"];
   const format = plan.format ?? ["web-отчёт"];
   const isCheckout = variant === "checkout";
-
-  return (
-    <button
-      className={`pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`}
-      type="button"
-      onClick={() => onSelect(plan.name)}
-    >
-      {!isCheckout && plan.recommended && <span className="pricing-card__badge">Оптимальный выбор</span>}
+  const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
+  const content = (
+    <>
+      {!isCheckout && plan.recommended && <span className="pricing-card__badge">Популярный выбор</span>}
       {isCheckout && selected && <span className="pricing-card__selected-badge">Выбрано</span>}
       {!isCheckout && (
         <span className="pricing-card__icon" aria-hidden="true">
@@ -56,7 +52,29 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
         </div>
       )}
 
-      <span className="pricing-card__cta">Выбрать тариф</span>
+      {isCheckout ? (
+        <span className="pricing-card__cta">Выбрать тариф</span>
+      ) : (
+        <a className="pricing-card__cta" href={`/checkout?plan=${encodeURIComponent(plan.name)}`}>Выбрать тариф</a>
+      )}
+    </>
+  );
+
+  if (isCheckout) {
+    return (
+    <button
+      className={className}
+      type="button"
+      onClick={() => onSelect(plan.name)}
+    >
+      {content}
     </button>
+    );
+  }
+
+  return (
+    <article className={className}>
+      {content}
+    </article>
   );
 }
