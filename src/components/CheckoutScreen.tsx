@@ -1,12 +1,6 @@
 import type { FormEvent } from "react";
 import { PricingCard } from "./PricingCard";
-import type { Plan } from "./types";
-
-const plans: Plan[] = [
-  { name: "Экспресс", price: "3900 ₽", description: "Краткий аудит + PDF" },
-  { name: "Стандарт", price: "9900 ₽", description: "Полный аудит + рекомендации", recommended: true },
-  { name: "Эксперт", price: "19900 ₽", description: "Аудит + созвон + разбор" }
-];
+import { auditPlans } from "./plans";
 
 type CheckoutScreenProps = {
   url: string;
@@ -33,32 +27,22 @@ export function CheckoutScreen({
   onTelegramChange,
   onSubmit
 }: CheckoutScreenProps) {
+  const selectedPlanData = auditPlans.find((plan) => plan.name === selectedPlan) ?? auditPlans[1];
+
   return (
-    <section className="checkout screen">
-      <div className="checkout__inner">
-        <h2 className="checkout__title">Полный аудит сайта</h2>
-        <p className="checkout__subtitle">Получите полный AI-аудит с рекомендациями по увеличению конверсии.</p>
-        <div className="url-pill">{url}</div>
-
-        <div className="checkout-layout">
-          <div className="checkout-panel">
-            <ul className="audit-list">
-              <li>Полный список проблем</li>
-              <li>Рекомендации по исправлению</li>
-              <li>Анализ CTA и оффера</li>
-              <li>Проверка мобильной версии</li>
-              <li>PDF-отчёт</li>
-              <li>Приоритеты исправлений</li>
-              <li>Quick wins для роста заявок</li>
-            </ul>
-            <div className="pricing-grid">
-              {plans.map((plan) => (
-                <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} />
-              ))}
+    <section className="full-report full-audit checkout checkout-audit screen">
+      <div className="full-report__inner full-audit__layout checkout-audit__layout">
+        <aside className="full-audit-sidebar checkout-audit__sidebar">
+          <section className="full-audit-sidebar__site">
+            <p className="full-audit__eyebrow">Оформление аудита</p>
+            <div className="full-audit-sidebar__meta">
+              <div><span>Адрес сайта</span><a href={url} target="_blank" rel="noreferrer">{url}</a></div>
+              <div><span>Выбранный тариф</span><b>{selectedPlanData.name}</b></div>
+              <div><span>Стоимость</span><b>{selectedPlanData.price}</b></div>
             </div>
-          </div>
+          </section>
 
-          <aside className="checkout-panel">
+          <section className="checkout-audit__form-card">
             <form className="checkout-form" onSubmit={onSubmit} noValidate>
               <h3>Куда отправить аудит</h3>
               <div className="field">
@@ -75,8 +59,33 @@ export function CheckoutScreen({
 
             <div className="guarantee-block">Отчёт носит рекомендательный характер и помогает найти потенциальные точки потери заявок.</div>
             {success && <div className="payment-placeholder">Оплата будет подключена следующим этапом</div>}
-          </aside>
-        </div>
+          </section>
+        </aside>
+
+        <main className="full-audit-content checkout-audit__content">
+          <header className="full-audit-content__hero checkout-audit__hero">
+            <p className="full-audit__eyebrow">Следующий шаг</p>
+            <h2>Выберите подходящий формат аудита</h2>
+            <p>От быстрой AI-проверки перед запуском рекламы до регулярного контроля нескольких лендингов.</p>
+            <div className="full-audit-content__hero-metrics">
+              <div><span>Фокус проверки</span><b>Конверсия в заявки</b></div>
+              <div><span>Источник трафика</span><b>Яндекс Директ</b></div>
+            </div>
+          </header>
+
+          <section className="full-audit__section checkout-audit__plans">
+            <div className="full-audit__section-heading">
+              <p className="full-audit__eyebrow">Тарифы</p>
+              <h2>Выберите глубину аудита</h2>
+            </div>
+            <p className="full-audit__lead">Карточки отличаются глубиной проверки, форматом отчёта и уровнем ручной проверки.</p>
+            <div className="pricing-grid checkout-pricing">
+              {auditPlans.map((plan) => (
+                <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} />
+              ))}
+            </div>
+          </section>
+        </main>
       </div>
     </section>
   );
