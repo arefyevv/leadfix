@@ -7359,9 +7359,11 @@ button { cursor: pointer; }
 
 /* Global minimal footer and legal documents. */
 .site-footer {
+  margin-top: clamp(64px, 8vw, 120px);
   padding: 0;
   color: #172033;
-  background: #fff;
+  background: #f4f7fb;
+  border-top: 1px solid #e3e9f1;
 }
 .site-footer__card {
   width: 100%;
@@ -7369,7 +7371,7 @@ button { cursor: pointer; }
   padding: clamp(34px, 5vw, 62px) clamp(20px, 7vw, 104px);
   border: 0;
   border-radius: 0;
-  background: #fff;
+  background: transparent;
   box-shadow: none;
 }
 .site-footer__main {
@@ -7510,6 +7512,7 @@ button { cursor: pointer; }
 }
 @media (max-width: 760px) {
   .site-footer {
+    margin-top: 52px;
     padding: 0;
   }
   .site-footer__card {
