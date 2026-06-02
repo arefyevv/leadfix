@@ -7,14 +7,14 @@ type FullReportProps = {
   reportDate: string;
 };
 
-type AuditStatus = "Хорошо" | "Требует внимания" | "Критично";
+type AuditStatus = "Хорошо" | "Требует внимания" | "Слабое место";
 
-type ReportCategory = {
+type AuditDirection = {
   title: string;
   score: number;
   status: AuditStatus;
   summary: string;
-  findings: string[];
+  categories: string[];
   recommendation: string;
 };
 
@@ -126,61 +126,56 @@ const implementationPriorities = [
   }
 ];
 
-function getCategories(analysis: AuditAnalysis): ReportCategory[] {
-  const hasContacts = analysis.hasPhone || analysis.hasEmail || analysis.hasTelInput || analysis.hasEmailInput;
-  const structureScore = analysis.h2.length > 0 && analysis.pageText.length >= 500 ? 82 : 54;
-
-  return [
-    {
-      title: "Главное предложение",
-      score: analysis.h1.length > 0 ? 72 : 28,
-      status: analysis.h1.length > 0 ? "Требует внимания" : "Критично",
-      summary: analysis.h1.length > 0 ? "Главный заголовок найден, но его конкретику нужно проверить вручную." : "Главный заголовок не найден.",
-      findings: ["Проверить, понятна ли услуга за 5 секунд.", "Добавить конкретный результат для клиента.", "Убрать общие формулировки без измеримой пользы."],
-      recommendation: "Сформулировать главный заголовок по схеме: результат + аудитория + срок или отличие."
-    },
-    {
-      title: "Кнопки действия",
-      score: analysis.ctaSignals.length > 0 ? 76 : 24,
-      status: analysis.ctaSignals.length > 0 ? "Требует внимания" : "Критично",
-      summary: analysis.ctaSignals.length > 0 ? `Найдены призывы к действию: ${analysis.ctaSignals.join(", ")}.` : "Явный призыв к действию не найден.",
-      findings: ["Оставить один главный сценарий действия.", "Проверить видимость основной кнопки на первом экране.", "Добавить короткое пояснение о следующем шаге."],
-      recommendation: "Сделать кнопку конкретной: пользователь должен понимать, что получит после нажатия."
-    },
-    {
-      title: "Доверие и экспертность",
-      score: analysis.trustSignals.length > 0 ? 70 : 36,
-      status: analysis.trustSignals.length > 0 ? "Требует внимания" : "Критично",
-      summary: analysis.trustSignals.length > 0 ? `Найдены сигналы доверия: ${analysis.trustSignals.join(", ")}.` : "Отзывы, кейсы и гарантии не обнаружены.",
-      findings: ["Поднять сильный кейс ближе к первой кнопке действия.", "Добавить цифры результата.", "Использовать реальные отзывы с контекстом."],
-      recommendation: "Показать доказательства до того, как пользователь принимает решение оставить заявку."
-    },
-    {
-      title: "Формы",
-      score: analysis.hasForm ? 84 : hasContacts ? 62 : 22,
-      status: analysis.hasForm ? "Хорошо" : hasContacts ? "Требует внимания" : "Критично",
-      summary: analysis.hasForm ? "Форма заявки найдена." : hasContacts ? "Контакты есть, но форма заявки не найдена." : "Форма и доступные контакты не найдены.",
-      findings: ["Оставить только обязательные поля.", "Подписать ожидаемый срок ответа.", "Проверить удобство заполнения с телефона."],
-      recommendation: "Снизить усилие пользователя: короткая форма и понятный результат отправки."
-    },
-    {
-      title: "Структура",
-      score: structureScore,
-      status: structureScore >= 70 ? "Хорошо" : "Требует внимания",
-      summary: structureScore >= 70 ? "Контент и подзаголовки формируют базовый каркас страницы." : "Структуру страницы стоит усилить.",
-      findings: ["Выстроить блоки от предложения к доказательствам.", "Убрать повторы и второстепенные детали.", "Завершать смысловые блоки подходящей кнопкой действия."],
-      recommendation: "Провести пользователя по логике: проблема, решение, доказательства, действие."
-    },
-    {
-      title: "Мобильная версия",
-      score: 58,
-      status: "Требует внимания",
-      summary: "Требуется ручная проверка адаптива и мобильного сценария.",
-      findings: ["Проверить первый экран на ширине 360 пикселей.", "Убедиться, что кнопки удобно нажимать.", "Проверить видимость контактов и формы."],
-      recommendation: "Пройти весь путь заявки с телефона и убрать лишние шаги."
-    }
-  ];
-}
+const auditDirections: AuditDirection[] = [
+  {
+    title: "Оффер и понимание предложения",
+    score: 71,
+    status: "Требует внимания",
+    summary: "Пользователь понимает направление предложения, но ценность и отличие от конкурентов считываются недостаточно быстро.",
+    categories: ["УТП и главное предложение", "Первый экран", "Оффер", "Целевая аудитория", "Боли и потребности клиента"],
+    recommendation: "Уточнить результат для клиента на первом экране и связать его с конкретной потребностью аудитории."
+  },
+  {
+    title: "Доверие и доказательства",
+    score: 67,
+    status: "Слабое место",
+    summary: "Лендингу не хватает убедительных доказательств, которые снижают сомнение перед обращением.",
+    categories: ["Доверие и экспертность", "Отзывы, кейсы и результаты", "Возражения клиентов", "Гарантии и снижение риска", "Ценообразование и тарифы"],
+    recommendation: "Добавить реальные кейсы, цифры результата и ответы на возражения рядом с точками принятия решения."
+  },
+  {
+    title: "Конверсионные действия",
+    score: 72,
+    status: "Требует внимания",
+    summary: "Форма работает, но CTA и путь к заявке можно сделать яснее и прямее.",
+    categories: ["Призывы к действию", "Формы захвата", "Мотивация к действию", "Конверсионные барьеры"],
+    recommendation: "Оставить один основной CTA, пояснить следующий шаг и убрать лишнее трение перед отправкой формы."
+  },
+  {
+    title: "Структура, текст и визуал",
+    score: 78,
+    status: "Хорошо",
+    summary: "Базовая структура страницы собрана корректно, но отдельные аргументы можно подать конкретнее.",
+    categories: ["Структура лендинга", "Продающий текст и читаемость", "Визуальное оформление"],
+    recommendation: "Сократить общие формулировки, усилить иерархию блоков и сохранить фокус на одном действии."
+  },
+  {
+    title: "UX и техническое качество",
+    score: 71,
+    status: "Требует внимания",
+    summary: "Главный риск находится в мобильном сценарии: его нужно проверить вручную до масштабирования рекламы.",
+    categories: ["Мобильная версия", "Скорость загрузки", "UX и удобство взаимодействия", "Технические ошибки"],
+    recommendation: "Пройти путь заявки на смартфоне, проверить скорость загрузки и работу интерактивных элементов."
+  },
+  {
+    title: "Реклама и аналитика",
+    score: 60,
+    status: "Слабое место",
+    summary: "Нужно проверить совпадение рекламных обещаний с первым экраном и корректность отслеживания заявок.",
+    categories: ["Соответствие трафику из Яндекс Директа", "Аналитика и отслеживание конверсий"],
+    recommendation: "Сопоставить объявления с оффером лендинга и настроить цели Метрики на все ключевые действия."
+  }
+];
 
 function getDetailedIssues(): DetailedIssue[] {
   return [
@@ -224,7 +219,6 @@ function getDetailedIssues(): DetailedIssue[] {
 }
 
 export function FullReport({ analysis, reportDate }: FullReportProps) {
-  const categories = getCategories(analysis);
   const detailedIssues = getDetailedIssues();
   const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
 
@@ -291,18 +285,27 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Разбор сайта" title="Разбор по категориям" />
+            <SectionHeading eyebrow="Разбор лендинга" title="Итоги по направлениям аудита" />
+            <p className="full-audit__lead">Сначала — краткая картина по шести направлениям. Ниже можно посмотреть оценки всех проверенных категорий и подробные замечания.</p>
             <div className="full-audit__categories">
-              {categories.map((category) => (
-                <article className="full-audit-category" key={category.title}>
+              {auditDirections.map((direction, index) => (
+                <article className="full-audit-category" key={direction.title}>
                   <div className="full-audit-category__top">
-                    <h3>{category.title}</h3>
-                    <strong>{category.score}<small>/100</small></strong>
+                    <div>
+                      <span className="full-audit-category__index">{String(index + 1).padStart(2, "0")}</span>
+                      <h3>{direction.title}</h3>
+                    </div>
+                    <strong>{direction.score}<small>/100</small></strong>
                   </div>
-                  <span className={`full-audit__status status-${category.status === "Хорошо" ? "good" : category.status === "Критично" ? "critical" : "attention"}`}>{category.status}</span>
-                  <p>{category.summary}</p>
-                  <ul>{category.findings.map((finding) => <li key={finding}>{finding}</li>)}</ul>
-                  <div className="full-audit-category__recommendation"><b>Рекомендация</b><span>{category.recommendation}</span></div>
+                  <span className={`full-audit__status status-${direction.status === "Хорошо" ? "good" : direction.status === "Слабое место" ? "critical" : "attention"}`}>{direction.status}</span>
+                  <p>{direction.summary}</p>
+                  <div className="full-audit-category__scores">
+                    {direction.categories.map((category) => {
+                      const score = scoreRows.find((row) => row.category === category);
+                      return <div key={category}><span>{category}</span><b>{score?.score ?? "—"}<small>/100</small></b></div>;
+                    })}
+                  </div>
+                  <div className="full-audit-category__recommendation"><b>Что исправить</b><span>{direction.recommendation}</span></div>
                 </article>
               ))}
             </div>
