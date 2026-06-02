@@ -26,8 +26,6 @@ export function CheckoutScreen({
   onTelegramChange,
   onSubmit
 }: CheckoutScreenProps) {
-  const selectedPlanData = auditPlans.find((plan) => plan.name === selectedPlan) ?? auditPlans[1];
-
   return (
     <section className="full-report full-audit checkout checkout-audit screen">
       <div className="full-report__inner full-audit__layout checkout-audit__layout">
@@ -42,7 +40,7 @@ export function CheckoutScreen({
             <div className="checkout-audit__selection">
               <div className="pricing-grid checkout-pricing">
                 {auditPlans.map((plan) => (
-                  <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} />
+                  <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} variant="checkout" />
                 ))}
               </div>
 
@@ -51,16 +49,18 @@ export function CheckoutScreen({
                   <h3>Куда отправить аудит</h3>
                   <p>Укажите контакты, чтобы перейти к оплате выбранного тарифа.</p>
                   <div className="field">
+                    <label htmlFor="checkout-plan">Выбранный тариф</label>
+                    <select id="checkout-plan" value={selectedPlan} onChange={(event) => onPlanChange(event.target.value)}>
+                      {auditPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} — {plan.price}</option>)}
+                    </select>
+                  </div>
+                  <div className="field">
                     <label htmlFor="checkout-email">Email</label>
                     <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="you@company.ru" />
                   </div>
                   <div className="field">
                     <label htmlFor="checkout-telegram">Telegram (необязательно)</label>
                     <input id="checkout-telegram" value={telegram} onChange={(event) => onTelegramChange(event.target.value)} type="text" placeholder="@username" />
-                  </div>
-                  <div className="checkout-audit__form-total">
-                    <span>{selectedPlanData.name}</span>
-                    <b>{selectedPlanData.price}</b>
                   </div>
                   <p className="checkout-error" aria-live="polite">{error}</p>
                   <button className="checkout-submit" type="submit">Перейти к оплате</button>

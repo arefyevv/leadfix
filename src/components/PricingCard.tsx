@@ -4,22 +4,27 @@ type PricingCardProps = {
   plan: Plan;
   selected: boolean;
   onSelect: (planName: string) => void;
+  variant?: "default" | "checkout";
 };
 
-export function PricingCard({ plan, selected, onSelect }: PricingCardProps) {
+export function PricingCard({ plan, selected, onSelect, variant = "default" }: PricingCardProps) {
   const features = plan.features ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт"];
   const format = plan.format ?? ["web-отчёт"];
+  const isCheckout = variant === "checkout";
 
   return (
     <button
-      className={`pricing-card ${plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`}
+      className={`pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`}
       type="button"
       onClick={() => onSelect(plan.name)}
     >
-      {plan.recommended && <span className="pricing-card__badge">Оптимальный выбор</span>}
-      <span className="pricing-card__icon" aria-hidden="true">
-        <img src="/leadfix-logo.png" alt="" />
-      </span>
+      {!isCheckout && plan.recommended && <span className="pricing-card__badge">Оптимальный выбор</span>}
+      {isCheckout && selected && <span className="pricing-card__selected-badge">Выбрано</span>}
+      {!isCheckout && (
+        <span className="pricing-card__icon" aria-hidden="true">
+          <img src="/leadfix-logo.png" alt="" />
+        </span>
+      )}
       <h3>{plan.name}</h3>
       <strong>{plan.price}</strong>
       <p>{plan.description}</p>
