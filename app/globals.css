@@ -6576,6 +6576,11 @@ button { cursor: pointer; }
   font-size: 16px !important;
   line-height: 1.55 !important;
 }
+.full-audit__lead--secondary {
+  margin-top: 7px !important;
+  color: #718096 !important;
+  font-size: 14px !important;
+}
 .full-audit__methodology {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
