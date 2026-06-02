@@ -16,7 +16,6 @@ type CheckoutScreenProps = {
 };
 
 export function CheckoutScreen({
-  url,
   selectedPlan,
   email,
   telegram,
@@ -32,34 +31,14 @@ export function CheckoutScreen({
   return (
     <section className="full-report full-audit checkout checkout-audit screen">
       <div className="full-report__inner full-audit__layout checkout-audit__layout">
-        <aside className="full-audit-sidebar checkout-audit__sidebar">
-          <section className="full-audit-sidebar__site">
-            <p className="full-audit__eyebrow">Оформление аудита</p>
-            <div className="full-audit-sidebar__meta">
-              <div><span>Адрес сайта</span><a href={url} target="_blank" rel="noreferrer">{url}</a></div>
-              <div><span>Выбранный тариф</span><b>{selectedPlanData.name}</b></div>
-              <div><span>Стоимость</span><b>{selectedPlanData.price}</b></div>
-            </div>
-          </section>
-        </aside>
-
         <main className="full-audit-content checkout-audit__content">
-          <header className="full-audit-content__hero checkout-audit__hero">
+          <header className="checkout-audit__heading">
             <p className="full-audit__eyebrow">Следующий шаг</p>
             <h2>Выберите подходящий формат аудита</h2>
             <p>От быстрой AI-проверки перед запуском рекламы до регулярного контроля нескольких лендингов.</p>
-            <div className="full-audit-content__hero-metrics">
-              <div><span>Фокус проверки</span><b>Конверсия в заявки</b></div>
-              <div><span>Источник трафика</span><b>Яндекс Директ</b></div>
-            </div>
           </header>
 
           <section className="full-audit__section checkout-audit__plans">
-            <div className="full-audit__section-heading">
-              <p className="full-audit__eyebrow">Тарифы</p>
-              <h2>Выберите глубину аудита</h2>
-            </div>
-            <p className="full-audit__lead">Карточки отличаются глубиной проверки, форматом отчёта и уровнем ручной проверки.</p>
             <div className="checkout-audit__selection">
               <div className="pricing-grid checkout-pricing">
                 {auditPlans.map((plan) => (
