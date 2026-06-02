@@ -25,9 +25,11 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
           <img src="/leadfix-logo.png" alt="" />
         </span>
       )}
-      <h3>{plan.name}</h3>
-      <strong>{plan.price}</strong>
-      <p>{plan.description}</p>
+      <div className="pricing-card__intro">
+        <h3>{plan.name}</h3>
+        <strong>{plan.price}</strong>
+        <p>{plan.description}</p>
+      </div>
 
       <div className="pricing-card__group">
         <span>Что входит</span>
