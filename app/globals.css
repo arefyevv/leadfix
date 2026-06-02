@@ -7231,7 +7231,7 @@ button { cursor: pointer; }
   align-content: stretch !important;
   min-height: 626px !important;
   height: 626px !important;
-  padding: 16px 16px 86px !important;
+  padding: 24px 24px 96px !important;
   gap: 8px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
@@ -7350,14 +7350,14 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card__cta {
   position: absolute !important;
-  right: 16px !important;
-  bottom: 16px !important;
-  left: 16px !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  left: 24px !important;
   min-height: 58px !important;
   display: grid !important;
   place-items: center !important;
   align-self: end !important;
-  width: 100% !important;
+  width: auto !important;
   margin-top: 8px !important;
   color: #34445e !important;
   border-radius: 9px !important;
