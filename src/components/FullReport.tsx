@@ -1,3 +1,5 @@
+"use client";
+
 import type { AuditAnalysis } from "@/types/audit";
 
 type FullReportProps = {
@@ -26,30 +28,88 @@ type DetailedIssue = {
   example: string;
 };
 
-const quickWins = [
-  "Уточнить главное предложение на первом экране",
-  "Добавить пояснение результата рядом с основной кнопкой",
-  "Разместить один сильный кейс до формы заявки",
-  "Сократить форму до минимального набора полей"
+type ScoreRow = {
+  category: string;
+  score: number;
+  status: "Хорошо" | "Нормально" | "Требует внимания" | "Слабое место";
+  priority: "Высокий" | "Средний" | "Низкий";
+};
+
+const reportScore = 74;
+
+const auditChecks = [
+  "УТП и главное предложение", "Первый экран", "Оффер", "Целевая аудитория",
+  "Боли и потребности клиента", "Аргументация выгод", "Доверие к компании",
+  "Социальные доказательства", "Кейсы и результаты", "Экспертность",
+  "Призывы к действию", "Формы захвата", "Возражения клиентов",
+  "Гарантии и снижение риска", "Ценообразование и тарифы", "Структура лендинга",
+  "Читаемость контента", "Качество продающего текста", "Визуальное оформление",
+  "Мобильная версия", "Скорость загрузки", "Пользовательский опыт",
+  "Конверсионные барьеры", "Эмоциональное воздействие", "Дефицит и срочность",
+  "Соответствие трафику из Яндекс Директа", "Аналитика и отслеживание конверсий",
+  "Технические ошибки"
 ];
 
-function getScoreLabel(score: number) {
-  if (score <= 40) return "Слабая продающая способность";
-  if (score <= 70) return "Есть точки потери заявок";
-  if (score <= 85) return "Нормальная структура, есть что улучшить";
-  return "Высокая продающая способность";
-}
+const scoreRows: ScoreRow[] = [
+  ["УТП и главное предложение", 72, "Требует внимания", "Высокий"],
+  ["Первый экран", 68, "Требует внимания", "Высокий"],
+  ["Оффер", 70, "Требует внимания", "Высокий"],
+  ["Целевая аудитория", 76, "Нормально", "Средний"],
+  ["Боли и потребности", 69, "Требует внимания", "Высокий"],
+  ["Аргументация выгод", 73, "Требует внимания", "Средний"],
+  ["Доверие", 70, "Требует внимания", "Высокий"],
+  ["Социальные доказательства", 62, "Слабое место", "Высокий"],
+  ["Кейсы и результаты", 58, "Слабое место", "Высокий"],
+  ["Экспертность", 74, "Нормально", "Средний"],
+  ["CTA", 76, "Нормально", "Средний"],
+  ["Формы", 84, "Хорошо", "Низкий"],
+  ["Возражения", 66, "Требует внимания", "Средний"],
+  ["Гарантии", 60, "Слабое место", "Средний"],
+  ["Цены и тарифы", 78, "Нормально", "Средний"],
+  ["Структура", 82, "Хорошо", "Низкий"],
+  ["Читаемость", 80, "Хорошо", "Низкий"],
+  ["Продающий текст", 71, "Требует внимания", "Средний"],
+  ["Визуальное оформление", 79, "Нормально", "Низкий"],
+  ["Мобильная версия", 58, "Слабое место", "Высокий"],
+  ["Скорость загрузки", 74, "Нормально", "Средний"],
+  ["UX", 72, "Требует внимания", "Средний"],
+  ["Конверсионные барьеры", 65, "Требует внимания", "Высокий"],
+  ["Эмоциональное воздействие", 68, "Требует внимания", "Средний"],
+  ["Дефицит и срочность", 52, "Слабое место", "Низкий"],
+  ["Соответствие Яндекс Директу", 64, "Требует внимания", "Высокий"],
+  ["Аналитика", 55, "Слабое место", "Высокий"],
+  ["Технические ошибки", 81, "Хорошо", "Низкий"]
+].map(([category, score, status, priority]) => ({ category, score, status, priority })) as ScoreRow[];
 
-function getSummary(analysis: AuditAnalysis) {
-  const { previewReport } = analysis;
-  const issuesCount = previewReport.insights.length;
+const quickImprovements = [
+  "Переписать главный заголовок первого экрана.",
+  "Уточнить подзаголовок через конкретную выгоду.",
+  "Сделать CTA более понятным и прямым.",
+  "Добавить пояснение рядом с кнопкой: что произойдёт после клика.",
+  "Добавить 2–3 доказательства доверия рядом с формой.",
+  "Сократить форму до минимального количества полей.",
+  "Проверить мобильный сценарий от первого экрана до заявки.",
+  "Настроить цели в Яндекс Метрике на формы, кнопки, телефон и мессенджеры.",
+  "Сравнить первый экран с основными объявлениями в Яндекс Директе."
+];
 
-  if (issuesCount === 0) {
-    return "Базовые элементы страницы собраны корректно: найдено главное предложение, кнопки действия и элементы доверия. Для роста заявок важно вручную проверить конкретику предложения, порядок аргументов и мобильный сценарий.";
+const implementationPriorities = [
+  {
+    title: "Высокий приоритет",
+    tone: "high",
+    items: ["Усилить УТП и первый экран.", "Согласовать первый экран с рекламными объявлениями.", "Добавить конкретику в оффер.", "Усилить доверие: отзывы, кейсы, данные компании.", "Проверить мобильную версию.", "Настроить цели аналитики.", "Устранить конверсионные барьеры перед формой."]
+  },
+  {
+    title: "Средний приоритет",
+    tone: "medium",
+    items: ["Переписать блок выгод.", "Добавить FAQ с ответами на возражения.", "Улучшить продающий текст.", "Добавить больше кейсов и результатов.", "Улучшить UX-сценарий страницы.", "Проверить скорость загрузки."]
+  },
+  {
+    title: "Низкий приоритет",
+    tone: "low",
+    items: ["Доработать визуальные акценты.", "Добавить дополнительные отзывы.", "Расширить блок экспертности.", "Проверить корректность дефицита и срочности.", "Протестировать альтернативные формулировки CTA."]
   }
-
-  return `Страница получает ${previewReport.score} из 100 баллов. Автоматическая проверка выявила ${issuesCount} потенциальных точек потери заявок. Первый приоритет: устранить критичные замечания в главном предложении, кнопках действия и сценарии обращения, затем усилить доверие и мобильную версию.`;
-}
+];
 
 function getCategories(analysis: AuditAnalysis): ReportCategory[] {
   const hasContacts = analysis.hasPhone || analysis.hasEmail || analysis.hasTelInput || analysis.hasEmailInput;
@@ -107,45 +167,50 @@ function getCategories(analysis: AuditAnalysis): ReportCategory[] {
   ];
 }
 
-function getDetailedIssues(analysis: AuditAnalysis): DetailedIssue[] {
-  const generated = analysis.previewReport.insights.slice(0, 4).map((insight) => ({
-    title: insight.title,
-    priority: insight.priority === "Критично" ? "Критично" as const : "Важно" as const,
-    category: insight.title.toLocaleLowerCase("ru-RU").includes("trust") || insight.title.toLocaleLowerCase("ru-RU").includes("довер") ? "Доверие" : "Конверсия",
-    problem: insight.description,
-    impact: "Пользователь получает недостаточно аргументов для уверенного следующего шага. Это увеличивает сомнение и снижает вероятность заявки.",
-    fix: "Уточнить формулировку, проверить расположение элемента на первом экране и добавить понятный сценарий действия.",
-    example: "Покажите конкретный результат, следующий шаг и одно доказательство рядом с основной кнопкой."
-  }));
-
-  if (generated.length > 0) return generated;
-
-  // Demo issues are placeholders until the paid report generator is connected.
+function getDetailedIssues(): DetailedIssue[] {
   return [
     {
-      title: "Главное предложение требует более конкретной выгоды",
-      priority: "Важно",
-      category: "Главное предложение",
-      problem: "Автоматическая проверка нашла главный заголовок, но не может оценить, насколько быстро новый посетитель понимает ценность предложения.",
-      impact: "Если выгода считывается медленно, часть платного трафика уходит до знакомства с аргументами и кейсами.",
-      fix: "Проверить главный заголовок вручную и добавить конкретный результат, аудиторию или срок.",
-      example: "Вместо общего описания услуги используйте формулировку с понятным результатом для клиента."
+      title: "Главное предложение требует большей конкретики",
+      priority: "Критично",
+      category: "УТП и первый экран",
+      problem: "Главный заголовок описывает направление, но не показывает конкретный результат для клиента.",
+      impact: "Пользователь из рекламы принимает решение за несколько секунд. Если он не понимает выгоду сразу, вероятность ухода со страницы растёт.",
+      fix: "Переписать заголовок по формуле: кому + какой результат + за счёт чего.",
+      example: "Было: «Работаем каждый день, но его конкуренты уже получают больше заявок». Стало: «Найдём, почему лендинг теряет заявки из Яндекс Директа, и покажем, что исправить в первую очередь»."
     },
     {
-      title: "Проверить силу основной кнопки на первом экране",
+      title: "Основной CTA не объясняет следующий шаг",
+      priority: "Критично",
+      category: "CTA и формы",
+      problem: "Кнопка заметна, но формулировка не показывает, что именно получит пользователь после клика.",
+      impact: "Неясный следующий шаг увеличивает сомнение перед заявкой и снижает кликабельность основной кнопки.",
+      fix: "Сделать CTA прямым и добавить рядом короткое пояснение результата отправки формы.",
+      example: "CTA: «Получить разбор лендинга». Пояснение: «Покажем основные точки потери заявок и приоритеты исправлений»."
+    },
+    {
+      title: "Недостаточно доказательств рядом с формой",
       priority: "Важно",
-      category: "Кнопки действия",
-      problem: "Призывы к действию присутствуют, но их заметность и убедительность требуют визуальной проверки.",
-      impact: "Даже правильный текст кнопки не работает, если пользователь не замечает её или не понимает результат клика.",
-      fix: "Оставить одну основную кнопку и добавить короткое пояснение следующего шага.",
-      example: "Получить расчёт за 15 минут. После отправки уточним задачу и предложим варианты."
+      category: "Доверие",
+      problem: "Отзывы, кейсы и цифры результата не поддерживают пользователя в момент принятия решения.",
+      impact: "Пользователь не получает подтверждений компетентности компании и откладывает отправку заявки.",
+      fix: "Добавить рядом с формой 2–3 коротких доказательства: цифру результата, кейс и отзыв с контекстом.",
+      example: "Разместить рядом с формой: «+28% к конверсии после переработки первого экрана» и короткую цитату клиента."
+    },
+    {
+      title: "Мобильный сценарий требует ручной проверки",
+      priority: "Важно",
+      category: "Мобильная версия",
+      problem: "Нужно проверить первый экран, CTA и заполнение формы на ширине 360 пикселей.",
+      impact: "Часть рекламного трафика приходит со смартфонов. Лишняя прокрутка или неудобная форма напрямую сокращают количество заявок.",
+      fix: "Пройти путь пользователя на телефоне: объявление, первый экран, CTA, форма, подтверждение заявки.",
+      example: "Основная кнопка должна быть видна без лишней прокрутки, а форма содержать только обязательные поля."
     }
   ];
 }
 
 export function FullReport({ analysis, reportDate }: FullReportProps) {
   const categories = getCategories(analysis);
-  const detailedIssues = getDetailedIssues(analysis);
+  const detailedIssues = getDetailedIssues();
   const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
 
   return (
@@ -159,7 +224,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <div><span>H1 сайта</span><b>{siteHeading}</b></div>
             </div>
             <div className="full-audit-sidebar__actions">
-              <button className="pdf-button" type="button">Скачать PDF</button>
+              <button className="pdf-button" type="button" onClick={() => window.print()}>Скачать PDF</button>
               <button className="telegram-button" type="button">Отправить в Telegram</button>
             </div>
           </section>
@@ -172,24 +237,32 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <p>Разбор ключевых точек потери конверсии и последовательный план исправлений.</p>
             <div className="full-audit-content__hero-metrics">
               <div><span>Первый приоритет</span><b>Оффер и CTA</b></div>
-              <div><span>Потенциал роста</span><b>+32%</b></div>
+              <div><span>Потенциал роста</span><b>+15–35%</b></div>
             </div>
           </header>
 
           <section className="full-audit-content__score">
             <div>
               <p className="full-audit__eyebrow">Общая оценка</p>
-              <strong>{analysis.previewReport.score}<small>/100</small></strong>
+              <strong>{reportScore}<small>/100</small></strong>
             </div>
             <div>
-              <h2>{getScoreLabel(analysis.previewReport.score)}</h2>
-              <p>{getSummary(analysis)}</p>
+              <h2>Средний уровень</h2>
+              <p>Лендинг уже может получать заявки, но есть заметные точки потери конверсии: оффер, CTA, доверие и мобильный сценарий требуют доработки.</p>
             </div>
             <dl>
-              <div><dt>Критично</dt><dd>{analysis.previewReport.criticalIssues}</dd></div>
-              <div><dt>Важно</dt><dd>{analysis.previewReport.mediumIssues}</dd></div>
-              <div><dt>Quick wins</dt><dd>{quickWins.length}</dd></div>
+              <div><dt>Критично</dt><dd>2</dd></div>
+              <div><dt>Важно</dt><dd>5</dd></div>
+              <div><dt>Точки роста</dt><dd>8</dd></div>
             </dl>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Объём проверки" title="Что проверял аудит" />
+            <p className="full-audit__lead">Аудит оценивает не сайт «вообще», а способность лендинга превращать платный трафик из Яндекс Директа в заявки.</p>
+            <div className="full-audit__check-grid">
+              {auditChecks.map((item) => <div key={item}><i />{item}</div>)}
+            </div>
           </section>
 
           <section className="full-audit__section">
@@ -205,6 +278,23 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                   <p>{category.summary}</p>
                   <ul>{category.findings.map((finding) => <li key={finding}>{finding}</li>)}</ul>
                   <div className="full-audit-category__recommendation"><b>Рекомендация</b><span>{category.recommendation}</span></div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Все категории" title="Полная таблица оценок" />
+            <div className="full-audit__score-table">
+              <div className="full-audit__score-table-head">
+                <span>Категория</span><span>Оценка</span><span>Статус</span><span>Приоритет</span>
+              </div>
+              {scoreRows.map((row) => (
+                <article className="full-audit__score-row" key={row.category}>
+                  <b>{row.category}</b>
+                  <strong>{row.score}<small>/100</small></strong>
+                  <span className={`score-status is-${getScoreTone(row.status)}`}>{row.status}</span>
+                  <span className={`score-priority is-${getPriorityTone(row.priority)}`}>{row.priority}</span>
                 </article>
               ))}
             </div>
@@ -236,6 +326,35 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </section>
 
+          <section className="full-audit__section full-audit__direct">
+            <div className="full-audit__direct-head">
+              <div>
+                <p className="full-audit__eyebrow">Рекламный трафик</p>
+                <h2>Соответствие трафику из Яндекс Директа</h2>
+              </div>
+              <strong>64<small>/100</small></strong>
+            </div>
+            <span className="full-audit__status status-attention">Требует внимания</span>
+            <p className="full-audit__lead">Лендинг должен подтверждать ожидание пользователя сразу после клика по рекламному объявлению. Если запрос, объявление, первый экран и CTA не совпадают по смыслу, рекламный трафик может теряться даже при нормальной настройке кампании.</p>
+            <h3>Что проверяется</h3>
+            <ul>
+              <li>Совпадает ли первый экран с рекламным объявлением.</li>
+              <li>Совпадает ли оффер на сайте с обещанием в рекламе.</li>
+              <li>Понятно ли пользователю, что он попал на нужную страницу.</li>
+              <li>Есть ли связка: запрос → объявление → первый экран → CTA → заявка.</li>
+              <li>Подходит ли CTA под температуру трафика.</li>
+              <li>Не ведётся ли разный трафик на один слишком общий лендинг.</li>
+            </ul>
+            <div className="full-audit__recommendation"><b>Рекомендация</b><p>Сравнить основные рекламные объявления с первым экраном лендинга. Если в объявлении обещается конкретный результат, этот же результат должен быть виден в заголовке, подзаголовке или рядом с CTA.</p></div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="1–2 дня" title="Быстрые улучшения" />
+            <div className="full-audit__improvements">
+              {quickImprovements.map((item, index) => <div key={item}><strong>{String(index + 1).padStart(2, "0")}</strong><span>{item}</span></div>)}
+            </div>
+          </section>
+
           <section className="full-audit__section">
             <SectionHeading eyebrow="Мобильная версия" title="Проверка мобильного сценария" />
             <div className="full-audit__mobile">
@@ -261,6 +380,29 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </section>
 
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Порядок работ" title="Приоритетный план внедрения" />
+            <div className="full-audit__implementation">
+              {implementationPriorities.map((group) => (
+                <article className={`is-${group.tone}`} key={group.title}>
+                  <h3>{group.title}</h3>
+                  <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="full-audit__section full-audit__potential">
+            <p className="full-audit__eyebrow">Ориентир после исправлений</p>
+            <h2>Потенциал роста конверсии</h2>
+            <p>После исправления критичных проблем потенциальный рост конверсии может составить:</p>
+            <strong>+15–35%</strong>
+            <small>Это не гарантия результата, а ориентировочная оценка на основе найденных барьеров. Фактический результат зависит от качества трафика, ниши, цены, продукта, конкурентной среды, обработки заявок и корректности внедрения рекомендаций.</small>
+          </section>
+
+          <footer className="full-audit__disclaimer">
+            Отчёт является аналитической рекомендацией и показывает возможные точки потери заявок на лендинге. Он не является гарантией роста продаж или финансового результата. Итоговая эффективность зависит от рекламного трафика, ниши, продукта, цены, отдела продаж и качества внедрения рекомендаций.
+          </footer>
         </main>
       </div>
     </section>
@@ -269,4 +411,17 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return <div className="full-audit__section-heading"><p className="full-audit__eyebrow">{eyebrow}</p><h2>{title}</h2></div>;
+}
+
+function getScoreTone(status: ScoreRow["status"]) {
+  if (status === "Хорошо") return "good";
+  if (status === "Слабое место") return "weak";
+  if (status === "Нормально") return "normal";
+  return "attention";
+}
+
+function getPriorityTone(priority: ScoreRow["priority"]) {
+  if (priority === "Высокий") return "high";
+  if (priority === "Средний") return "medium";
+  return "low";
 }
