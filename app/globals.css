@@ -7217,6 +7217,222 @@ button { cursor: pointer; }
   font-weight: 800;
 }
 
+/* Landing pricing uses the compact checkout card rhythm, with the middle plan still highlighted. */
+#pricing .landing-pricing {
+  align-items: stretch !important;
+  gap: 14px !important;
+  margin-top: 42px !important;
+}
+
+#pricing .landing-pricing .pricing-card {
+  position: relative !important;
+  display: grid !important;
+  grid-template-rows: auto auto auto minmax(auto, 1fr) 46px !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 16px !important;
+  gap: 10px !important;
+  color: #16233d !important;
+  border-color: #e4eaf3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+
+#pricing .landing-pricing .pricing-card:hover {
+  transform: none !important;
+  border-color: #d4deeb !important;
+  box-shadow: none !important;
+}
+
+#pricing .landing-pricing .pricing-card__icon {
+  display: none !important;
+}
+
+#pricing .landing-pricing .pricing-card__intro {
+  display: grid !important;
+  grid-template-rows: 24px 48px 56px !important;
+  gap: 10px !important;
+  margin-top: 20px !important;
+}
+
+#pricing .landing-pricing .pricing-card__intro h3,
+#pricing .landing-pricing .pricing-card__intro strong,
+#pricing .landing-pricing .pricing-card__intro p {
+  margin: 0 !important;
+}
+
+#pricing .landing-pricing .pricing-card h3 {
+  color: inherit !important;
+  font-size: 20px !important;
+  line-height: 1.1 !important;
+}
+
+#pricing .landing-pricing .pricing-card strong {
+  display: block !important;
+  color: inherit !important;
+  font-size: 23px !important;
+  line-height: 1.05 !important;
+}
+
+#pricing .landing-pricing .pricing-card p {
+  color: #69758d !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+#pricing .landing-pricing .pricing-card__group {
+  display: grid !important;
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+
+#pricing .landing-pricing .pricing-card__group > span,
+#pricing .landing-pricing .pricing-card__fit > span {
+  color: #2877da !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+}
+
+#pricing .landing-pricing .pricing-card ul {
+  display: grid !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+#pricing .landing-pricing .pricing-card li {
+  position: relative !important;
+  min-height: auto !important;
+  padding-left: 16px !important;
+  color: #56657c !important;
+  font-size: 12px !important;
+  line-height: 1.32 !important;
+}
+
+#pricing .landing-pricing .pricing-card li::before {
+  content: "" !important;
+  position: absolute !important;
+  top: .48em !important;
+  left: 0 !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #31c98d !important;
+}
+
+#pricing .landing-pricing .pricing-card li::after {
+  display: none !important;
+}
+
+#pricing .landing-pricing .pricing-card__fit {
+  display: grid !important;
+  align-self: start !important;
+  gap: 5px !important;
+  margin-top: 4px !important;
+  padding: 10px !important;
+  border-radius: 9px !important;
+  background: #f8fafc !important;
+}
+
+#pricing .landing-pricing .pricing-card__fit p {
+  color: #69758d !important;
+  font-size: 11px !important;
+}
+
+#pricing .landing-pricing .pricing-card__cta {
+  min-height: 46px !important;
+  display: grid !important;
+  place-items: center !important;
+  align-self: end !important;
+  width: 100% !important;
+  margin-top: auto !important;
+  color: #34445e !important;
+  border-radius: 9px !important;
+  background: #edf2f7 !important;
+  box-shadow: inset 0 0 0 1px #dce5ef !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended,
+#pricing .landing-pricing .pricing-card.is-selected {
+  min-height: 0 !important;
+  height: auto !important;
+  color: #ffffff !important;
+  border-color: rgba(174, 205, 255, .22) !important;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(65, 126, 255, .28), transparent 38%),
+    linear-gradient(180deg, #102441 0%, #123d7a 52%, #0b1830 100%) !important;
+  box-shadow: 0 22px 56px rgba(11, 24, 48, .18) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended:hover,
+#pricing .landing-pricing .pricing-card.is-selected:hover {
+  border-color: rgba(174, 205, 255, .34) !important;
+  box-shadow: 0 22px 56px rgba(11, 24, 48, .18) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__badge,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__badge {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  padding: 5px 8px !important;
+  color: #0f241a !important;
+  background: rgba(255, 255, 255, .9) !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended p,
+#pricing .landing-pricing .pricing-card.is-selected p,
+#pricing .landing-pricing .pricing-card--recommended li,
+#pricing .landing-pricing .pricing-card.is-selected li {
+  color: rgba(255, 255, 255, .76) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__group > span,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__group > span,
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__fit > span,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__fit > span {
+  color: #5ce4aa !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__fit,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__fit {
+  background: rgba(255, 255, 255, .08) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__fit p,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__fit p {
+  color: rgba(255, 255, 255, .7) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__cta,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta {
+  color: #0f241a !important;
+  background: linear-gradient(180deg, #49e6a2 0%, #2fd08c 100%) !important;
+  box-shadow: 0 12px 28px rgba(47, 208, 140, .24), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
+}
+
+@media (max-width: 760px) {
+  #pricing .landing-pricing .pricing-card {
+    min-height: 0 !important;
+  }
+
+  #pricing .landing-pricing .pricing-card__intro {
+    grid-template-rows: auto !important;
+    margin-top: 0 !important;
+  }
+}
+
 @media (max-width: 1080px) {
   .full-report__inner.full-audit__layout {
     grid-template-columns: 1fr;
