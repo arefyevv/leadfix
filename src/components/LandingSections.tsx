@@ -12,6 +12,8 @@ const audiences = [
   ["Веб-студиям", "Использовать аудит как входной продукт перед доработкой сайта или редизайном."]
 ];
 
+const audienceIcons = ["owner", "growth", "ads", "studio"];
+
 const audienceUseCases = [
   "Проверить посадочную страницу до того, как бюджет начнёт сливать заявки.",
   "Понять, какие блоки реально мешают конверсии, а не менять сайт вслепую.",
@@ -104,7 +106,7 @@ export function LandingSections() {
         <div className="audience-grid">
           {audiences.map(([title, text], index) => (
             <article className={`landing-card audience-card audience-card--${index + 1}`} key={title}>
-              <span className="card-index">{String(index + 1).padStart(2, "0")}</span>
+              <span className={`audience-icon audience-icon--${audienceIcons[index]}`} aria-hidden="true" />
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
