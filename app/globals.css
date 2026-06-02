@@ -7362,8 +7362,10 @@ button { cursor: pointer; }
   margin-top: clamp(64px, 8vw, 120px);
   padding: 0;
   color: #172033;
-  background: #f4f7fb;
-  border-top: 1px solid #e3e9f1;
+  overflow: hidden;
+  background: #fbfcfe;
+  border-top: 1px solid #edf1f5;
+  border-radius: 36px 36px 0 0;
 }
 .site-footer__card {
   width: 100%;
@@ -7417,13 +7419,40 @@ button { cursor: pointer; }
 }
 .site-footer__bottom {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 28px;
   margin-top: 34px;
   padding-top: 18px;
   color: #7a8494;
   border-top: 1px solid #edf0f3;
   font-size: 12px;
+}
+.site-footer__details,
+.site-footer__contacts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.site-footer__contacts {
+  justify-content: flex-end;
+}
+.site-footer__contacts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #687385;
+  text-decoration: none;
+  transition: color .18s ease;
+}
+.site-footer__contacts a:hover {
+  color: #167650;
+}
+.site-footer__contacts svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 .legal-page {
   min-height: 100vh;
@@ -7514,6 +7543,7 @@ button { cursor: pointer; }
   .site-footer {
     margin-top: 52px;
     padding: 0;
+    border-radius: 24px 24px 0 0;
   }
   .site-footer__card {
     padding: 28px 20px;
@@ -7529,6 +7559,12 @@ button { cursor: pointer; }
   }
   .site-footer__bottom {
     display: grid;
+  }
+  .site-footer__details,
+  .site-footer__contacts {
+    display: grid;
+    justify-content: start;
+    gap: 8px;
   }
   .legal-page {
     padding: 108px 14px 36px;
