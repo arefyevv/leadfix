@@ -4818,8 +4818,8 @@ button { cursor: pointer; }
 #pricing .landing-pricing .pricing-card,
 #pricing .landing-pricing .pricing-card--recommended,
 #pricing .landing-pricing .pricing-card.is-selected {
-  min-height: 620px !important;
-  height: 620px !important;
+  min-height: 860px !important;
+  height: 860px !important;
   padding: 28px 26px 24px !important;
   gap: 10px !important;
   box-shadow: none !important;
@@ -4877,12 +4877,17 @@ button { cursor: pointer; }
   top: 4px !important;
 }
 
-#pricing .landing-pricing .pricing-card__group:first-of-type li:nth-child(n+6) {
-  display: none !important;
+#pricing .landing-pricing .pricing-card__fit {
+  display: grid !important;
+  gap: 6px !important;
+  margin-top: 4px !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
 }
 
-#pricing .landing-pricing .pricing-card__fit {
-  display: none !important;
+#pricing .landing-pricing .pricing-card__fit p {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
 }
 
 #pricing .landing-pricing .pricing-card__cta,
