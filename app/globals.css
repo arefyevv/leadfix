@@ -7009,8 +7009,9 @@ button { cursor: pointer; }
   display: block !important;
 }
 .checkout-audit__heading {
-  max-width: 880px;
-  margin-bottom: 24px;
+  max-width: 760px;
+  margin: 0 auto 24px;
+  text-align: center;
 }
 .checkout-audit__heading .full-audit__eyebrow {
   margin: 0 0 10px;
@@ -7019,20 +7020,20 @@ button { cursor: pointer; }
 .checkout-audit__heading h2 {
   margin: 0;
   color: #fff;
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: .96;
-  letter-spacing: -.06em;
+  font-size: clamp(36px, 4.5vw, 58px);
+  line-height: 1;
+  letter-spacing: -.05em;
 }
 .checkout-audit__heading > p:not(.full-audit__eyebrow) {
   max-width: 720px;
-  margin: 18px 0 0;
+  margin: 16px auto 0;
   color: rgba(230, 239, 255, .74);
   font-size: 17px;
   line-height: 1.5;
 }
 .checkout-audit__selection {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 390px);
   gap: 14px;
   align-items: stretch;
   margin-top: 0;
@@ -7121,30 +7122,26 @@ button { cursor: pointer; }
 }
 .checkout-pricing .pricing-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(40, 119, 218, .34);
+  border-color: rgba(49, 201, 141, .58);
   background: #fff;
-  box-shadow: 0 18px 44px rgba(15, 38, 76, .1);
+  box-shadow: 0 16px 34px rgba(49, 201, 141, .12);
 }
 .checkout-pricing .pricing-card--recommended,
 .checkout-pricing .pricing-card.is-selected {
-  color: #fff;
-  border-color: rgba(174, 205, 255, .28);
-  background:
-    radial-gradient(circle at 50% -10%, rgba(65, 126, 255, .28), transparent 38%),
-    linear-gradient(180deg, #102441 0%, #123d7a 52%, #0b1830 100%);
-  box-shadow: 0 22px 48px rgba(11, 24, 48, .18);
+  color: #16233d;
+  border-color: #31c98d;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(49, 201, 141, .16), 0 18px 36px rgba(49, 201, 141, .12);
 }
 .checkout-pricing .pricing-card--recommended:hover,
 .checkout-pricing .pricing-card.is-selected:hover {
-  border-color: rgba(174, 205, 255, .38);
-  background:
-    radial-gradient(circle at 50% -10%, rgba(65, 126, 255, .34), transparent 38%),
-    linear-gradient(180deg, #102441 0%, #123d7a 52%, #0b1830 100%);
+  border-color: #31c98d;
+  background: #fff;
 }
 .checkout-pricing .pricing-card__badge {
   padding: 6px 8px;
-  color: #0f241a;
-  background: rgba(255, 255, 255, .9);
+  color: #167650;
+  background: #e1f7ed;
   font-size: 10px;
 }
 .checkout-pricing .pricing-card__icon img {
@@ -7164,10 +7161,6 @@ button { cursor: pointer; }
   font-size: 13px;
   line-height: 1.4;
 }
-.checkout-pricing .pricing-card--recommended p,
-.checkout-pricing .pricing-card.is-selected p {
-  color: rgba(230, 239, 255, .72);
-}
 .checkout-pricing .pricing-card__group {
   display: grid;
   gap: 8px;
@@ -7180,12 +7173,6 @@ button { cursor: pointer; }
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
-}
-.checkout-pricing .pricing-card--recommended .pricing-card__group > span,
-.checkout-pricing .pricing-card.is-selected .pricing-card__group > span,
-.checkout-pricing .pricing-card--recommended .pricing-card__fit > span,
-.checkout-pricing .pricing-card.is-selected .pricing-card__fit > span {
-  color: #5ce4aa;
 }
 .checkout-pricing .pricing-card ul {
   display: grid;
@@ -7211,10 +7198,6 @@ button { cursor: pointer; }
   border-radius: 50%;
   background: #31c98d;
 }
-.checkout-pricing .pricing-card--recommended li,
-.checkout-pricing .pricing-card.is-selected li {
-  color: rgba(230, 239, 255, .78);
-}
 .checkout-pricing .pricing-card__fit {
   display: grid;
   gap: 5px;
@@ -7222,10 +7205,6 @@ button { cursor: pointer; }
   padding: 10px;
   border-radius: 9px;
   background: #f8fafc;
-}
-.checkout-pricing .pricing-card--recommended .pricing-card__fit,
-.checkout-pricing .pricing-card.is-selected .pricing-card__fit {
-  background: rgba(193, 215, 255, .09);
 }
 .checkout-pricing .pricing-card__fit p {
   font-size: 11px;
@@ -7295,7 +7274,7 @@ button { cursor: pointer; }
     margin-bottom: 18px;
   }
   .checkout-audit__heading h2 {
-    font-size: clamp(38px, 12vw, 52px);
+    font-size: clamp(34px, 10vw, 44px);
   }
   .checkout-pricing {
     grid-template-columns: 1fr;
