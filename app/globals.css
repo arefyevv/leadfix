@@ -4787,8 +4787,8 @@ button { cursor: pointer; }
   }
 
   #audience .audience-card {
-    height: auto !important;
-    min-height: 188px !important;
+    height: 223px !important;
+    min-height: 223px !important;
   }
 }
 
