@@ -219,23 +219,6 @@ export function LandingSections() {
         </div>
       </section>
 
-      <footer className="leadfix-footer">
-        <div className="leadfix-footer__brand">
-          <img src="/leadfix-logo.png" alt="LeadFix" />
-          <div>
-            <strong>LeadFix</strong>
-            <p>AI-аудитор продающей способности сайтов</p>
-          </div>
-        </div>
-        <nav aria-label="Навигация в футере">
-          <a href="#audience">Для кого</a>
-          <a href="#audit-checks">Что проверяем</a>
-          <a href="#pricing">Тарифы</a>
-          <a href="#cases">Пример отчёта</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <p className="leadfix-footer__note">© 2026 LeadFix. Рекомендательный аудит точек потери заявок.</p>
-      </footer>
     </div>
   );
 }
