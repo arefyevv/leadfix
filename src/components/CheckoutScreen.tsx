@@ -41,25 +41,6 @@ export function CheckoutScreen({
               <div><span>Стоимость</span><b>{selectedPlanData.price}</b></div>
             </div>
           </section>
-
-          <section className="checkout-audit__form-card">
-            <form className="checkout-form" onSubmit={onSubmit} noValidate>
-              <h3>Куда отправить аудит</h3>
-              <div className="field">
-                <label htmlFor="checkout-email">Email</label>
-                <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="you@company.ru" />
-              </div>
-              <div className="field">
-                <label htmlFor="checkout-telegram">Telegram (необязательно)</label>
-                <input id="checkout-telegram" value={telegram} onChange={(event) => onTelegramChange(event.target.value)} type="text" placeholder="@username" />
-              </div>
-              <p className="checkout-error" aria-live="polite">{error}</p>
-              <button className="checkout-submit" type="submit">Перейти к оплате</button>
-            </form>
-
-            <div className="guarantee-block">Отчёт носит рекомендательный характер и помогает найти потенциальные точки потери заявок.</div>
-            {success && <div className="payment-placeholder">Оплата будет подключена следующим этапом</div>}
-          </section>
         </aside>
 
         <main className="full-audit-content checkout-audit__content">
@@ -79,10 +60,36 @@ export function CheckoutScreen({
               <h2>Выберите глубину аудита</h2>
             </div>
             <p className="full-audit__lead">Карточки отличаются глубиной проверки, форматом отчёта и уровнем ручной проверки.</p>
-            <div className="pricing-grid checkout-pricing">
-              {auditPlans.map((plan) => (
-                <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} />
-              ))}
+            <div className="checkout-audit__selection">
+              <div className="pricing-grid checkout-pricing">
+                {auditPlans.map((plan) => (
+                  <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} />
+                ))}
+              </div>
+
+              <aside className="checkout-audit__form-card">
+                <form className="checkout-form" onSubmit={onSubmit} noValidate>
+                  <h3>Куда отправить аудит</h3>
+                  <p>Укажите контакты, чтобы перейти к оплате выбранного тарифа.</p>
+                  <div className="field">
+                    <label htmlFor="checkout-email">Email</label>
+                    <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="you@company.ru" />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="checkout-telegram">Telegram (необязательно)</label>
+                    <input id="checkout-telegram" value={telegram} onChange={(event) => onTelegramChange(event.target.value)} type="text" placeholder="@username" />
+                  </div>
+                  <div className="checkout-audit__form-total">
+                    <span>{selectedPlanData.name}</span>
+                    <b>{selectedPlanData.price}</b>
+                  </div>
+                  <p className="checkout-error" aria-live="polite">{error}</p>
+                  <button className="checkout-submit" type="submit">Перейти к оплате</button>
+                </form>
+
+                <div className="guarantee-block">Отчёт носит рекомендательный характер и помогает найти потенциальные точки потери заявок.</div>
+                {success && <div className="payment-placeholder">Оплата будет подключена следующим этапом</div>}
+              </aside>
             </div>
           </section>
         </main>

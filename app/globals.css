@@ -7004,48 +7004,81 @@ button { cursor: pointer; }
 }
 
 /* Checkout follows the full report workspace and reuses the landing plans. */
+.checkout-audit__layout {
+  grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) !important;
+  max-width: 1580px;
+}
+.checkout-audit__selection {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 300px);
+  gap: 14px;
+  align-items: stretch;
+  margin-top: 22px;
+}
 .checkout-audit__form-card {
   padding: 22px;
-  color: #fff;
-  border: 1px solid rgba(193, 215, 255, .18);
-  border-radius: 20px;
-  background: rgba(8, 25, 49, .72);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08);
-  backdrop-filter: blur(18px);
+  color: #16233d;
+  border: 1px solid #e4eaf3;
+  border-radius: 14px;
+  background: #f8fafc;
 }
 .checkout-audit__form-card h3 {
   margin: 0 0 4px;
-  color: #fff;
+  color: #16233d;
   font-size: 20px;
   line-height: 1.1;
 }
+.checkout-audit__form-card .checkout-form > p:not(.checkout-error) {
+  margin: 0 0 6px;
+  color: #69758d;
+  font-size: 13px;
+  line-height: 1.45;
+}
 .checkout-audit__form-card .field label {
-  color: rgba(207, 221, 248, .7);
+  color: #69758d;
 }
 .checkout-audit__form-card .field input {
-  color: #fff;
-  border-color: rgba(193, 215, 255, .18);
+  color: #16233d;
+  border-color: #d9e2ee;
   border-radius: 10px;
-  background: rgba(193, 215, 255, .08);
+  background: #fff;
 }
 .checkout-audit__form-card .field input::placeholder {
-  color: rgba(207, 221, 248, .46);
+  color: #a0adbd;
 }
 .checkout-audit__form-card .field input:focus {
-  border-color: rgba(83, 225, 165, .72);
+  border-color: rgba(40, 119, 218, .52);
 }
 .checkout-audit__form-card .checkout-submit {
   color: #092036;
   background: linear-gradient(180deg, #53e1a5, #31ce8b);
 }
-.checkout-audit__form-card .guarantee-block {
-  color: rgba(219, 230, 250, .68);
-  border-color: rgba(193, 215, 255, .14);
+.checkout-audit__form-total {
+  display: grid;
+  gap: 5px;
+  margin-top: 4px;
+  padding: 13px;
+  border: 1px solid #dce5ef;
   border-radius: 10px;
-  background: rgba(193, 215, 255, .06);
+  background: #fff;
+}
+.checkout-audit__form-total span {
+  color: #69758d;
+  font-size: 12px;
+}
+.checkout-audit__form-total b {
+  color: #16233d;
+  font-size: 20px;
+  line-height: 1.1;
+}
+.checkout-audit__form-card .guarantee-block {
+  color: #69758d;
+  border-color: #dce5ef;
+  border-radius: 10px;
+  background: #fff;
 }
 .checkout-audit__form-card .payment-placeholder {
-  color: #bff4dc;
+  color: #167650;
   border-radius: 10px;
 }
 .checkout-audit__hero .full-audit-content__hero-metrics {
@@ -7054,10 +7087,11 @@ button { cursor: pointer; }
 .checkout-pricing {
   align-items: stretch;
   gap: 10px;
+  margin-top: 0;
 }
 .checkout-pricing .pricing-card {
-  min-height: 710px;
-  padding: 18px;
+  min-height: 740px;
+  padding: 16px;
   gap: 10px;
   color: #16233d;
   border-color: #e4eaf3;
@@ -7099,11 +7133,11 @@ button { cursor: pointer; }
 }
 .checkout-pricing .pricing-card h3 {
   color: inherit;
-  font-size: 22px;
+  font-size: 20px;
 }
 .checkout-pricing .pricing-card strong {
   color: inherit;
-  font-size: 27px;
+  font-size: 23px;
   line-height: 1.05;
 }
 .checkout-pricing .pricing-card p {
@@ -7195,6 +7229,9 @@ button { cursor: pointer; }
   .full-report__inner.full-audit__layout {
     grid-template-columns: 1fr;
   }
+  .checkout-audit__layout {
+    grid-template-columns: 1fr !important;
+  }
   .full-audit-sidebar {
     position: static;
     display: block;
@@ -7208,13 +7245,14 @@ button { cursor: pointer; }
   .preview-audit .full-audit-sidebar__score {
     margin-top: 14px;
   }
+  .checkout-audit__selection {
+    grid-template-columns: 1fr;
+  }
   .checkout-audit__content {
     order: -1;
   }
   .checkout-audit__sidebar {
     order: 2;
-  }
-  .checkout-audit__form-card {
     margin-top: 14px;
   }
 }
