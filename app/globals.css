@@ -7227,11 +7227,11 @@ button { cursor: pointer; }
 #pricing .landing-pricing .pricing-card {
   position: relative !important;
   display: grid !important;
-  grid-template-rows: auto auto auto auto auto !important;
-  align-content: start !important;
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 16px !important;
+  grid-template-rows: auto auto auto 1fr 58px !important;
+  align-content: stretch !important;
+  min-height: 626px !important;
+  height: 626px !important;
+  padding: 16px 16px 86px !important;
   gap: 8px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
@@ -7255,9 +7255,10 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card__intro {
   display: grid !important;
-  grid-template-rows: 24px 48px minmax(46px, auto) !important;
-  gap: 8px !important;
-  margin-top: 20px !important;
+  grid-template-rows: auto auto auto !important;
+  gap: 7px !important;
+  margin-top: 18px !important;
+  margin-bottom: 2px !important;
 }
 
 #pricing .landing-pricing .pricing-card__intro h3,
@@ -7282,13 +7283,13 @@ button { cursor: pointer; }
 #pricing .landing-pricing .pricing-card p {
   color: #69758d !important;
   font-size: 14px !important;
-  line-height: 1.4 !important;
+  line-height: 1.35 !important;
 }
 
 #pricing .landing-pricing .pricing-card__group {
   display: grid !important;
   gap: 8px !important;
-  margin-top: 0 !important;
+  margin-top: 2px !important;
 }
 
 #pricing .landing-pricing .pricing-card__group > span,
@@ -7348,7 +7349,11 @@ button { cursor: pointer; }
 }
 
 #pricing .landing-pricing .pricing-card__cta {
-  min-height: 46px !important;
+  position: absolute !important;
+  right: 16px !important;
+  bottom: 16px !important;
+  left: 16px !important;
+  min-height: 58px !important;
   display: grid !important;
   place-items: center !important;
   align-self: end !important;
@@ -7366,8 +7371,9 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card--recommended,
 #pricing .landing-pricing .pricing-card.is-selected {
-  min-height: 0 !important;
-  height: auto !important;
+  min-height: 626px !important;
+  height: 626px !important;
+  transform: none !important;
   color: #ffffff !important;
   border-color: rgba(174, 205, 255, .22) !important;
   background:
@@ -7378,6 +7384,7 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card--recommended:hover,
 #pricing .landing-pricing .pricing-card.is-selected:hover {
+  transform: none !important;
   border-color: rgba(174, 205, 255, .34) !important;
   box-shadow: 0 22px 56px rgba(11, 24, 48, .18) !important;
 }
@@ -7421,6 +7428,7 @@ button { cursor: pointer; }
 
 #pricing .landing-pricing .pricing-card--recommended .pricing-card__cta,
 #pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta {
+  min-height: 58px !important;
   color: #0f241a !important;
   background: linear-gradient(180deg, #49e6a2 0%, #2fd08c 100%) !important;
   box-shadow: 0 12px 28px rgba(47, 208, 140, .24), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
@@ -7428,6 +7436,7 @@ button { cursor: pointer; }
 
 @media (max-width: 760px) {
   #pricing .landing-pricing .pricing-card {
+    height: auto !important;
     min-height: 0 !important;
   }
 
