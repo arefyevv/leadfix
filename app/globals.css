@@ -6883,6 +6883,129 @@ button { cursor: pointer; }
   line-height: 1.5;
 }
 
+/* Preview report uses the same workspace language as the paid report. */
+.preview-audit .preview-report__header {
+  align-items: start;
+}
+.preview-audit .preview-report__header h1 {
+  max-width: 740px;
+  color: #fff;
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+.preview-audit .preview-report__header p:not(.preview-report__eyebrow) {
+  color: rgba(230, 239, 255, .74);
+}
+.preview-audit .preview-report__meta {
+  color: rgba(207, 221, 248, .7);
+}
+.preview-audit .preview-report__meta span {
+  color: #5ce4aa;
+}
+.preview-audit .preview-score__main > span,
+.preview-audit .preview-score__metrics span {
+  color: #7b8799;
+}
+.preview-audit .preview-score__main strong {
+  color: #248b63;
+}
+.preview-audit .preview-score__main small {
+  color: #93a1b3;
+}
+.preview-audit .preview-score__status {
+  color: #16233d;
+}
+.preview-audit .preview-score__metrics div {
+  border-color: #e4eaf3;
+  background: #f8fafc;
+}
+.preview-audit .preview-score__metrics strong {
+  color: #16233d;
+}
+.preview-audit .preview-report__eyebrow {
+  color: #2877da;
+}
+.preview-audit .preview-report__header .preview-report__eyebrow {
+  color: #5ce4aa;
+}
+.preview-audit .preview-report__section h2,
+.preview-audit .preview-unlock h2 {
+  color: #14213b;
+}
+.preview-audit .preview-report__section p,
+.preview-audit .preview-unlock > p:not(.preview-report__eyebrow) {
+  color: #69758d;
+}
+.preview-audit .preview-summary p:last-child {
+  border-color: rgba(49, 201, 141, .45);
+}
+.preview-audit .preview-section-heading > span {
+  color: #7b8799;
+}
+.preview-audit .preview-issue,
+.preview-audit .preview-category,
+.preview-audit .preview-locked__card {
+  border-color: #e4eaf3;
+  background: #fff;
+}
+.preview-audit .preview-issue.is-critical {
+  border-color: rgba(232, 86, 77, .28);
+  background: linear-gradient(90deg, rgba(232, 86, 77, .08), #fff 48%);
+}
+.preview-audit .preview-issue__number {
+  color: #9aa6b7;
+  border-color: #e4eaf3;
+}
+.preview-audit .preview-issue h3,
+.preview-audit .preview-category h3,
+.preview-audit .preview-locked__card h3,
+.preview-audit .preview-empty h3 {
+  color: #16233d;
+}
+.preview-audit .preview-issue__details div {
+  border-color: #e9eef5;
+  background: #f8fafc;
+}
+.preview-audit .preview-issue__details b,
+.preview-audit .preview-category__locked-score {
+  color: #248b63;
+}
+.preview-audit .preview-issue__details span {
+  color: #63718a;
+}
+.preview-audit .preview-category p {
+  color: #69758d;
+}
+.preview-audit .preview-empty {
+  border-color: rgba(49, 201, 141, .32);
+  background: #effaf5;
+}
+.preview-audit .preview-locked__card {
+  background: #f8fafc;
+}
+.preview-audit .preview-lock-icon,
+.preview-audit .preview-lock-icon::before {
+  border-color: #79a3d4;
+}
+.preview-audit .preview-lock-icon::after {
+  background: #79a3d4;
+}
+.preview-audit .preview-locked__blur span {
+  background: #c9d5e5;
+}
+.preview-audit .preview-locked__card p {
+  color: #8a98aa;
+}
+.preview-audit .preview-unlock {
+  background: linear-gradient(135deg, #eefaf6, #fff 70%);
+}
+.preview-audit .preview-unlock .report-button--secondary {
+  color: #34445e;
+  border-color: #dce5ef;
+  background: #fff;
+}
+
 @media (max-width: 1080px) {
   .full-report__inner.full-audit__layout {
     grid-template-columns: 1fr;
@@ -6896,6 +7019,9 @@ button { cursor: pointer; }
   }
   .full-audit-content__score dl {
     grid-column: 1 / -1;
+  }
+  .preview-audit .full-audit-sidebar__score {
+    margin-top: 14px;
   }
 }
 
@@ -6916,6 +7042,9 @@ button { cursor: pointer; }
     border-radius: 16px;
   }
   .full-audit-content__hero h2 {
+    font-size: clamp(34px, 11vw, 48px);
+  }
+  .preview-audit .preview-report__header h1 {
     font-size: clamp(34px, 11vw, 48px);
   }
   .full-audit-content__hero-metrics {

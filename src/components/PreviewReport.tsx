@@ -131,11 +131,38 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
   }).format(new Date());
   const categories = getCategories(analysis);
   const visibleInsights = previewReport.insights.slice(0, 3);
+  const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
 
   return (
-    <section className="report preview-report screen">
-      <div className="report__inner preview-report__inner">
-        <header className="preview-report__header">
+    <section className="full-report full-audit preview-report preview-audit screen">
+      <div className="full-report__inner full-audit__layout preview-report__inner">
+        <aside className="full-audit-sidebar">
+          <section className="full-audit-sidebar__site">
+            <div className="full-audit-sidebar__meta">
+              <div><span>Дата аудита</span><b>{reportDate}</b></div>
+              <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
+              <div><span>H1 сайта</span><b>{siteHeading}</b></div>
+            </div>
+            <div className="full-audit-sidebar__actions">
+              <button className="pdf-button" type="button" onClick={onCheckout}>Получить полный аудит</button>
+              <button className="telegram-button" type="button" onClick={onReset}>Проверить другой сайт</button>
+            </div>
+          </section>
+
+          <section className="full-audit-sidebar__score">
+            <p className="full-audit__eyebrow">Краткая оценка</p>
+            <strong>{previewReport.score}<small>/100</small></strong>
+            <p>{getScoreInterpretation(previewReport.score)}</p>
+            <dl>
+              <div><dt>Критично</dt><dd>{previewReport.criticalIssues}</dd></div>
+              <div><dt>Важно</dt><dd>{previewReport.mediumIssues}</dd></div>
+              <div><dt>Низкий</dt><dd>{previewReport.lowIssues}</dd></div>
+            </dl>
+          </section>
+        </aside>
+
+        <main className="full-audit-content preview-audit-content">
+        <header className="full-audit-content__hero preview-report__header">
           <div>
             <p className="preview-report__eyebrow">Краткий отчёт LeadFix</p>
             <h1>Предварительный аудит сайта</h1>
@@ -147,7 +174,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
         </header>
 
-        <section className="preview-score">
+        <section className="full-audit-content__score preview-score">
           <div className="preview-score__main">
             <span>Оценка продающей способности</span>
             <strong>{previewReport.score}<small>/100</small></strong>
@@ -163,13 +190,13 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
         </section>
 
-        <section className="preview-report__section preview-summary">
+        <section className="full-audit__section preview-report__section preview-summary">
           <p className="preview-report__eyebrow">Краткий вывод</p>
           <h2>Что важно исправить в первую очередь</h2>
           <p>{getSummary(analysis)}</p>
         </section>
 
-        <section className="preview-report__section">
+        <section className="full-audit__section preview-report__section">
           <div className="preview-section-heading">
             <div>
               <p className="preview-report__eyebrow">Найденные проблемы</p>
@@ -205,7 +232,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           )}
         </section>
 
-        <section className="preview-report__section">
+        <section className="full-audit__section preview-report__section">
           <div className="preview-section-heading">
             <div>
               <p className="preview-report__eyebrow">Мини-разбор</p>
@@ -228,7 +255,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
         </section>
 
-        <section className="preview-report__section preview-locked">
+        <section className="full-audit__section preview-report__section preview-locked">
           <div className="preview-section-heading">
             <div>
               <p className="preview-report__eyebrow">Полный отчёт</p>
@@ -248,7 +275,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
         </section>
 
-        <section className="preview-unlock">
+        <section className="full-audit__section preview-unlock">
           <p className="preview-report__eyebrow">Следующий шаг</p>
           <h2>Разблокировать полный отчёт</h2>
           <p>Получите полный список проблем, приоритеты исправлений и рекомендации, которые можно передать дизайнеру, маркетологу или подрядчику.</p>
@@ -257,6 +284,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
             <button className="report-button report-button--secondary" type="button" onClick={onReset}>Проверить другой сайт</button>
           </div>
         </section>
+        </main>
       </div>
     </section>
   );
