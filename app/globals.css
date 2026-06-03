@@ -8070,3 +8070,44 @@ h6,
 .legal-page__card h1 {
   letter-spacing: 0 !important;
 }
+
+/* Unified landing headings after the hero. */
+.landing-flow > .landing-section:not(.hero):not(.screen) .section-head,
+.report-showcase__head {
+  width: 100% !important;
+  max-width: 980px !important;
+  display: grid !important;
+  justify-items: center !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  text-align: center !important;
+}
+
+.landing-flow > .landing-section:not(.hero):not(.screen) .section-head h2,
+#audience .section-head h2,
+#audit-checks .section-head h2,
+.report-showcase__head h2,
+.landing-final .section-head h2,
+#faq .section-head h2 {
+  width: 100% !important;
+  max-width: 980px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  font-size: clamp(40px, 4vw, 58px) !important;
+  line-height: 1.06 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  text-wrap: balance !important;
+  justify-self: center !important;
+}
+
+.landing-flow > .landing-section:not(.hero):not(.screen) .section-head p,
+#audience .section-head p,
+#audit-checks .section-head p,
+.report-showcase__head p,
+.landing-final .section-head p {
+  max-width: 720px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  text-align: center !important;
+}
