@@ -4707,9 +4707,16 @@ h6 {
 
 #audience .audience-card:hover {
   background: #ffffff !important;
-  border-color: rgba(78, 123, 242, .26) !important;
+  border-color: rgba(16, 16, 20, .08) !important;
   box-shadow: none !important;
-  transform: none !important;
+  animation: audience-card-tremble .34s ease-in-out both !important;
+}
+
+@keyframes audience-card-tremble {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(.7px, -.5px, 0); }
+  50% { transform: translate3d(-.6px, .4px, 0); }
+  75% { transform: translate3d(.4px, .3px, 0); }
 }
 
 #audience .audience-card::after {
