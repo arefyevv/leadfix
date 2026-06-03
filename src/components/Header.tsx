@@ -13,6 +13,8 @@ const navItems = [
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeHref, setActiveHref] = useState("");
+  const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, x: 0, visible: false });
 
   useEffect(() => {
     function handleScroll() {
@@ -24,6 +26,63 @@ export function Header() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.getElementById(item.href.split("#")[1] ?? ""))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    function updateActiveSection() {
+      const viewportAnchor = window.innerHeight * 0.38;
+      const current = sections.reduce<HTMLElement | null>((active, section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= viewportAnchor && rect.bottom >= viewportAnchor) return section;
+        if (!active && rect.top <= viewportAnchor) return section;
+        return active;
+      }, null);
+
+      setActiveHref(current ? `/#${current.id}` : "");
+    }
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+
+  useEffect(() => {
+    function updateIndicator() {
+      if (!activeHref) {
+        setIndicatorStyle((current) => ({ ...current, visible: false }));
+        return;
+      }
+
+      const menu = document.querySelector<HTMLElement>(".leadfix-fixed-nav .laptop-menu");
+      const activeLink = document.querySelector<HTMLElement>(`.leadfix-fixed-nav .laptop-menu a[data-href="${activeHref}"]`);
+
+      if (!menu || !activeLink) {
+        setIndicatorStyle((current) => ({ ...current, visible: false }));
+        return;
+      }
+
+      const menuRect = menu.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      setIndicatorStyle({
+        width: Math.round(linkRect.width),
+        x: Math.round(linkRect.left - menuRect.left),
+        visible: true
+      });
+    }
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeHref]);
 
   function closeMobileMenu() {
     setMenuOpen(false);
@@ -51,8 +110,13 @@ export function Header() {
       </a>
 
       <nav className="laptop-menu" aria-label="Основная навигация">
-        {navItems.map((item, index) => (
-          <a href={item.href} key={item.label} className={index === 0 ? "is-active" : undefined}>
+        <span
+          className={indicatorStyle.visible ? "laptop-menu__indicator is-visible" : "laptop-menu__indicator"}
+          style={{ width: `${indicatorStyle.width}px`, transform: `translateX(${indicatorStyle.x}px)` }}
+          aria-hidden="true"
+        />
+        {navItems.map((item) => (
+          <a href={item.href} key={item.label} data-href={item.href} className={activeHref === item.href ? "is-active" : undefined}>
             {item.label}
           </a>
         ))}

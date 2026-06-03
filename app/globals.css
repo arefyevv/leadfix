@@ -3846,6 +3846,7 @@ h6 {
 }
 
 .leadfix-fixed-nav .laptop-menu {
+  position: relative;
   display: flex;
   align-items: center;
   min-height: 52px;
@@ -3857,7 +3858,28 @@ h6 {
   backdrop-filter: blur(18px);
 }
 
+.leadfix-fixed-nav .laptop-menu__indicator {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(91, 132, 224, .44), rgba(49, 81, 163, .28));
+  border: 1px solid rgba(149, 179, 255, .26);
+  border-radius: 9px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 22px rgba(46, 91, 204, .28);
+  transition: transform .36s cubic-bezier(.22, 1, .36, 1), width .36s cubic-bezier(.22, 1, .36, 1), opacity .18s ease;
+}
+
+.leadfix-fixed-nav .laptop-menu__indicator.is-visible {
+  opacity: 1;
+}
+
 .leadfix-fixed-nav .laptop-menu a {
+  position: relative;
+  z-index: 1;
   min-height: 42px;
   display: inline-flex;
   align-items: center;
@@ -3874,12 +3896,8 @@ h6 {
   color: #fff;
 }
 
-.leadfix-fixed-nav .laptop-menu a.is-active,
-.leadfix-fixed-nav .laptop-menu a:first-child {
+.leadfix-fixed-nav .laptop-menu a.is-active {
   color: #fff;
-  background: linear-gradient(180deg, rgba(91, 132, 224, .44), rgba(49, 81, 163, .28));
-  border: 1px solid rgba(149, 179, 255, .26);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 22px rgba(46, 91, 204, .28);
 }
 
 .leadfix-fixed-nav .laptop-cta {
@@ -8020,6 +8038,21 @@ h6,
 .preview-audit .preview-report__header h1,
 .legal-page__card h1 {
   letter-spacing: 0 !important;
+}
+
+/* Moving nav indicator controls active state; links themselves do not draw the pill. */
+.leadfix-fixed-nav .laptop-menu a:first-child,
+.leadfix-fixed-nav .laptop-menu a.is-active,
+.hero--reference .laptop-menu a:first-child,
+.hero--reference .laptop-menu a.is-active {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.leadfix-fixed-nav .laptop-menu a.is-active,
+.hero--reference .laptop-menu a.is-active {
+  color: #fff !important;
 }
 
 /* Hero content exact centering. */
