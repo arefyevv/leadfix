@@ -5069,7 +5069,7 @@ button { cursor: pointer; }
 }
 
 #faq .section-head h2 span {
-  color: #15995a !important;
+  color: inherit !important;
 }
 
 #faq .faq-list {
