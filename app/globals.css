@@ -13,6 +13,8 @@
   --accent-dark: #20a971;
   --accent-soft: rgba(47, 208, 140, .12);
   --shadow: 0 28px 80px rgba(0, 0, 0, .36);
+  --font-body-fallback: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading-fallback: Rubik, Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -23,11 +25,20 @@ body {
   overflow-x: clip;
   color: var(--dark-ink);
   background: var(--paper);
-  font-family: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-body), var(--font-body-fallback);
 }
 
 button, input { font: inherit; }
 button { cursor: pointer; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-heading-fallback);
+}
 
 .screen { animation: screenFade .45s ease both; }
 @keyframes screenFade {
