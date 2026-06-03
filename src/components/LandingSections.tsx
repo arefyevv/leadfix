@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AudienceLottieIcon } from "./AudienceLottieIcon";
 import { PricingCard } from "./PricingCard";
 import { ReportShowcase } from "./ReportShowcase";
 import { auditPlans } from "./plans";
@@ -12,7 +13,7 @@ const audiences = [
   ["Веб-студиям", "Использовать аудит как входной продукт перед доработкой сайта или редизайном."]
 ];
 
-const audienceIcons = ["owner", "growth", "ads", "studio"];
+const audienceIcons = ["business", "marketing", "analytics", "design"] as const;
 
 const audienceUseCases = [
   "Проверить посадочную страницу до того, как бюджет начнёт сливать заявки.",
@@ -107,7 +108,7 @@ export function LandingSections() {
         <div className="audience-grid">
           {audiences.map(([title, text], index) => (
             <article className={`landing-card audience-card audience-card--${index + 1}`} key={title}>
-              <span className={`audience-icon audience-icon--${audienceIcons[index]}`} aria-hidden="true" />
+              <AudienceLottieIcon name={audienceIcons[index]} />
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
