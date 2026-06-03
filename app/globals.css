@@ -38,6 +38,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading), var(--font-heading-fallback);
+  letter-spacing: 0;
 }
 
 .screen { animation: screenFade .45s ease both; }
@@ -8050,4 +8051,22 @@ h6 {
   .legal-shell .leadfix-fixed-nav .mobile-menu-button span {
     background: #172033;
   }
+}
+
+/* Keep heading tracking neutral with Inter Tight. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero__title,
+.section-head h2,
+#faq .section-head h2,
+.report-showcase__head h2,
+.full-audit-content__hero h2,
+.checkout-audit__heading h2,
+.preview-audit .preview-report__header h1,
+.legal-page__card h1 {
+  letter-spacing: 0 !important;
 }
