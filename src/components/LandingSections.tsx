@@ -94,6 +94,7 @@ const faq = [
 
 export function LandingSections() {
   const [openAuditIndex, setOpenAuditIndex] = useState<number | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   return (
     <div className="landing-flow">
@@ -201,12 +202,23 @@ export function LandingSections() {
           <p>Коротко о формате аудита, ожиданиях и применимости для разных сайтов.</p>
         </div>
         <div className="faq-list">
-          {faq.map(([question, answer]) => (
-            <details className="faq-item" key={question}>
-              <summary>{question}</summary>
-              <p>{answer}</p>
-            </details>
-          ))}
+          {faq.map(([question, answer], index) => {
+            const isOpen = openFaqIndex === index;
+
+            return (
+              <details className="faq-item" key={question} open={isOpen}>
+                <summary
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setOpenFaqIndex((current) => (current === index ? null : index));
+                  }}
+                >
+                  {question}
+                </summary>
+                <p>{answer}</p>
+              </details>
+            );
+          })}
         </div>
       </section>
 
