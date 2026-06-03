@@ -47,7 +47,7 @@ export function Header() {
       </button>
 
       <a className="laptop-logo" href="/#audit" aria-label="LeadFix" onClick={closeMobileMenu}>
-        <img src="/leadfix-logo.png" alt="LeadFix" />
+        <img src="/logo-white.svg" alt="LeadFix" />
       </a>
 
       <nav className="laptop-menu" aria-label="Основная навигация">

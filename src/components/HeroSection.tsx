@@ -54,7 +54,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="laptop-dashboard" aria-hidden="true">
             <aside className="dashboard-sidebar">
               <div className="dashboard-brand">
-                <img src="/leadfix-logo.png" alt="LeadFix" />
+                <img src="/logo-black.svg" alt="LeadFix" />
               </div>
               <small>Main Menu</small>
               <p className="is-selected">Dashboard</p>

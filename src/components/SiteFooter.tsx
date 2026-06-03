@@ -4,7 +4,7 @@ export function SiteFooter() {
       <div className="site-footer__card">
         <div className="site-footer__main">
           <div className="site-footer__brand">
-            <img src="/leadfix-logo.png" alt="LeadFix" />
+            <img src="/logo-black.svg" alt="LeadFix" />
             <p>Аудит продающей способности лендингов под платный трафик.</p>
           </div>
 

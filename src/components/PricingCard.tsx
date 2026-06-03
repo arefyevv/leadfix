@@ -18,7 +18,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
       {isCheckout && selected && <span className="pricing-card__selected-badge">Выбрано</span>}
       {!isCheckout && (
         <span className="pricing-card__icon" aria-hidden="true">
-          <img src="/leadfix-logo.png" alt="" />
+          <img src="/logo-black.svg" alt="" />
         </span>
       )}
       <div className="pricing-card__intro">
