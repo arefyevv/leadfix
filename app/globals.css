@@ -8071,6 +8071,36 @@ h6,
   letter-spacing: 0 !important;
 }
 
+/* Hero content exact centering. */
+.hero--reference .hero__inner,
+.hero--reference .hero__title,
+.hero--reference .hero__subtitle,
+.hero--reference .site-form {
+  justify-self: center !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.hero--reference .hero__inner {
+  width: min(100%, 1180px) !important;
+  justify-items: center !important;
+  text-align: center !important;
+}
+
+.hero--reference .hero__title {
+  width: min(100%, 1180px) !important;
+  text-align: center !important;
+}
+
+.hero--reference .hero__subtitle {
+  width: min(100%, 720px) !important;
+  text-align: center !important;
+}
+
+.hero--reference .site-form {
+  width: min(100%, 650px) !important;
+}
+
 /* Unified landing headings after the hero. */
 .landing-flow > .landing-section:not(.hero):not(.screen) .section-head,
 .report-showcase__head {
