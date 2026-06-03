@@ -4719,7 +4719,7 @@ h6 {
 #audience .audience-card h3 {
   grid-row: 3;
   max-width: 230px !important;
-  margin: 0 !important;
+  margin: -10px 0 0 !important;
   font-size: clamp(18px, 1.45vw, 22px) !important;
   line-height: 1.12 !important;
   font-weight: 600 !important;
@@ -4793,6 +4793,11 @@ h6 {
   color: rgba(16, 16, 20, .66);
   font-size: 15px;
   line-height: 1.45;
+}
+
+#audience .audience-note li strong {
+  color: rgba(16, 16, 20, .86);
+  font-weight: 700;
 }
 
 #audience .audience-note li::before {

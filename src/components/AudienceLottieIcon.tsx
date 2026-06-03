@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Lottie from "lottie-react";
 import type { LottieRefCurrentProps } from "lottie-react";
 import analyticsAnimation from "../../public/animations/analytics.json";
@@ -48,20 +48,28 @@ function thickenStrokes<T>(animationData: T): T {
 export function AudienceLottieIcon({ name }: AudienceLottieIconProps) {
   const containerRef = useRef<HTMLSpanElement | null>(null);
   const lottieRef = useRef<LottieRefCurrentProps | null>(null);
-  const [hasPlayed, setHasPlayed] = useState(false);
   const animationData = useMemo(() => thickenStrokes(animations[name]), [name]);
 
   useEffect(() => {
     const node = containerRef.current;
-    if (!node || hasPlayed) return;
+    if (!node) return;
+    let canReplay = true;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        lottieRef.current?.stop();
-        lottieRef.current?.play();
-        setHasPlayed(true);
-        observer.disconnect();
+        if (!entry) return;
+
+        if (entry.isIntersecting && canReplay) {
+          canReplay = false;
+          lottieRef.current?.stop();
+          lottieRef.current?.play();
+          return;
+        }
+
+        if (!entry.isIntersecting) {
+          canReplay = true;
+          lottieRef.current?.stop();
+        }
       },
       { threshold: 0.45 }
     );
@@ -69,7 +77,7 @@ export function AudienceLottieIcon({ name }: AudienceLottieIconProps) {
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [hasPlayed]);
+  }, []);
 
   return (
     <span className="audience-lottie" ref={containerRef} aria-hidden="true">

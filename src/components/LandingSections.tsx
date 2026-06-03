@@ -24,6 +24,15 @@ const audienceUseCases = [
   "Получить понятный список задач для дизайнера, маркетолога или разработчика."
 ];
 
+const audienceUseCaseHighlights = [
+  "Проверить посадочную страницу",
+  "какие блоки реально мешают конверсии",
+  "Показать клиенту конкретные причины",
+  "Быстро найти очевидные проблемы",
+  "Проверить типовые ошибки лендинга",
+  "Получить понятный список задач"
+];
+
 const auditChecks = [
   {
     title: "Оффер и первый экран",
@@ -116,9 +125,18 @@ export function LandingSections() {
           <article className="audience-note" aria-label="Сценарии использования">
             <h3>Сценарии</h3>
             <ul>
-              {audienceUseCases.map((text) => (
-                <li key={text}>{text}</li>
-              ))}
+              {audienceUseCases.map((text, index) => {
+                const highlight = audienceUseCaseHighlights[index];
+                const [before, after = ""] = text.split(highlight);
+
+                return (
+                  <li key={text}>
+                    {before}
+                    <strong>{highlight}</strong>
+                    {after}
+                  </li>
+                );
+              })}
             </ul>
           </article>
         </div>
