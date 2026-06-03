@@ -197,7 +197,7 @@ export function LandingSections() {
       <section className="landing-section faq-section" id="faq">
         <div className="section-kicker">FAQ</div>
         <div className="section-head">
-          <h2>Частые вопросы</h2>
+          <h2>Частые <span>вопросы</span></h2>
           <p>Коротко о формате аудита, ожиданиях и применимости для разных сайтов.</p>
         </div>
         <div className="faq-list">
