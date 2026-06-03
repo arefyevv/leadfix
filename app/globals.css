@@ -14,7 +14,7 @@
   --accent-soft: rgba(47, 208, 140, .12);
   --shadow: 0 28px 80px rgba(0, 0, 0, .36);
   --font-body-fallback: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading-fallback: Rubik, Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading-fallback: "Inter Tight", Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }

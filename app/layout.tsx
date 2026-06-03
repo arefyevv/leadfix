@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Rubik } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
@@ -9,7 +9,7 @@ const inter = Inter({
   display: "swap"
 });
 
-const rubik = Rubik({
+const interTight = Inter_Tight({
   subsets: ["latin", "cyrillic"],
   variable: "--font-heading",
   display: "swap"
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${rubik.variable}`}>
+    <html lang="ru" className={`${inter.variable} ${interTight.variable}`}>
       <body>
         {children}
         <SiteFooter />
