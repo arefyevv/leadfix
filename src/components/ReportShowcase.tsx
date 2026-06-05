@@ -195,7 +195,7 @@ export function ReportShowcase() {
         </div>
 
         <div className="report-showcase__cta">
-          <a href="#audit">Проверить сайт</a>
+          <a href="/checkout">Проверить сайт</a>
           <p>Первые ошибки покажем бесплатно</p>
         </div>
       </div>

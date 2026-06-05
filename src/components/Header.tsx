@@ -123,7 +123,7 @@ export function Header() {
       </nav>
 
       <a className="laptop-cta" href="/#audit" onClick={closeMobileMenu}>
-        Проверить сайт
+        Попробовать
       </a>
 
       <nav className={menuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">

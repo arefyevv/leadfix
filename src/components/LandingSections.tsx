@@ -181,35 +181,6 @@ export function LandingSections() {
           <p>Каждый блок отчёта привязан к решению: что мешает заявке и что исправить в первую очередь.</p>
         </div>
         <div className="audit-accordion-layout">
-          <div className="audit-browser-shot" aria-label="Горизонтальный пример отчёта в браузере">
-            <div className="audit-browser-shot__chrome">
-              <span />
-              <span />
-              <span />
-              <b>leadfix.ru/report</b>
-            </div>
-            <div className="audit-browser-shot__body">
-              <div className="audit-browser-shot__hero">
-                <p>Отчёт по лендингу</p>
-                <h3>Потери заявок найдены в оффере, CTA и мобильной версии</h3>
-              </div>
-              <div className="audit-browser-shot__score">
-                <strong>74</strong>
-                <span>/100</span>
-              </div>
-              <div className="audit-browser-shot__metrics">
-                <div><b>3</b><span>критично</span></div>
-                <div><b>7</b><span>замечаний</span></div>
-                <div><b>5</b><span>quick wins</span></div>
-              </div>
-              <div className="audit-browser-shot__issues">
-                <i />
-                <i />
-                <i />
-              </div>
-            </div>
-          </div>
-
           <div className="audit-accordion">
             {auditChecks.map((item, index) => {
               const isOpen = openAuditIndex === index;
