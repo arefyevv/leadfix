@@ -3,27 +3,36 @@ import { PricingCard } from "./PricingCard";
 import { auditPlans } from "./plans";
 
 type CheckoutScreenProps = {
-  url: string;
+  urlValue: string;
   selectedPlan: string;
   email: string;
   telegram: string;
+  consent: boolean;
   error: string;
   success: boolean;
+  submitting: boolean;
   onPlanChange: (plan: string) => void;
+  onUrlChange: (url: string) => void;
   onEmailChange: (email: string) => void;
   onTelegramChange: (telegram: string) => void;
+  onConsentChange: (consent: boolean) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export function CheckoutScreen({
+  urlValue,
   selectedPlan,
   email,
   telegram,
+  consent,
   error,
   success,
+  submitting,
   onPlanChange,
+  onUrlChange,
   onEmailChange,
   onTelegramChange,
+  onConsentChange,
   onSubmit
 }: CheckoutScreenProps) {
   return (
@@ -32,8 +41,11 @@ export function CheckoutScreen({
         <main className="full-audit-content checkout-audit__content">
           <header className="checkout-audit__heading">
             <p className="full-audit__eyebrow">Следующий шаг</p>
-            <h2>Выберите подходящий формат аудита</h2>
-            <p>От быстрой AI-проверки перед запуском рекламы до регулярного контроля нескольких лендингов.</p>
+            <h2>Выберите формат аудита и оставьте заявку</h2>
+            <p>
+              Первый запуск LeadFix работает как Concierge MVP: заявка сохраняется, оплата подтверждается вручную,
+              полный аудит готовится до 24 часов.
+            </p>
           </header>
 
           <section className="full-audit__section checkout-audit__plans">
@@ -47,27 +59,47 @@ export function CheckoutScreen({
               <aside className="checkout-audit__form-card">
                 <form className="checkout-form" onSubmit={onSubmit} noValidate>
                   <h3>Куда отправить аудит</h3>
-                  <p>Укажите контакты, чтобы перейти к оплате выбранного тарифа.</p>
+                  <p>Укажите контакты. После заявки откроется инструкция по оплате и ручному запуску аудита.</p>
+
+                  <div className="field">
+                    <label htmlFor="checkout-url">Сайт на проверку</label>
+                    <input id="checkout-url" value={urlValue} onChange={(event) => onUrlChange(event.target.value)} type="url" placeholder="https://site.ru" />
+                  </div>
+
                   <div className="field">
                     <label htmlFor="checkout-plan">Выбранный тариф</label>
                     <select id="checkout-plan" value={selectedPlan} onChange={(event) => onPlanChange(event.target.value)}>
                       {auditPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} — {plan.price}</option>)}
                     </select>
                   </div>
+
                   <div className="field">
                     <label htmlFor="checkout-email">Email</label>
                     <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="you@company.ru" />
                   </div>
+
                   <div className="field">
-                    <label htmlFor="checkout-telegram">Telegram (необязательно)</label>
+                    <label htmlFor="checkout-telegram">Telegram</label>
                     <input id="checkout-telegram" value={telegram} onChange={(event) => onTelegramChange(event.target.value)} type="text" placeholder="@username" />
                   </div>
+
+                  <label className="checkout-consent">
+                    <input type="checkbox" checked={consent} onChange={(event) => onConsentChange(event.target.checked)} />
+                    <span>
+                      Я согласен на обработку персональных данных и принимаю условия <a href="/offer" target="_blank">оферты</a>.
+                    </span>
+                  </label>
+
                   <p className="checkout-error" aria-live="polite">{error}</p>
-                  <button className="checkout-submit" type="submit">Перейти к оплате</button>
+                  <button className="checkout-submit" type="submit" disabled={submitting}>
+                    {submitting ? "Создаем заявку..." : "Создать заявку"}
+                  </button>
                 </form>
 
-                <div className="guarantee-block">Отчёт носит рекомендательный характер и помогает найти потенциальные точки потери заявок.</div>
-                {success && <div className="payment-placeholder">Оплата будет подключена следующим этапом</div>}
+                <div className="guarantee-block">
+                  Отчет носит информационно-аналитический характер и не гарантирует рост заявок. Первые 10 заказов нужны для валидации модели.
+                </div>
+                {success && <div className="payment-placeholder">Заявка создана. Открываем инструкцию по оплате.</div>}
               </aside>
             </div>
           </section>

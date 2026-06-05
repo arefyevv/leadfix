@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import { Metrika } from "@/components/Metrika";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         {children}
         <SiteFooter />
+        <Metrika />
       </body>
     </html>
   );
