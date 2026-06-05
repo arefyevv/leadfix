@@ -18,6 +18,12 @@ const loadingSteps = [
   "Собираем предварительный отчёт"
 ];
 
+const MIN_LOADING_MS = 5600;
+
+function delay(ms: number) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
 export function ReportRoute() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,11 +44,9 @@ export function ReportRoute() {
     }
 
     setUrl(normalizedUrl);
-    const cachedAnalysis = getAuditCache(normalizedUrl);
-    if (cachedAnalysis) {
-      setAnalysis(cachedAnalysis);
-      return;
-    }
+    setError("");
+    setAnalysis(null);
+    setLoadingIndex(0);
 
     let cancelled = false;
     let index = 0;
@@ -51,8 +55,11 @@ export function ReportRoute() {
       setLoadingIndex(Math.min(index, loadingSteps.length - 1));
     }, 850);
 
-    fetchAudit(normalizedUrl)
-      .then((result) => {
+    const cachedAnalysis = getAuditCache(normalizedUrl);
+    const analysisRequest = cachedAnalysis ? Promise.resolve(cachedAnalysis) : fetchAudit(normalizedUrl);
+
+    Promise.all([analysisRequest, delay(MIN_LOADING_MS)])
+      .then(([result]) => {
         if (!cancelled) {
           setLoadingIndex(loadingSteps.length - 1);
           setAnalysis(result);
