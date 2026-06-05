@@ -39,7 +39,7 @@ export function SiteFooter() {
               </svg>
               <span>Telegram</span>
             </a>
-            <a href="mailto:hello@leadfix.ru">hello@leadfix.ru</a>
+            <a href="mailto:viktor-82rus@ya.ru">viktor-82rus@ya.ru</a>
           </div>
         </div>
       </div>
