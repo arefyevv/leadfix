@@ -33,13 +33,13 @@ export function SiteFooter() {
             <span>ИНН 910907646492</span>
           </div>
           <div className="site-footer__contacts">
-            <a href="https://t.me/delegin" target="_blank" rel="noreferrer" aria-label="Telegram LeadFix">
+            <a href="https://t.me/LeadFixRu" target="_blank" rel="noreferrer" aria-label="Telegram LeadFix">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20.7 4.1 3.9 10.6c-1.1.4-1.1 1.1-.2 1.4l4.3 1.3 1.7 5.1c.2.7.1.9.8.9.5 0 .8-.2 1-.4l2.1-2 4.4 3.2c.8.5 1.4.2 1.6-.8l2.8-13.4c.3-1.2-.5-1.8-1.7-1.3ZM9.1 13l8.4-5.3c.4-.2.8-.1.5.2l-6.9 6.3-.3 3.1-1.7-4.3Z" />
               </svg>
               <span>Telegram</span>
             </a>
-            <a href="mailto:viktor-82rus@ya.ru">viktor-82rus@ya.ru</a>
+            <span>Написать на почту</span>
           </div>
         </div>
       </div>

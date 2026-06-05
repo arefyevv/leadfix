@@ -7878,7 +7878,8 @@ h6 {
 .site-footer__contacts {
   justify-content: flex-end;
 }
-.site-footer__contacts a {
+.site-footer__contacts a,
+.site-footer__contacts span {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -8707,5 +8708,23 @@ h6,
     height: 42px !important;
     display: inline-flex !important;
     align-items: center !important;
+  }
+}
+
+/* Footer should sit on the same dark page background instead of leaving a white gap. */
+.site-footer {
+  margin-top: 0 !important;
+  padding-top: clamp(64px, 8vw, 120px) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(180deg, #0d2344 0%, #061121 100%) !important;
+  background-size: 58px 58px, 58px 58px, auto !important;
+}
+
+@media (max-width: 760px) {
+  .site-footer {
+    margin-top: 0 !important;
+    padding-top: 52px !important;
   }
 }

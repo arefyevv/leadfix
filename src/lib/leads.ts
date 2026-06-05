@@ -7,14 +7,14 @@ import type { LeadRecord, LeadRequest } from "@/types/lead";
 const LEADS_DIR = path.join(process.cwd(), "data");
 const LEADS_FILE = path.join(LEADS_DIR, "leads.jsonl");
 const DEFAULT_OWNER_EMAIL = "viktor-82rus@ya.ru";
-const DEFAULT_OWNER_TELEGRAM = "@delegin";
+const DEFAULT_OWNER_TELEGRAM = "@LeadFixRu";
 
 function createLeadId() {
   return `lf_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 export function getPaymentLink() {
-  return process.env.LEADFIX_PAYMENT_LINK || "https://t.me/delegin";
+  return process.env.LEADFIX_PAYMENT_LINK || "https://t.me/LeadFixRu";
 }
 
 export function createLead(input: LeadRequest, userAgent?: string): LeadRecord {

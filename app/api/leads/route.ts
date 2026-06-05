@@ -54,6 +54,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ lead });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: "Не удалось создать заявку. Напишите в Telegram: @delegin" }, { status: 400 });
+    return NextResponse.json({ error: "Не удалось создать заявку. Напишите в Telegram: @LeadFixRu" }, { status: 400 });
   }
 }

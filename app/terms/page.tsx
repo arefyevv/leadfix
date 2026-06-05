@@ -88,7 +88,7 @@ export default function TermsPage() {
             <h2>7. Контакты</h2>
             <p>Исполнитель: НПД Арефьев В.О.</p>
             <p>ИНН 910907646492</p>
-            <p>Email: viktor-82rus@ya.ru</p>
+            <p>Email: Написать на почту</p>
           </section>
         </article>
       </main>
