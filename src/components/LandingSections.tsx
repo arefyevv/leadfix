@@ -36,33 +36,57 @@ const audienceUseCaseHighlights = [
 const auditChecks = [
   {
     title: "Оффер и первый экран",
-    description:
-      "Понимает ли посетитель за 5 секунд: что вы предлагаете; для кого это; почему выбрать именно вас."
+    summary: "Проверяем, понятно ли за 5 секунд, что вы предлагаете, кому и почему это стоит выбрать.",
+    details: [
+      "Есть ли конкретное обещание результата, а не общий красивый слоган.",
+      "Понятно ли, для какой аудитории и задачи сделано предложение.",
+      "Совпадает ли первый экран с ожиданием пользователя из рекламы или поиска."
+    ]
   },
   {
-    title: "CTA и формы",
-    description:
-      "Проверяем: заметны ли кнопки; есть ли призыв к действию; насколько легко оставить заявку."
+    title: "CTA и сценарий заявки",
+    summary: "Смотрим, насколько легко пользователю понять следующий шаг и оставить заявку без лишнего трения.",
+    details: [
+      "Заметны ли основные кнопки и не конкурируют ли они между собой.",
+      "Понятен ли текст действия: что произойдёт после клика.",
+      "Нет ли лишних полей, сомнительных формулировок и барьеров перед отправкой."
+    ]
   },
   {
-    title: "Доверие",
-    description:
-      "Анализируем: кейсы, отзывы, цифры, гарантии и подтверждение экспертности."
+    title: "Доверие и доказательства",
+    summary: "Оцениваем, хватает ли пользователю оснований доверять компании до отправки контактов.",
+    details: [
+      "Есть ли кейсы, отзывы, цифры, сертификаты, гарантии или понятные факты.",
+      "Не выглядят ли доказательства абстрактными и неподтверждёнными.",
+      "Показывает ли сайт реальный опыт, процесс и ответственность исполнителя."
+    ]
   },
   {
-    title: "Структура и UX",
-    description:
-      "Смотрим: логичность блоков, читаемость, визуальную перегрузку и насколько сайт ведёт к заявке."
+    title: "Структура и логика блоков",
+    summary: "Проверяем, ведёт ли страница пользователя к решению или распадается на набор несвязанных блоков.",
+    details: [
+      "Есть ли понятная последовательность: проблема, решение, доказательства, действие.",
+      "Не перегружена ли страница второстепенными блоками и повторяющимися смыслами.",
+      "Понятно ли, какие блоки нужно усилить, переставить или убрать."
+    ]
   },
   {
-    title: "Mobile-версия",
-    description:
-      "Проверяем удобство на телефоне: размеры текста и кнопок, проблемы адаптации и скорость восприятия."
+    title: "Мобильная версия",
+    summary: "Проверяем, не теряются ли заявки на телефоне из-за мелкого текста, плохих отступов и неудобных кнопок.",
+    details: [
+      "Насколько удобно читать первый экран и ключевые блоки с мобильного.",
+      "Достаточно ли крупные кнопки, поля и интерактивные элементы.",
+      "Нет ли сломанных отступов, длинных строк, наложений и тяжёлых участков."
+    ]
   },
   {
-    title: "Потери конверсии",
-    description:
-      "Находим критичные ошибки, слабые места и элементы, которые могут снижать количество заявок."
+    title: "Приоритет правок",
+    summary: "Собираем вывод не в стиле “всё улучшить”, а в виде списка задач по влиянию на заявки.",
+    details: [
+      "Разделяем критичные ошибки, средние проблемы и косметические замечания.",
+      "Формируем quick wins: что можно исправить быстро и с максимальным эффектом.",
+      "Даём понятный порядок действий для дизайнера, маркетолога или разработчика."
+    ]
   }
 ];
 
@@ -157,16 +181,32 @@ export function LandingSections() {
           <p>Каждый блок отчёта привязан к решению: что мешает заявке и что исправить в первую очередь.</p>
         </div>
         <div className="audit-accordion-layout">
-          <div className="audit-visual-placeholder" aria-hidden="true">
-            <div className="audit-visual-placeholder__top">
+          <div className="audit-browser-shot" aria-label="Горизонтальный пример отчёта в браузере">
+            <div className="audit-browser-shot__chrome">
               <span />
               <span />
               <span />
+              <b>leadfix.ru/report</b>
             </div>
-            <div className="audit-visual-placeholder__screen">
-              <i />
-              <i />
-              <i />
+            <div className="audit-browser-shot__body">
+              <div className="audit-browser-shot__hero">
+                <p>Отчёт по лендингу</p>
+                <h3>Потери заявок найдены в оффере, CTA и мобильной версии</h3>
+              </div>
+              <div className="audit-browser-shot__score">
+                <strong>74</strong>
+                <span>/100</span>
+              </div>
+              <div className="audit-browser-shot__metrics">
+                <div><b>3</b><span>критично</span></div>
+                <div><b>7</b><span>замечаний</span></div>
+                <div><b>5</b><span>quick wins</span></div>
+              </div>
+              <div className="audit-browser-shot__issues">
+                <i />
+                <i />
+                <i />
+              </div>
             </div>
           </div>
 
@@ -175,28 +215,42 @@ export function LandingSections() {
               const isOpen = openAuditIndex === index;
 
               return (
-                <details
-                  className="audit-accordion__item"
+                <article
+                  className={isOpen ? "audit-accordion__item is-active" : "audit-accordion__item"}
                   key={item.title}
-                  open={isOpen}
                 >
-                  <summary
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setOpenAuditIndex((current) => (current === index ? null : index));
-                    }}
-                  >
+                  <div className="audit-accordion__head">
                     <span>{String(index + 1).padStart(2, "0")}</span>
-                    <b>{item.title}</b>
-                  </summary>
-                  <div className="audit-accordion__content">
-                    <p>{item.description}</p>
+                    <h3>{item.title}</h3>
                   </div>
-                </details>
+                  <p>{item.summary}</p>
+                  <button
+                    type="button"
+                    onClick={() => setOpenAuditIndex(index)}
+                    aria-haspopup="dialog"
+                  >
+                    Подробнее
+                  </button>
+                </article>
               );
             })}
           </div>
         </div>
+        {openAuditIndex !== null && (
+          <div className="audit-modal" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title" onClick={() => setOpenAuditIndex(null)}>
+            <div className="audit-modal__card" onClick={(event) => event.stopPropagation()}>
+              <button className="audit-modal__close" type="button" aria-label="Закрыть" onClick={() => setOpenAuditIndex(null)}>×</button>
+              <span>{String(openAuditIndex + 1).padStart(2, "0")}</span>
+              <h3 id="audit-modal-title">{auditChecks[openAuditIndex].title}</h3>
+              <p>{auditChecks[openAuditIndex].summary}</p>
+              <ul>
+                {auditChecks[openAuditIndex].details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </section>
 
       <ReportShowcase />

@@ -12,6 +12,7 @@ export function SiteFooter() {
             <div>
               <b>Сервис</b>
               <a href="/#audit-checks">Что проверяем</a>
+              <a href="/#cases">Пример аудита</a>
               <a href="/#pricing">Тарифы</a>
               <a href="/#faq">FAQ</a>
             </div>
