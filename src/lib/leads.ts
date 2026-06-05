@@ -1,10 +1,13 @@
 import { mkdir, appendFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import nodemailer from "nodemailer";
 import type { LeadRecord, LeadRequest } from "@/types/lead";
 
 const LEADS_DIR = path.join(process.cwd(), "data");
 const LEADS_FILE = path.join(LEADS_DIR, "leads.jsonl");
+const DEFAULT_OWNER_EMAIL = "viktor-82rus@ya.ru";
+const DEFAULT_OWNER_TELEGRAM = "@delegin";
 
 function createLeadId() {
   return `lf_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -36,14 +39,22 @@ export async function saveLead(lead: LeadRecord) {
 }
 
 export async function notifyLead(lead: LeadRecord) {
-  const token = process.env.LEADFIX_TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.LEADFIX_TELEGRAM_CHAT_ID;
+  const message = getLeadNotificationMessage(lead);
 
-  if (!token || !chatId) {
-    return;
-  }
+  const results = await Promise.allSettled([
+    notifyLeadByTelegram(message),
+    notifyLeadByEmail(lead, message)
+  ]);
 
-  const message = [
+  results.forEach((result) => {
+    if (result.status === "rejected") {
+      console.error("Lead notification channel failed", result.reason);
+    }
+  });
+}
+
+function getLeadNotificationMessage(lead: LeadRecord) {
+  return [
     "Новая заявка LeadFix",
     `ID: ${lead.id}`,
     `Тариф: ${lead.plan}`,
@@ -51,8 +62,18 @@ export async function notifyLead(lead: LeadRecord) {
     `Email: ${lead.email}`,
     `Telegram: ${lead.telegram || "-"}`,
     `Источник: ${lead.source || "-"}`,
-    `Статус: ${lead.status}`
+    `Статус: ${lead.status}`,
+    `Контакт владельца: ${DEFAULT_OWNER_TELEGRAM}`
   ].join("\n");
+}
+
+async function notifyLeadByTelegram(message: string) {
+  const token = process.env.LEADFIX_TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.LEADFIX_TELEGRAM_CHAT_ID;
+
+  if (!token || !chatId) {
+    return;
+  }
 
   await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
@@ -62,5 +83,32 @@ export async function notifyLead(lead: LeadRecord) {
       text: message,
       disable_web_page_preview: true
     })
+  });
+}
+
+async function notifyLeadByEmail(lead: LeadRecord, message: string) {
+  const host = process.env.LEADFIX_SMTP_HOST;
+  const port = Number(process.env.LEADFIX_SMTP_PORT || 465);
+  const user = process.env.LEADFIX_SMTP_USER;
+  const pass = process.env.LEADFIX_SMTP_PASSWORD;
+  const from = process.env.LEADFIX_NOTIFICATION_FROM || user;
+  const to = process.env.LEADFIX_NOTIFICATION_EMAIL || DEFAULT_OWNER_EMAIL;
+
+  if (!host || !user || !pass || !from || !to) {
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass }
+  });
+
+  await transporter.sendMail({
+    from,
+    to,
+    subject: `Новая заявка LeadFix: ${lead.plan}`,
+    text: message
   });
 }

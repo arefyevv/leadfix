@@ -59,7 +59,7 @@ export function CheckoutScreen({
               <aside className="checkout-audit__form-card">
                 <form className="checkout-form" onSubmit={onSubmit} noValidate>
                   <h3>Куда отправить аудит</h3>
-                  <p>Укажите контакты. После заявки откроется инструкция по оплате и ручному запуску аудита.</p>
+                  <p>Укажите контакты. После создания заявки откроется страница оплаты.</p>
 
                   <div className="field">
                     <label htmlFor="checkout-url">Сайт на проверку</label>
@@ -99,7 +99,7 @@ export function CheckoutScreen({
                 <div className="guarantee-block">
                   Отчет носит информационно-аналитический характер и не гарантирует рост заявок. Первые 10 заказов нужны для валидации модели.
                 </div>
-                {success && <div className="payment-placeholder">Заявка создана. Открываем инструкцию по оплате.</div>}
+                {success && <div className="payment-placeholder">Заявка создана. Открываем оплату.</div>}
               </aside>
             </div>
           </section>

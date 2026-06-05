@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { CheckoutScreen } from "@/components/CheckoutScreen";
 import { Header } from "@/components/Header";
 import { auditPlans } from "@/components/plans";
@@ -15,7 +15,6 @@ declare global {
 }
 
 export function CheckoutRoute() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const planParam = searchParams.get("plan") ?? "";
   const initialPlan = auditPlans.some((plan) => plan.name === planParam) ? planParam : "Стандарт";
@@ -87,9 +86,7 @@ export function CheckoutRoute() {
         window.ym?.(metrikaId, "reachGoal", "leadfix_checkout_submit");
       }
 
-      router.push(
-        `/checkout/success?lead=${encodeURIComponent(data.lead.id)}&plan=${encodeURIComponent(data.lead.plan)}&url=${encodeURIComponent(data.lead.url)}&payment=${encodeURIComponent(data.lead.paymentLink)}`
-      );
+      window.location.assign(data.lead.paymentLink);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Не удалось создать заявку");
     } finally {
