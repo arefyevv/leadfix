@@ -14,7 +14,7 @@ function createLeadId() {
 }
 
 export function getPaymentLink() {
-  return process.env.LEADFIX_PAYMENT_LINK || "https://t.me/leadfix_support";
+  return process.env.LEADFIX_PAYMENT_LINK || "https://t.me/delegin";
 }
 
 export function createLead(input: LeadRequest, userAgent?: string): LeadRecord {

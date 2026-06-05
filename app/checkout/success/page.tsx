@@ -14,7 +14,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
   const leadId = params.lead || "";
   const plan = params.plan || "Стандарт";
   const url = params.url || "";
-  const payment = params.payment || "https://t.me/leadfix_support";
+  const payment = params.payment || "https://t.me/delegin";
 
   return (
     <>
@@ -37,7 +37,7 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
             <a className="checkout-submit" href={payment} target="_blank" rel="noreferrer">
               Перейти к оплате
             </a>
-            <a className="telegram-button" href="https://t.me/leadfix_support" target="_blank" rel="noreferrer">
+            <a className="telegram-button" href="https://t.me/delegin" target="_blank" rel="noreferrer">
               Написать в Telegram
             </a>
           </div>
@@ -50,4 +50,3 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
     </>
   );
 }
-
