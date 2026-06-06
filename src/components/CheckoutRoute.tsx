@@ -17,7 +17,7 @@ declare global {
 export function CheckoutRoute() {
   const searchParams = useSearchParams();
   const planParam = searchParams.get("plan") ?? "";
-  const initialPlan = auditPlans.some((plan) => plan.name === planParam) ? planParam : "Стандарт";
+  const initialPlan = auditPlans.some((plan) => plan.name === planParam) ? planParam : "Экспресс";
   const [selectedPlan, setSelectedPlan] = useState(initialPlan);
   const [urlValue, setUrlValue] = useState(() => {
     try {

@@ -12,7 +12,7 @@ type SuccessPageProps = {
 export default async function CheckoutSuccessPage({ searchParams }: SuccessPageProps) {
   const params = await searchParams;
   const leadId = params.lead || "";
-  const plan = params.plan || "Стандарт";
+  const plan = params.plan || "Экспресс";
   const url = params.url || "";
   const payment = params.payment || "https://t.me/LeadFixRu";
 
