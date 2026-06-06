@@ -7312,12 +7312,16 @@ h6 {
 }
 .checkout-pricing {
   align-items: stretch;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 0;
 }
 .checkout-pricing .pricing-card {
   position: relative;
-  min-height: 650px;
+  width: 100%;
+  min-height: 560px;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
   padding: 16px;
   gap: 10px;
   color: #16233d;
@@ -7375,7 +7379,7 @@ h6 {
 .checkout-pricing .pricing-card__group {
   display: grid;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 14px;
 }
 .checkout-pricing .pricing-card__group > span,
 .checkout-pricing .pricing-card__fit > span {
@@ -7412,7 +7416,9 @@ h6 {
 .checkout-pricing .pricing-card__fit {
   display: grid;
   gap: 5px;
-  margin-top: 4px;
+  align-self: end;
+  margin-top: 16px;
+  margin-bottom: 4px;
   padding: 10px;
   border-radius: 9px;
   background: #f8fafc;
@@ -7444,7 +7450,7 @@ h6 {
 #pricing .landing-pricing .pricing-card {
   position: relative !important;
   display: grid !important;
-  grid-template-rows: auto auto auto 1fr 58px !important;
+  grid-template-rows: auto auto auto 1fr auto !important;
   align-content: stretch !important;
   min-height: 626px !important;
   height: 626px !important;
@@ -7506,7 +7512,7 @@ h6 {
 #pricing .landing-pricing .pricing-card__group {
   display: grid !important;
   gap: 8px !important;
-  margin-top: 2px !important;
+  margin-top: 16px !important;
 }
 
 #pricing .landing-pricing .pricing-card__group > span,
@@ -7617,9 +7623,10 @@ h6 {
 
 #pricing .landing-pricing .pricing-card__fit {
   display: grid !important;
-  align-self: start !important;
+  align-self: end !important;
   gap: 5px !important;
-  margin-top: 4px !important;
+  margin-top: 18px !important;
+  margin-bottom: 4px !important;
   padding: 10px !important;
   border-radius: 9px !important;
   background: #f8fafc !important;
