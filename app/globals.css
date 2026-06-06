@@ -7452,9 +7452,9 @@ h6 {
   display: grid !important;
   grid-template-rows: auto auto auto 1fr auto !important;
   align-content: stretch !important;
-  min-height: 626px !important;
-  height: 626px !important;
-  padding: 24px 24px 96px !important;
+  min-height: 690px !important;
+  height: 690px !important;
+  padding: 24px 24px 112px !important;
   gap: 8px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
@@ -7660,8 +7660,8 @@ h6 {
 
 #pricing .landing-pricing .pricing-card--recommended,
 #pricing .landing-pricing .pricing-card.is-selected {
-  min-height: 626px !important;
-  height: 626px !important;
+  min-height: 690px !important;
+  height: 690px !important;
   transform: none !important;
   color: #ffffff !important;
   border-color: rgba(174, 205, 255, .22) !important;
