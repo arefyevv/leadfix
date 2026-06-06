@@ -86,7 +86,7 @@ export function CheckoutScreen({
                   <label className="checkout-consent">
                     <input type="checkbox" checked={consent} onChange={(event) => onConsentChange(event.target.checked)} />
                     <span>
-                      Я принимаю <a href="/personal-data-consent" target="_blank">Соглашение об обработке ПД</a> и условия <a href="/offer" target="_blank">оферты</a>.
+                      Даю согласие на <a href="/personal-data-consent" target="_blank" rel="noreferrer">обработку персональных данных</a> и принимаю <a href="/offer" target="_blank" rel="noreferrer">условия использования</a>.
                     </span>
                   </label>
 

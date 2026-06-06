@@ -6,7 +6,6 @@ export default function OfferPage() {
       <Header />
       <main className="legal-page">
         <article className="legal-page__card">
-          <p className="legal-page__eyebrow">Документы LeadFix</p>
           <h1>Публичная оферта</h1>
           <p>
             Настоящая оферта является предложением заключить договор оказания информационно-аналитических услуг

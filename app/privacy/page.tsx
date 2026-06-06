@@ -6,7 +6,6 @@ export default function PrivacyPage() {
       <Header />
       <main className="legal-page">
         <article className="legal-page__card">
-          <p className="legal-page__eyebrow">Документы LeadFix</p>
           <h1>Политика конфиденциальности</h1>
           <p>
             Настоящая Политика описывает, какие данные собирает LeadFix, для каких целей они используются,

@@ -6,7 +6,6 @@ export default function PersonalDataConsentPage() {
       <Header />
       <main className="legal-page">
         <article className="legal-page__card">
-          <p className="legal-page__eyebrow">Документы LeadFix</p>
           <h1>Соглашение об обработке ПД</h1>
           <p>
             Настоящее соглашение фиксирует согласие пользователя на обработку персональных данных при использовании
