@@ -7899,20 +7899,16 @@ h6 {
   min-height: 100vh;
   padding: 132px 20px 64px;
   color: #172033;
-  background:
-    linear-gradient(rgba(255, 255, 255, .38) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .38) 1px, transparent 1px),
-    #eef0f2;
-  background-size: 58px 58px;
+  background: #fff;
 }
 .legal-page__card {
   width: min(100%, 900px);
   margin: 0 auto;
-  padding: clamp(26px, 5vw, 56px);
-  border: 1px solid #e0e4e9;
-  border-radius: 24px;
+  padding: clamp(24px, 4vw, 48px) 0;
+  border: 0;
+  border-radius: 0;
   background: #fff;
-  box-shadow: 0 18px 46px rgba(24, 35, 54, .06);
+  box-shadow: none;
 }
 .legal-page__eyebrow {
   margin: 0 0 10px;
@@ -7925,9 +7921,9 @@ h6 {
 .legal-page h1 {
   margin: 0;
   color: #172033;
-  font-size: clamp(38px, 6vw, 64px);
-  line-height: 1;
-  letter-spacing: -.055em;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.08;
+  letter-spacing: 0;
 }
 .legal-page__card > p:not(.legal-page__eyebrow) {
   margin: 18px 0 0;
@@ -7943,7 +7939,7 @@ h6 {
 .legal-page h2 {
   margin: 0;
   color: #172033;
-  font-size: 20px;
+  font-size: 18px;
 }
 .legal-page section p {
   margin: 10px 0 0;

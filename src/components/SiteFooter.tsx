@@ -18,12 +18,9 @@ export function SiteFooter() {
             </div>
             <div>
               <b>Документы</b>
-              <a href="/terms">Пользовательское соглашение</a>
-              <a href="/privacy">Политика обработки персональных данных</a>
-              <a href="/personal-data-consent">Согласие на обработку персональных данных</a>
-              <a href="/cookies">Политика cookies</a>
+              <a href="/privacy">Политика конфиденциальности</a>
               <a href="/offer">Публичная оферта</a>
-              <a href="/requisites">Реквизиты</a>
+              <a href="/personal-data-consent">Соглашение об обработке ПД</a>
             </div>
           </nav>
         </div>
