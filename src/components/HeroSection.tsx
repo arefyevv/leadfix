@@ -6,13 +6,11 @@ import { Header } from "@/components/Header";
 type HeroSectionProps = {
   url: string;
   error: string;
-  consent: boolean;
   onUrlChange: (value: string) => void;
-  onConsentChange: (value: boolean) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-export function HeroSection({ url, error, consent, onUrlChange, onConsentChange, onSubmit }: HeroSectionProps) {
+export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionProps) {
   return (
     <>
       <Header />
@@ -46,13 +44,6 @@ export function HeroSection({ url, error, consent, onUrlChange, onConsentChange,
               />
               <button type="submit">Найти ошибки</button>
             </form>
-
-            <label className="form-consent hero-consent">
-              <input type="checkbox" checked={consent} onChange={(event) => onConsentChange(event.target.checked)} />
-              <span>
-                Даю согласие на <a href="/personal-data-consent" target="_blank" rel="noreferrer">обработку персональных данных</a> и принимаю <a href="/offer" target="_blank" rel="noreferrer">условия использования</a>.
-              </span>
-            </label>
 
             <p className="hero__proof">Бесплатно покажем первые ошибки за 1 минуту</p>
             <p className="form-error" aria-live="polite">

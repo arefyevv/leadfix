@@ -7300,6 +7300,12 @@ h6 {
   border-radius: 10px;
   background: #fff;
 }
+.checkout-audit__form-card .checkout-consent {
+  color: #526078;
+}
+.checkout-audit__form-card .checkout-consent a {
+  color: #16b978;
+}
 .checkout-audit__form-card .payment-placeholder {
   color: #167650;
   border-radius: 10px;
@@ -8145,7 +8151,6 @@ h6,
   text-align: center !important;
 }
 
-.form-consent,
 .checkout-consent {
   display: grid;
   grid-template-columns: 18px 1fr;
@@ -8155,7 +8160,6 @@ h6,
   line-height: 1.45;
 }
 
-.form-consent input,
 .checkout-consent input {
   width: 18px;
   height: 18px;
@@ -8163,17 +8167,9 @@ h6,
   accent-color: var(--accent);
 }
 
-.form-consent a,
 .checkout-consent a {
   color: var(--accent);
   text-decoration: none;
-}
-
-.hero-consent {
-  width: min(100%, 650px);
-  margin: 12px auto 0;
-  color: rgba(247, 248, 244, .68);
-  text-align: left;
 }
 
 .checkout-consent {

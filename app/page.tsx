@@ -20,7 +20,6 @@ const loadingSteps = [
 export default function LeadFixPage() {
   const router = useRouter();
   const [urlInput, setUrlInput] = useState("");
-  const [consent, setConsent] = useState(false);
   const [error, setError] = useState("");
   const [pendingUrl, setPendingUrl] = useState("");
 
@@ -30,10 +29,6 @@ export default function LeadFixPage() {
 
     try {
       const normalizedUrl = normalizeClientUrl(urlInput);
-      if (!consent) {
-        setError("Подтвердите согласие на обработку персональных данных");
-        return;
-      }
       setPendingUrl(normalizedUrl);
       router.push(`/report?url=${encodeURIComponent(normalizedUrl)}`);
     } catch {
@@ -58,9 +53,7 @@ export default function LeadFixPage() {
       <HeroSection
         url={urlInput}
         error={error}
-        consent={consent}
         onUrlChange={setUrlInput}
-        onConsentChange={setConsent}
         onSubmit={handleHeroSubmit}
       />
       <LandingSections />
