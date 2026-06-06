@@ -8711,20 +8711,17 @@ h6,
   }
 }
 
-/* Footer should sit on the same dark page background instead of leaving a white gap. */
+/* Footer sits apart from page content and uses a slightly warm off-white surface. */
 .site-footer {
-  margin-top: 0 !important;
-  padding-top: clamp(64px, 8vw, 120px) !important;
-  background:
-    linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px),
-    linear-gradient(180deg, #0d2344 0%, #061121 100%) !important;
-  background-size: 58px 58px, 58px 58px, auto !important;
+  margin-top: clamp(150px, 12vw, 200px) !important;
+  padding-top: 0 !important;
+  background: #f6f8fb !important;
+  border-top-color: #e7edf4 !important;
 }
 
 @media (max-width: 760px) {
   .site-footer {
-    margin-top: 0 !important;
-    padding-top: 52px !important;
+    margin-top: 150px !important;
+    padding-top: 0 !important;
   }
 }
