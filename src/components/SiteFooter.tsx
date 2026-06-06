@@ -19,9 +19,11 @@ export function SiteFooter() {
             <div>
               <b>Документы</b>
               <a href="/terms">Пользовательское соглашение</a>
-              <a href="/privacy">Политика конфиденциальности</a>
+              <a href="/privacy">Политика обработки персональных данных</a>
               <a href="/personal-data-consent">Согласие на обработку персональных данных</a>
+              <a href="/cookies">Политика cookies</a>
               <a href="/offer">Публичная оферта</a>
+              <a href="/requisites">Реквизиты</a>
             </div>
           </nav>
         </div>
@@ -29,7 +31,7 @@ export function SiteFooter() {
         <div className="site-footer__bottom">
           <div className="site-footer__details">
             <span>© 2026 LeadFix</span>
-            <span>НПД</span>
+            <span>НПД Арефьев В.О.</span>
             <span>ИНН 910907646492</span>
           </div>
           <div className="site-footer__contacts">
