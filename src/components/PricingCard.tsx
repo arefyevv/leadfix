@@ -10,6 +10,7 @@ type PricingCardProps = {
 export function PricingCard({ plan, selected, onSelect, variant = "default" }: PricingCardProps) {
   const features = plan.features ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт"];
   const format = plan.format ?? ["web-отчёт"];
+  const featureDetails = plan.featureDetails ?? {};
   const isCheckout = variant === "checkout";
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
   const content = (
@@ -31,7 +32,14 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
         <span>Что входит</span>
         <ul>
           {features.map((feature) => (
-            <li key={feature}>{feature}</li>
+            <li key={feature}>
+              <span>{feature}</span>
+              {featureDetails[feature] && (
+                <span className="pricing-card__info" tabIndex={0} aria-label={featureDetails[feature]} data-tooltip={featureDetails[feature]}>
+                  i
+                </span>
+              )}
+            </li>
           ))}
         </ul>
       </div>

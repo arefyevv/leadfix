@@ -7550,6 +7550,71 @@ h6 {
   display: none !important;
 }
 
+.pricing-card li {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+
+.pricing-card li > span:first-child {
+  min-width: 0;
+}
+
+.pricing-card__info {
+  position: relative;
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+  color: #167650;
+  background: #dff8eb;
+  border: 1px solid rgba(47, 208, 140, .34);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: help;
+}
+
+.pricing-card__info::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  bottom: calc(100% + 8px);
+  width: min(260px, 72vw);
+  padding: 10px 12px;
+  opacity: 0;
+  visibility: hidden;
+  color: #ffffff;
+  background: #101827;
+  border-radius: 8px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, .22);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+  transform: translateY(4px);
+  transition: opacity .16s ease, visibility .16s ease, transform .16s ease;
+  pointer-events: none;
+}
+
+.pricing-card__info:hover::after,
+.pricing-card__info:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__info,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__info {
+  color: #06130d;
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, .36);
+}
+
 #pricing .landing-pricing .pricing-card__fit {
   display: grid !important;
   align-self: start !important;

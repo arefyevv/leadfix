@@ -1,6 +1,6 @@
 import type { FormEvent } from "react";
 import { PricingCard } from "./PricingCard";
-import { auditPlans } from "./plans";
+import { paidAuditPlans } from "./plans";
 
 type CheckoutScreenProps = {
   urlValue: string;
@@ -51,7 +51,7 @@ export function CheckoutScreen({
           <section className="full-audit__section checkout-audit__plans">
             <div className="checkout-audit__selection">
               <div className="pricing-grid checkout-pricing">
-                {auditPlans.map((plan) => (
+                {paidAuditPlans.map((plan) => (
                   <PricingCard key={plan.name} plan={plan} selected={selectedPlan === plan.name} onSelect={onPlanChange} variant="checkout" />
                 ))}
               </div>
@@ -69,7 +69,7 @@ export function CheckoutScreen({
                   <div className="field">
                     <label htmlFor="checkout-plan">Выбранный тариф</label>
                     <select id="checkout-plan" value={selectedPlan} onChange={(event) => onPlanChange(event.target.value)}>
-                      {auditPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} — {plan.price}</option>)}
+                      {paidAuditPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} — {plan.price}</option>)}
                     </select>
                   </div>
 

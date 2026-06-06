@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckoutScreen } from "@/components/CheckoutScreen";
 import { Header } from "@/components/Header";
-import { auditPlans } from "@/components/plans";
+import { paidAuditPlans } from "@/components/plans";
 import { normalizeClientUrl } from "@/lib/clientAudit";
 import type { LeadResponse } from "@/types/lead";
 
@@ -17,7 +17,7 @@ declare global {
 export function CheckoutRoute() {
   const searchParams = useSearchParams();
   const planParam = searchParams.get("plan") ?? "";
-  const initialPlan = auditPlans.some((plan) => plan.name === planParam) ? planParam : "Экспресс";
+  const initialPlan = paidAuditPlans.some((plan) => plan.name === planParam) ? planParam : "Экспресс";
   const [selectedPlan, setSelectedPlan] = useState(initialPlan);
   const [urlValue, setUrlValue] = useState(() => {
     try {
