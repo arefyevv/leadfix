@@ -270,23 +270,46 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit-content__score readiness-score" aria-label="Готовность лендинга к платному трафику">
             <div className={`readiness-score__gauge is-${activeScoreLevel.tone}`}>
-              <div className="readiness-score__ring" style={{ "--score": `${reportScore}%` } as CSSProperties}>
-                <strong>{reportScore}<small>/100</small></strong>
+              <div className="readiness-score__arc" style={{ "--score": reportScore } as CSSProperties}>
+                <svg viewBox="0 0 300 172" role="img" aria-label={`Оценка ${reportScore} из 100`}>
+                  <defs>
+                    <linearGradient id="readiness-arc-gradient" x1="24" y1="0" x2="276" y2="0" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#f25d58" />
+                      <stop offset="52%" stopColor="#f6c04e" />
+                      <stop offset="100%" stopColor="#35c76f" />
+                    </linearGradient>
+                  </defs>
+                  <path className="readiness-score__arc-track" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
+                  <path className="readiness-score__arc-progress" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
+                  <g className="readiness-score__arc-ticks" aria-hidden="true">
+                    <text x="24" y="166">0</text>
+                    <text x="72" y="45">40</text>
+                    <text x="150" y="18">60</text>
+                    <text x="230" y="45">80</text>
+                    <text x="276" y="166">100</text>
+                  </g>
+                </svg>
+                <strong>{reportScore}</strong>
               </div>
               <p>Готовность к платному трафику</p>
             </div>
             <div className="readiness-score__verdict">
-              <p className="full-audit__eyebrow">Общий score</p>
+              <p className="full-audit__eyebrow">Общая оценка</p>
               <h2>{activeScoreLevel.title}</h2>
               <p>{activeScoreLevel.summary}</p>
               <p>Главные зоны потерь: оффер, CTA, доверие и мобильный сценарий.</p>
-              <div className="readiness-score__scale" aria-label="Уровни общего score">
-                {scoreLevels.map((level) => (
-                  <div className={`is-${level.tone}${level.title === activeScoreLevel.title ? " is-active" : ""}`} key={level.title}>
-                    <span>{level.range}</span>
-                    <b>{level.title}</b>
-                  </div>
-                ))}
+              <div className="readiness-score__scale" style={{ "--score-position": `${reportScore}%` } as CSSProperties} aria-label="Шкала общей оценки">
+                <div className="readiness-score__scale-track">
+                  <span className="readiness-score__scale-marker"><b>{reportScore}</b></span>
+                </div>
+                <div className="readiness-score__scale-labels" aria-hidden="true">
+                  {scoreLevels.map((level) => (
+                    <span className={level.title === activeScoreLevel.title ? "is-active" : ""} key={level.title}>
+                      <b>{level.range}</b>
+                      {level.title}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             <dl className="readiness-score__metrics">
