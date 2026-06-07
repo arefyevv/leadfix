@@ -8242,6 +8242,12 @@ h6 {
   .checkout-pricing {
     grid-template-columns: 1fr;
   }
+  .checkout-audit__form-card {
+    order: 1;
+  }
+  .checkout-pricing {
+    order: 2;
+  }
   .checkout-pricing .pricing-card {
     min-height: 0;
   }
