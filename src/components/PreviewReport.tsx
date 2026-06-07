@@ -140,7 +140,12 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
   }).format(new Date());
   const categories = getCategories(analysis);
   const visibleInsights = previewReport.insights.slice(0, 3);
-  const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
+  const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
+
+  function copyReportLink() {
+    const reportUrl = typeof window !== "undefined" ? window.location.href : analysis.url;
+    void navigator.clipboard?.writeText(reportUrl);
+  }
 
   return (
     <section className="full-report full-audit preview-report preview-audit screen">
@@ -150,11 +155,11 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
             <div className="full-audit-sidebar__meta">
               <div><span>Дата аудита</span><b>{reportDate}</b></div>
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
-              <div><span>H1 сайта</span><b>{siteHeading}</b></div>
+              <div><span>УТП сайта</span><b>{siteHeading}</b></div>
             </div>
             <div className="full-audit-sidebar__actions">
               <button className="pdf-button" type="button" onClick={onCheckout}>Получить полный аудит</button>
-              <button className="telegram-button" type="button" onClick={onReset}>Проверить другой сайт</button>
+              <button className="telegram-button" type="button" onClick={copyReportLink}>Скопировать ссылку на отчёт</button>
             </div>
           </section>
 
@@ -173,13 +178,8 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
         <main className="full-audit-content preview-audit-content">
         <header className="full-audit-content__hero preview-report__header">
           <div>
-            <p className="preview-report__eyebrow">Краткий отчёт LeadFix</p>
-            <h1>Предварительный аудит сайта</h1>
-            <p>Краткая версия по структуре полного отчёта: шесть направлений проверки и первые точки потери заявок.</p>
-          </div>
-          <div className="preview-report__meta">
-            <span>{analysis.url}</span>
-            <time>{reportDate}</time>
+            <p className="preview-report__eyebrow">Демо отчёта LeadFix</p>
+            <h1>Краткий отчёт конверсии «{analysis.url}»</h1>
           </div>
         </header>
 

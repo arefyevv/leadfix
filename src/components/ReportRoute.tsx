@@ -79,7 +79,7 @@ export function ReportRoute() {
   }, [searchParams]);
 
   return (
-    <>
+    <div className="legal-shell report-shell">
       <Header />
       <main>
         {error ? (
@@ -100,6 +100,6 @@ export function ReportRoute() {
           <LoadingScreen url={url} steps={loadingSteps} stepIndex={loadingIndex} />
         )}
       </main>
-    </>
+    </div>
   );
 }
