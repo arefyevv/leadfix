@@ -9404,6 +9404,12 @@ h6,
   font-size: clamp(26px, 3vw, 40px);
   line-height: 1.08;
   letter-spacing: 0;
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.preview-audit .preview-report__title-url {
+  color: var(--report-accent-strong);
 }
 
 .preview-audit .preview-report__header p:not(.preview-report__eyebrow),
@@ -9671,6 +9677,8 @@ h6,
   .preview-audit .preview-report__header h1 {
     font-size: clamp(29px, 9.3vw, 39px);
     line-height: 1.02;
+    text-wrap: balance;
+    white-space: normal;
   }
 
   .preview-audit .preview-report__meta {

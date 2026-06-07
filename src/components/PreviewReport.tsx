@@ -141,6 +141,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
   const categories = getCategories(analysis);
   const visibleInsights = previewReport.insights.slice(0, 3);
   const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
+  const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
 
   function copyReportLink() {
     const reportUrl = typeof window !== "undefined" ? window.location.href : analysis.url;
@@ -179,7 +180,10 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
         <header className="full-audit-content__hero preview-report__header">
           <div>
             <p className="preview-report__eyebrow">Демо отчёта LeadFix</p>
-            <h1>Краткий отчёт конверсии «{analysis.url}»</h1>
+            <h1>
+              <span>Краткий отчёт конверсии </span>
+              <span className="preview-report__title-url">{displayUrl}</span>
+            </h1>
           </div>
         </header>
 
