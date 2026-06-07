@@ -68,6 +68,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true
   },
+  verification: {
+    yandex: "6a5c525b3269f922"
+  },
   icons: {
     icon: "/favicon.svg"
   }
