@@ -7867,7 +7867,7 @@ h6 {
   align-content: stretch !important;
   min-height: 690px !important;
   height: 690px !important;
-  padding: 24px 24px 112px !important;
+  padding: 24px 24px 184px !important;
   gap: 8px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
@@ -8035,11 +8035,15 @@ h6 {
 }
 
 #pricing .landing-pricing .pricing-card__fit {
+  position: absolute !important;
+  right: 24px !important;
+  bottom: 92px !important;
+  left: 24px !important;
   display: grid !important;
-  align-self: end !important;
+  align-content: start !important;
   gap: 5px !important;
-  margin-top: 18px !important;
-  margin-bottom: 4px !important;
+  min-height: 72px !important;
+  margin: 0 !important;
   padding: 10px !important;
   border-radius: 9px !important;
   background: #f8fafc !important;
@@ -8140,11 +8144,17 @@ h6 {
   #pricing .landing-pricing .pricing-card {
     height: auto !important;
     min-height: 0 !important;
+    padding-bottom: 24px !important;
   }
 
   #pricing .landing-pricing .pricing-card__intro {
     grid-template-rows: auto !important;
     margin-top: 0 !important;
+  }
+
+  #pricing .landing-pricing .pricing-card__fit,
+  #pricing .landing-pricing .pricing-card__cta {
+    position: static !important;
   }
 }
 
