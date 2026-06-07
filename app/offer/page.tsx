@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Публичная оферта",
+  description: "Публичная оферта LeadFix на оказание информационно-аналитических услуг по аудиту сайтов и лендингов.",
+  alternates: {
+    canonical: "/offer"
+  }
+};
 
 export default function OfferPage() {
   return (

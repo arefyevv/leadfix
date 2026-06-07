@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Соглашение об обработке персональных данных",
+  description: "Согласие пользователя LeadFix на обработку персональных данных при использовании сайта и сервиса.",
+  alternates: {
+    canonical: "/personal-data-consent"
+  }
+};
 
 export default function PersonalDataConsentPage() {
   return (

@@ -1,7 +1,16 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { ReportRoute } from "@/components/ReportRoute";
+
+export const metadata: Metadata = {
+  title: "Предварительный отчёт",
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
 const loadingSteps = [
   "Открываем сайт",

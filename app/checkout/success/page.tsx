@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Заявка создана",
+  robots: {
+    index: false,
+    follow: false
+  }
+};
 
 type SuccessPageProps = {
   searchParams: Promise<{

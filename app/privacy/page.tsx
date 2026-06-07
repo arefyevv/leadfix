@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Политика конфиденциальности",
+  description: "Политика конфиденциальности LeadFix: обработка персональных данных, cookies, аналитика, хранение и права пользователя.",
+  alternates: {
+    canonical: "/privacy"
+  }
+};
 
 export default function PrivacyPage() {
   return (

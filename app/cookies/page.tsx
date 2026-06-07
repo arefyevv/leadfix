@@ -1,4 +1,13 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+
+export const metadata: Metadata = {
+  title: "Политика cookies",
+  description: "Политика cookies LeadFix: какие cookie-файлы используются, зачем они нужны и как ими управлять.",
+  alternates: {
+    canonical: "/cookies"
+  }
+};
 
 export default function CookiesPage() {
   return (
