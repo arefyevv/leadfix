@@ -128,6 +128,10 @@ h6 {
 .analysis, .report, .checkout, .full-report {
   background: radial-gradient(circle at 50% 16%, rgba(47, 208, 140, .14), transparent 30%), linear-gradient(180deg, #171b1a 0%, var(--bg) 100%);
 }
+.analysis {
+  place-items: start center;
+  padding-top: 118px;
+}
 .hero {
   position: relative;
   width: 100%;
@@ -263,6 +267,64 @@ h6 {
   color: rgba(247, 248, 244, .56);
 }
 .form-error, .checkout-error { color: #ffb4a8; min-height: 20px; }
+
+.cookie-notice {
+  position: fixed;
+  z-index: 10030;
+  left: 50%;
+  bottom: 18px;
+  width: min(calc(100% - 36px), 920px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 12px 12px 18px;
+  color: rgba(247, 248, 244, .82);
+  background: rgba(7, 16, 28, .92);
+  border: 1px solid rgba(178, 205, 255, .16);
+  border-radius: 10px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .24);
+  backdrop-filter: blur(18px);
+  transform: translateX(-50%);
+}
+
+.cookie-notice p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.cookie-notice a {
+  color: #8ee8bf;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(142, 232, 191, .42);
+}
+
+.cookie-notice a:hover {
+  color: #bff4dc;
+  border-bottom-color: rgba(191, 244, 220, .7);
+}
+
+.cookie-notice button {
+  min-height: 38px;
+  padding: 0 16px;
+  color: #07110d;
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  transition: transform .18s ease, background .18s ease;
+}
+
+.cookie-notice button:hover {
+  background: #45dfa0;
+}
+
+.cookie-notice button:active {
+  transform: translateY(1px);
+}
 
 .hero-product {
   position: relative;
@@ -898,12 +960,58 @@ h6 {
   backdrop-filter: blur(18px);
 }
 .analysis-card, .report-card { width: min(100%, 640px); margin-top: 34px; padding: clamp(20px, 4vw, 30px); }
+.analysis-card {
+  border-radius: 22px;
+}
 .progress, .score-bar { height: 10px; overflow: hidden; background: rgba(247, 248, 244, .1); border-radius: 999px; }
 .progress__bar, .score-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #bff4dc); border-radius: inherit; transition: width .55s ease; }
 .analysis-steps { display: grid; gap: 12px; margin: 24px 0 0; padding: 0; list-style: none; text-align: left; }
-.analysis-steps li { color: rgba(174, 183, 178, .48); }
+.analysis-steps li {
+  position: relative;
+  min-height: 26px;
+  padding-left: 34px;
+  color: rgba(174, 183, 178, .48);
+  line-height: 1.35;
+}
+.analysis-steps li::before {
+  content: "";
+  position: absolute;
+  top: .08em;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(247, 248, 244, .14);
+  border-radius: 7px;
+  background: rgba(247, 248, 244, .055);
+  opacity: 0;
+  transform: scale(.82);
+  transition: opacity .22s ease, transform .22s ease, background .22s ease, border-color .22s ease;
+}
+.analysis-steps li::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid #07110d;
+  border-bottom: 2px solid #07110d;
+  opacity: 0;
+  transform: rotate(-45deg) scale(.72);
+  transition: opacity .2s ease .06s, transform .2s ease .06s;
+}
 .analysis-steps li.is-current { color: var(--accent); }
 .analysis-steps li.is-done { color: var(--ink); }
+.analysis-steps li.is-done::before {
+  border-color: rgba(47, 208, 140, .65);
+  background: var(--accent);
+  opacity: 1;
+  transform: scale(1);
+}
+.analysis-steps li.is-done::after {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+}
 
 .report-grid, .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .metric, .summary-card, .quick-card, .roadmap-step {
@@ -1610,6 +1718,7 @@ h6 {
     white-space: normal;
   }
   .analysis, .report, .checkout, .full-report { padding: 164px 18px 36px; }
+  .analysis { padding-top: 132px; }
   .landing-flow { padding: 24px 18px 0; }
   .landing-section { padding: 56px 0; border-radius: 0; }
   .hero__title { white-space: normal; }
@@ -1618,6 +1727,15 @@ h6 {
     gap: 6px;
   }
   .site-form button {
+    width: 100%;
+  }
+  .cookie-notice {
+    bottom: 12px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+  .cookie-notice button {
     width: 100%;
   }
   .hero-product {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CookieNotice } from "@/components/CookieNotice";
 import { Inter, Inter_Tight } from "next/font/google";
 import { Metrika } from "@/components/Metrika";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         {children}
         <SiteFooter />
+        <CookieNotice />
         <Metrika />
       </body>
     </html>
