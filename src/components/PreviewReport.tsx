@@ -12,16 +12,17 @@ type Category = {
   name: string;
   status: CategoryStatus;
   comment: string;
+  scope: string;
 };
 
 const lockedSections = [
-  "Подробный анализ главного предложения",
-  "Рекомендации по кнопкам действия",
-  "Анализ доверия",
-  "Рекомендации по формам",
-  "Мобильная версия",
-  "Roadmap исправлений",
-  "PDF-версия отчёта"
+  "Оффер и понимание предложения",
+  "Доверие и доказательства",
+  "Конверсионные действия",
+  "Структура, текст и визуал",
+  "UX и техническое качество",
+  "Реклама и аналитика",
+  "Roadmap исправлений"
 ];
 
 function getScoreInterpretation(score: number) {
@@ -87,37 +88,45 @@ function getManualCheck(insight: AuditInsight) {
 
 function getCategories(analysis: AuditAnalysis): Category[] {
   const hasContacts = analysis.hasPhone || analysis.hasEmail || analysis.hasTelInput || analysis.hasEmailInput;
+  const hasLeadAction = analysis.ctaSignals.length > 0 || analysis.hasForm || hasContacts;
+  const hasContentStructure = analysis.h2.length > 0 && analysis.pageText.length >= 500;
 
   return [
     {
-      name: "Главное предложение",
+      name: "Оффер и понимание предложения",
       status: analysis.h1.length > 0 ? "Хорошо" : "Критично",
-      comment: analysis.h1.length > 0 ? "Главный заголовок найден. Его конкретику нужно оценить вручную." : "На странице не найден главный заголовок с предложением."
+      comment: analysis.h1.length > 0 ? "Главный заголовок найден. В полном отчёте проверяем конкретику, выгоду и совпадение с ожиданием клиента." : "На странице не найден главный заголовок с предложением.",
+      scope: "УТП, первый экран, оффер, аудитория, боли клиента"
     },
     {
-      name: "Кнопки действия",
-      status: analysis.ctaSignals.length > 0 ? "Хорошо" : "Критично",
-      comment: analysis.ctaSignals.length > 0 ? "Найдены явные призывы к действию." : "Не найден понятный призыв к следующему шагу."
-    },
-    {
-      name: "Доверие",
+      name: "Доверие и доказательства",
       status: analysis.trustSignals.length > 0 ? "Хорошо" : "Требует внимания",
-      comment: analysis.trustSignals.length > 0 ? `Найдены сигналы: ${analysis.trustSignals.join(", ")}.` : "Не найдены отзывы, кейсы, гарантии или сертификаты."
+      comment: analysis.trustSignals.length > 0 ? `Найдены сигналы: ${analysis.trustSignals.join(", ")}.` : "Не найдены отзывы, кейсы, гарантии или сертификаты.",
+      scope: "Экспертность, кейсы, отзывы, гарантии, возражения"
     },
     {
-      name: "Формы",
-      status: analysis.hasForm || hasContacts ? "Хорошо" : "Критично",
-      comment: analysis.hasForm ? "Форма заявки присутствует на странице." : hasContacts ? "Контакты найдены, но форма заявки не обнаружена." : "Не найдены форма и доступные контакты."
+      name: "Конверсионные действия",
+      status: hasLeadAction ? "Хорошо" : "Критично",
+      comment: analysis.hasForm ? "Форма заявки присутствует на странице." : hasContacts ? "Контакты найдены, но форму и CTA стоит проверить вручную." : "Не найдены форма и доступные контакты.",
+      scope: "CTA, формы захвата, мотивация к действию, барьеры"
     },
     {
-      name: "Мобильная версия",
+      name: "Структура, текст и визуал",
+      status: hasContentStructure ? "Хорошо" : "Требует внимания",
+      comment: hasContentStructure ? "Базовая текстовая структура страницы присутствует." : "Структуру, иерархию и объём контента нужно проверить вручную.",
+      scope: "Структура лендинга, читаемость, визуальная логика"
+    },
+    {
+      name: "UX и техническое качество",
       status: "Требует внимания",
-      comment: "Требуется ручная проверка адаптации, читаемости и доступности основной кнопки."
+      comment: "Мобильную версию, скорость, кликабельность и удобство форм нужно проверять по рендеру страницы.",
+      scope: "Мобильная версия, скорость, UX, технические ошибки"
     },
     {
-      name: "Структура",
-      status: analysis.h2.length > 0 && analysis.pageText.length >= 500 ? "Хорошо" : "Требует внимания",
-      comment: analysis.h2.length > 0 && analysis.pageText.length >= 500 ? "Базовая текстовая структура страницы присутствует." : "Структуру и объём контента стоит проверить вручную."
+      name: "Реклама и аналитика",
+      status: "Требует внимания",
+      comment: "В полном отчёте проверяется связка рекламного обещания, первого экрана, CTA и отслеживания заявок.",
+      scope: "Яндекс Директ, соответствие трафику, цели и конверсии"
     }
   ];
 }
@@ -166,7 +175,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           <div>
             <p className="preview-report__eyebrow">Краткий отчёт LeadFix</p>
             <h1>Предварительный аудит сайта</h1>
-            <p>Это краткая версия отчёта. Полные рекомендации доступны после оплаты.</p>
+            <p>Краткая версия по структуре полного отчёта: шесть направлений проверки и первые точки потери заявок.</p>
           </div>
           <div className="preview-report__meta">
             <span>{analysis.url}</span>
@@ -181,7 +190,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
           </div>
           <div className="preview-score__comment">
             <span className="preview-score__status">{getScoreInterpretation(previewReport.score)}</span>
-            <p>Оценка собрана по базовым элементам страницы: главному предложению, кнопкам действия, контактам, доверию и структуре текста.</p>
+            <p>Оценка собрана по базовым сигналам страницы и разложена по структуре полного отчёта: оффер, доверие, действия, структура, UX и реклама.</p>
           </div>
           <div className="preview-score__metrics">
             <div><strong>{previewReport.criticalIssues}</strong><span>Критично</span></div>
@@ -235,8 +244,8 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
         <section className="full-audit__section preview-report__section">
           <div className="preview-section-heading">
             <div>
-              <p className="preview-report__eyebrow">Мини-разбор</p>
-              <h2>Состояние ключевых категорий</h2>
+              <p className="preview-report__eyebrow">Структура отчёта</p>
+              <h2>Состояние по направлениям аудита</h2>
             </div>
           </div>
           <div className="preview-categories">
@@ -248,6 +257,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
                     {category.status}
                   </span>
                 </div>
+                <span className="preview-category__scope">{category.scope}</span>
                 <p>{category.comment}</p>
                 <span className="preview-category__locked-score">Оценка категории: доступно в полном отчёте</span>
               </article>
