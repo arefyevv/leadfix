@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import type { AuditAnalysis } from "@/types/audit";
 
 type FullReportProps = {
@@ -36,6 +37,14 @@ type ScoreRow = {
 };
 
 const reportScore = 74;
+
+const scoreLevels = [
+  { range: "0–39", title: "Критический риск", tone: "critical", summary: "Лендинг не готов к рекламе. Бюджет, скорее всего, сливается." },
+  { range: "40–59", title: "Слабая готовность", tone: "weak", summary: "Есть база, но много барьеров для заявки. Нужны правки до масштабирования." },
+  { range: "60–74", title: "Средняя готовность", tone: "medium", summary: "Лендинг может давать заявки, но часть трафика теряется из-за заметных проблем." },
+  { range: "75–89", title: "Хорошая готовность", tone: "good", summary: "Можно вести трафик. Есть точки роста, но критичных провалов мало." },
+  { range: "90–100", title: "Сильная готовность", tone: "strong", summary: "Лендинг хорошо подготовлен к рекламе. Нужны точечные улучшения и A/B-тесты." }
+] as const;
 
 const auditGroups = [
   {
@@ -222,6 +231,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const detailedIssues = getDetailedIssues();
   const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+  const activeScoreLevel = getScoreLevel(reportScore);
 
   function copyReportLink() {
     const reportUrl = typeof window !== "undefined" ? window.location.href : analysis.url;
@@ -258,19 +268,35 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </header>
 
-          <section className="full-audit-content__score">
-            <div>
-              <p className="full-audit__eyebrow">Общая оценка</p>
-              <strong>{reportScore}<small>/100</small></strong>
+          <section className="full-audit-content__score readiness-score" aria-label="Готовность лендинга к платному трафику">
+            <div className={`readiness-score__gauge is-${activeScoreLevel.tone}`}>
+              <div className="readiness-score__ring" style={{ "--score": `${reportScore}%` } as CSSProperties}>
+                <strong>{reportScore}<small>/100</small></strong>
+              </div>
+              <p>Готовность к платному трафику</p>
             </div>
-            <div>
-              <h2>Средний уровень</h2>
-              <p>Лендинг уже может получать заявки, но есть заметные точки потери конверсии: оффер, CTA, доверие и мобильный сценарий требуют доработки.</p>
+            <div className="readiness-score__verdict">
+              <p className="full-audit__eyebrow">Общий score</p>
+              <h2>{activeScoreLevel.title}</h2>
+              <p>{activeScoreLevel.summary}</p>
+              <p>Главные зоны потерь: оффер, CTA, доверие и мобильный сценарий.</p>
+              <div className="readiness-score__scale" aria-label="Уровни общего score">
+                {scoreLevels.map((level) => (
+                  <div className={`is-${level.tone}${level.title === activeScoreLevel.title ? " is-active" : ""}`} key={level.title}>
+                    <span>{level.range}</span>
+                    <b>{level.title}</b>
+                  </div>
+                ))}
+              </div>
             </div>
-            <dl>
-              <div><dt>Критично</dt><dd>2</dd></div>
-              <div><dt>Важно</dt><dd>5</dd></div>
-              <div><dt>Точки роста</dt><dd>8</dd></div>
+            <dl className="readiness-score__metrics">
+              {auditDirections.map((direction) => (
+                <div key={direction.title}>
+                  <dt>{direction.title}</dt>
+                  <dd>{direction.score}</dd>
+                  <span style={{ "--value": `${direction.score}%` } as CSSProperties} />
+                </div>
+              ))}
             </dl>
           </section>
 
@@ -454,6 +480,14 @@ function getScoreTone(status: ScoreRow["status"]) {
   if (status === "Слабое место") return "weak";
   if (status === "Нормально") return "normal";
   return "attention";
+}
+
+function getScoreLevel(score: number) {
+  if (score <= 39) return scoreLevels[0];
+  if (score <= 59) return scoreLevels[1];
+  if (score <= 74) return scoreLevels[2];
+  if (score <= 89) return scoreLevels[3];
+  return scoreLevels[4];
 }
 
 function getPriorityTone(priority: ScoreRow["priority"]) {
