@@ -8,11 +8,15 @@ type PricingCardProps = {
 };
 
 export function PricingCard({ plan, selected, onSelect, variant = "default" }: PricingCardProps) {
-  const features = plan.features ?? ["Аудит сайта", "Рекомендации", "PDF-отчёт"];
-  const format = plan.format ?? ["web-отчёт"];
+  const features = plan.features ?? ["Аудит сайта", "Рекомендации", "web-отчет"];
+  const format = plan.format ?? ["web-отчет"];
   const featureDetails = plan.featureDetails ?? {};
   const isCheckout = variant === "checkout";
+  const isFreePlan = plan.name === "Тест сайта";
+  const ctaHref = isFreePlan ? "/#audit" : `/checkout?plan=${encodeURIComponent(plan.name)}`;
+  const ctaLabel = isFreePlan ? "Запустить тест" : "Выбрать тариф";
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
+
   const content = (
     <>
       {!isCheckout && plan.recommended && <span className="pricing-card__badge">Популярный выбор</span>}
@@ -63,20 +67,16 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
       {isCheckout ? (
         <span className="pricing-card__cta">Выбрать тариф</span>
       ) : (
-        <a className="pricing-card__cta" href={`/checkout?plan=${encodeURIComponent(plan.name)}`}>Выбрать тариф</a>
+        <a className="pricing-card__cta" href={ctaHref}>{ctaLabel}</a>
       )}
     </>
   );
 
   if (isCheckout) {
     return (
-    <button
-      className={className}
-      type="button"
-      onClick={() => onSelect(plan.name)}
-    >
-      {content}
-    </button>
+      <button className={className} type="button" onClick={() => onSelect(plan.name)}>
+        {content}
+      </button>
     );
   }
 

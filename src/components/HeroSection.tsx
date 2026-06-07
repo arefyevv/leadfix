@@ -20,17 +20,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="hero__inner">
             <div className="hero__label">
               <span className="hero__label-icon" aria-hidden="true" />
-              <span>Экспресс-аудит сайтов под заявки</span>
+              <span>Аудит лендингов под заявки</span>
             </div>
 
             <h1 className="hero__title" id="leadfix-hero-title">
-              <span>Найдём, где ваш лендинг </span>
+              <span>Покажем, где ваш лендинг </span>
               <span>теряет заявки</span>
             </h1>
 
             <p className="hero__subtitle">
-              Анализируем оффер, CTA, доверие, структуру и мобильную версию с помощью ИИ-инструментов.
-              Показываем конкретные ошибки и что исправить в первую очередь.
+              Проверяем страницу как маркетолог, UX-дизайнер и директолог: находим слабый оффер,
+              незаметные CTA, недоверие, лишние поля и мобильные ошибки. На выходе — список правок по влиянию на заявки.
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
