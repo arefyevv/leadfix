@@ -21,7 +21,7 @@ export function CookieNotice() {
   return (
     <aside className="cookie-notice" aria-label="Уведомление об использовании cookies">
       <p>
-        LeadFix использует cookies для работы сайта, аналитики и улучшения сервиса.
+        LeadFix использует cookies для работы сайта. Без них никак.
         Подробнее - в <a href="/cookies">Политике cookies</a>.
       </p>
       <button type="button" onClick={acceptCookies}>
