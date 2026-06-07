@@ -6,6 +6,7 @@ import { CheckoutScreen } from "@/components/CheckoutScreen";
 import { Header } from "@/components/Header";
 import { paidAuditPlans } from "@/components/plans";
 import { normalizeClientUrl } from "@/lib/clientAudit";
+import { YANDEX_METRIKA_COUNTER_ID } from "@/lib/metrika";
 import type { LeadResponse } from "@/types/lead";
 
 declare global {
@@ -81,9 +82,8 @@ export function CheckoutRoute() {
       }
 
       setSuccess(true);
-      const metrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID);
-      if (Number.isFinite(metrikaId)) {
-        window.ym?.(metrikaId, "reachGoal", "leadfix_checkout_submit");
+      if (Number.isFinite(YANDEX_METRIKA_COUNTER_ID)) {
+        window.ym?.(YANDEX_METRIKA_COUNTER_ID, "reachGoal", "leadfix_checkout_submit");
       }
 
       window.location.assign(data.lead.paymentLink);

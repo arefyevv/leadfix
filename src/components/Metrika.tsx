@@ -1,11 +1,8 @@
 import Script from "next/script";
+import { YANDEX_METRIKA_ID } from "@/lib/metrika";
 
 export function Metrika() {
-  const counterId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
-
-  if (!counterId) {
-    return null;
-  }
+  const counterId = YANDEX_METRIKA_ID;
 
   return (
     <>
@@ -29,4 +26,3 @@ export function Metrika() {
     </>
   );
 }
-
