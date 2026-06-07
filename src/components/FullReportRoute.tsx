@@ -43,7 +43,7 @@ export function FullReportRoute() {
   }, [searchParams]);
 
   return (
-    <>
+    <div className="legal-shell report-shell">
       <Header />
       <main>
         {error ? (
@@ -60,6 +60,6 @@ export function FullReportRoute() {
           <LoadingScreen url={url} steps={["Загружаем данные отчёта", "Готовим полный аудит"]} stepIndex={0} />
         )}
       </main>
-    </>
+    </div>
   );
 }

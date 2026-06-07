@@ -220,30 +220,38 @@ function getDetailedIssues(): DetailedIssue[] {
 
 export function FullReport({ analysis, reportDate }: FullReportProps) {
   const detailedIssues = getDetailedIssues();
-  const siteHeading = analysis.h1[0] || "Главный заголовок на странице не найден";
+  const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
+  const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+
+  function copyReportLink() {
+    const reportUrl = typeof window !== "undefined" ? window.location.href : analysis.url;
+    void navigator.clipboard?.writeText(reportUrl);
+  }
 
   return (
-    <section className="full-report full-audit screen">
+    <section className="full-report full-audit full-audit-document screen">
       <div className="full-report__inner full-audit__layout">
         <aside className="full-audit-sidebar">
           <section className="full-audit-sidebar__site">
             <div className="full-audit-sidebar__meta">
               <div><span>Дата аудита</span><b>{reportDate}</b></div>
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
-              <div><span>H1 сайта</span><b>{siteHeading}</b></div>
+              <div><span>УТП сайта</span><b>{siteHeading}</b></div>
             </div>
             <div className="full-audit-sidebar__actions">
               <button className="pdf-button" type="button" onClick={() => window.print()}>Скачать PDF</button>
-              <button className="telegram-button" type="button">Отправить в Telegram</button>
+              <button className="telegram-button" type="button" onClick={copyReportLink}>Скопировать ссылку на отчёт</button>
             </div>
           </section>
         </aside>
 
         <main className="full-audit-content">
           <header className="full-audit-content__hero">
-            <p className="full-audit__eyebrow">Аудит продающей способности</p>
-            <h2>Что мешает сайту приносить больше заявок</h2>
-            <p>Разбор ключевых точек потери конверсии и последовательный план исправлений.</p>
+            <p className="full-audit__eyebrow">Полный отчёт LeadFix</p>
+            <h2>
+              <span>Полный отчёт конверсии </span>
+              <span className="preview-report__title-url">{displayUrl}</span>
+            </h2>
             <div className="full-audit-content__hero-metrics">
               <div><span>Первый приоритет</span><b>Оффер и CTA</b></div>
               <div><span>Потенциал роста</span><b>+15–35%</b></div>
