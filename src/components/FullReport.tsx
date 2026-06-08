@@ -320,9 +320,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
             <dl className="readiness-score__metrics">
               {auditDirections.map((direction) => (
-                <div key={direction.title}>
-                  <dt>{direction.title}</dt>
+                <div className={`is-${getDirectionTone(direction.status)}`} key={direction.title}>
+                  <dt><i aria-hidden="true" />{direction.title}</dt>
                   <dd>{direction.score}</dd>
+                  <em>{direction.status}</em>
                   <span style={{ "--value": `${direction.score}%` } as CSSProperties} />
                 </div>
               ))}
@@ -517,6 +518,12 @@ function getScoreLevel(score: number) {
   if (score <= 74) return scoreLevels[2];
   if (score <= 89) return scoreLevels[3];
   return scoreLevels[4];
+}
+
+function getDirectionTone(status: AuditStatus) {
+  if (status === "Хорошо") return "good";
+  if (status === "Слабое место") return "weak";
+  return "attention";
 }
 
 function getPriorityTone(priority: ScoreRow["priority"]) {
