@@ -24,10 +24,18 @@ type DetailedIssue = {
   title: string;
   priority: "Критично" | "Важно";
   category: string;
+  location: string;
   problem: string;
   impact: string;
   fix: string;
   example: string;
+  effort: "Низкая" | "Средняя";
+  effect: string;
+  screenshot: {
+    title: string;
+    note: string;
+    markers: string[];
+  };
 };
 
 type ScoreRow = {
@@ -118,6 +126,44 @@ const quickImprovements = [
   "Сравнить первый экран с основными объявлениями в Яндекс Директе."
 ];
 
+const executiveSummary = [
+  "Лендинг можно использовать для платного трафика только с ограничениями: критичных технических провалов нет, но часть заявок теряется на уровне смысла и доверия.",
+  "Главный риск — пользователь не считывает конкретный результат и следующий шаг достаточно быстро после клика по рекламе.",
+  "Сначала нужно усилить первый экран, CTA, доказательства рядом с формой и мобильный путь до заявки."
+];
+
+const topProblems = [
+  { title: "Оффер недостаточно конкретный", area: "Первый экран", impact: "Пользователь не понимает выгоду за 5 секунд.", tone: "critical" },
+  { title: "CTA не объясняет следующий шаг", area: "Кнопки и форма", impact: "Перед кликом остаётся лишнее сомнение.", tone: "critical" },
+  { title: "Доверие не поддерживает заявку", area: "Отзывы / кейсы / форма", impact: "Нет быстрых доказательств перед обращением.", tone: "important" }
+];
+
+const pageMapItems = [
+  { index: "01", title: "Первый экран", note: "Уточнить результат, аудиторию и связь с рекламным запросом.", tone: "critical" },
+  { index: "02", title: "CTA и форма", note: "Пояснить, что произойдёт после клика и убрать лишнее трение.", tone: "critical" },
+  { index: "03", title: "Доверие", note: "Добавить кейсы, цифры результата и ответы на возражения.", tone: "important" },
+  { index: "04", title: "Мобильный путь", note: "Проверить видимость CTA, размеры кнопок и заполнение формы.", tone: "important" }
+];
+
+const specialistTasks = [
+  {
+    role: "Дизайнер",
+    tasks: ["Пересобрать первый экран вокруг одного главного обещания.", "Усилить визуальную иерархию CTA, формы и доказательств.", "Проверить мобильные состояния ключевых блоков."]
+  },
+  {
+    role: "Копирайтер / маркетолог",
+    tasks: ["Переписать заголовок и подзаголовок через конкретный результат.", "Добавить блок возражений и доказательств рядом с точками решения.", "Согласовать текст первого экрана с рекламными объявлениями."]
+  },
+  {
+    role: "Разработчик / Tilda",
+    tasks: ["Сократить форму и добавить пояснение следующего шага.", "Проверить адаптив на 360–430 px.", "Убедиться, что клики по кнопкам, телефону и мессенджерам отслеживаются."]
+  },
+  {
+    role: "Директолог / аналитик",
+    tasks: ["Сверить объявления с первым экраном.", "Настроить цели в Метрике на все ключевые действия.", "После правок запустить повторный аудит и сравнить score."]
+  }
+];
+
 const implementationPriorities = [
   {
     title: "Высокий приоритет",
@@ -193,37 +239,69 @@ function getDetailedIssues(): DetailedIssue[] {
       title: "Главное предложение требует большей конкретики",
       priority: "Критично",
       category: "УТП и первый экран",
+      location: "Первый экран, заголовок и подзаголовок",
       problem: "Главный заголовок описывает направление, но не показывает конкретный результат для клиента.",
       impact: "Пользователь из рекламы принимает решение за несколько секунд. Если он не понимает выгоду сразу, вероятность ухода со страницы растёт.",
       fix: "Переписать заголовок по формуле: кому + какой результат + за счёт чего.",
-      example: "Было: «Работаем каждый день, но его конкуренты уже получают больше заявок». Стало: «Найдём, почему лендинг теряет заявки из Яндекс Директа, и покажем, что исправить в первую очередь»."
+      example: "Было: «Работаем каждый день, но его конкуренты уже получают больше заявок». Стало: «Найдём, почему лендинг теряет заявки из Яндекс Директа, и покажем, что исправить в первую очередь».",
+      effort: "Средняя",
+      effect: "Выше понимание предложения и меньше отказов после клика.",
+      screenshot: {
+        title: "Скрин первого экрана",
+        note: "Проблемную зону нужно отметить на заголовке, подзаголовке и первом CTA.",
+        markers: ["Заголовок", "Выгода", "CTA"]
+      }
     },
     {
       title: "Основной CTA не объясняет следующий шаг",
       priority: "Критично",
       category: "CTA и формы",
+      location: "Основные кнопки и форма заявки",
       problem: "Кнопка заметна, но формулировка не показывает, что именно получит пользователь после клика.",
       impact: "Неясный следующий шаг увеличивает сомнение перед заявкой и снижает кликабельность основной кнопки.",
       fix: "Сделать CTA прямым и добавить рядом короткое пояснение результата отправки формы.",
-      example: "CTA: «Получить разбор лендинга». Пояснение: «Покажем основные точки потери заявок и приоритеты исправлений»."
+      example: "CTA: «Получить разбор лендинга». Пояснение: «Покажем основные точки потери заявок и приоритеты исправлений».",
+      effort: "Низкая",
+      effect: "Больше кликов по основной кнопке и меньше сомнений перед формой.",
+      screenshot: {
+        title: "Скрин CTA / формы",
+        note: "На скрине нужно показать кнопку, поля формы и подпись следующего шага.",
+        markers: ["Кнопка", "Поля", "Пояснение"]
+      }
     },
     {
       title: "Недостаточно доказательств рядом с формой",
       priority: "Важно",
       category: "Доверие",
+      location: "Блок доверия и зона перед отправкой заявки",
       problem: "Отзывы, кейсы и цифры результата не поддерживают пользователя в момент принятия решения.",
       impact: "Пользователь не получает подтверждений компетентности компании и откладывает отправку заявки.",
       fix: "Добавить рядом с формой 2–3 коротких доказательства: цифру результата, кейс и отзыв с контекстом.",
-      example: "Разместить рядом с формой: «+28% к конверсии после переработки первого экрана» и короткую цитату клиента."
+      example: "Разместить рядом с формой: «+28% к конверсии после переработки первого экрана» и короткую цитату клиента.",
+      effort: "Средняя",
+      effect: "Выше доверие в момент принятия решения.",
+      screenshot: {
+        title: "Скрин блока доверия",
+        note: "Нужно отметить места, где должны появиться кейсы, цифры и отзыв.",
+        markers: ["Кейс", "Цифра", "Отзыв"]
+      }
     },
     {
       title: "Мобильный сценарий требует ручной проверки",
       priority: "Важно",
       category: "Мобильная версия",
+      location: "Мобильный первый экран и форма",
       problem: "Нужно проверить первый экран, CTA и заполнение формы на ширине 360 пикселей.",
       impact: "Часть рекламного трафика приходит со смартфонов. Лишняя прокрутка или неудобная форма напрямую сокращают количество заявок.",
       fix: "Пройти путь пользователя на телефоне: объявление, первый экран, CTA, форма, подтверждение заявки.",
-      example: "Основная кнопка должна быть видна без лишней прокрутки, а форма содержать только обязательные поля."
+      example: "Основная кнопка должна быть видна без лишней прокрутки, а форма содержать только обязательные поля.",
+      effort: "Средняя",
+      effect: "Меньше потерь мобильного трафика до заявки.",
+      screenshot: {
+        title: "Мобильный скрин",
+        note: "Показать первый экран и форму на ширине 360–390 px.",
+        markers: ["Первый экран", "CTA", "Форма"]
+      }
     }
   ];
 }
@@ -329,18 +407,58 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </dl>
           </section>
 
+          <section className="full-audit__section full-audit__executive">
+            <SectionHeading eyebrow="Короткий вывод" title="Что происходит с лендингом" />
+            <div className="full-audit__executive-grid">
+              {executiveSummary.map((item, index) => (
+                <article key={item}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <p>{item}</p>
+                </article>
+              ))}
+            </div>
+            <div className="full-audit__traffic-verdict">
+              <b>Можно лить трафик?</b>
+              <strong>Да, но с ограничениями</strong>
+              <p>До масштабирования стоит закрыть критичные правки первого экрана, CTA, доверия и мобильной формы.</p>
+            </div>
+          </section>
+
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Объём проверки" title="Что проверял аудит" />
-            <p className="full-audit__lead">Аудит оценивает не сайт «вообще», а способность лендинга превращать платный трафик из Яндекс Директа в заявки.</p>
-            <p className="full-audit__lead full-audit__lead--secondary">Проверки сгруппированы по этапам принятия решения: от первого понимания предложения до заявки и измерения результата.</p>
-            <div className="full-audit__methodology">
-              {auditGroups.map((group, index) => (
-                <article key={group.title}>
-                  <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{group.title}</h3>
-                  <p>{group.description}</p>
+            <SectionHeading eyebrow="Сначала исправить" title="Топ проблем и быстрые победы" />
+            <div className="full-audit__top-grid">
+              <div className="full-audit__top-problems">
+                {topProblems.map((item, index) => (
+                  <article className={`is-${item.tone}`} key={item.title}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <b>{item.area}</b>
+                      <h3>{item.title}</h3>
+                      <p>{item.impact}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="full-audit__quick-panel">
+                <h3>Быстрые победы на 1–2 дня</h3>
+                <ul>
+                  {quickImprovements.slice(0, 5).map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Визуальная привязка" title="Карта проблемных блоков лендинга" />
+            <p className="full-audit__lead">В финальном отчёте каждый пункт должен быть привязан к конкретному скриншоту блока. Ниже — структура таких скриншотов: зона страницы, маркер проблемы и действие.</p>
+            <div className="full-audit__page-map">
+              {pageMapItems.map((item) => (
+                <article className={`is-${item.tone}`} key={item.title}>
+                  <ScreenshotFrame title={item.title} markers={[item.index, item.tone === "critical" ? "Проблема" : "Усилить"]} />
                   <div>
-                    {group.items.map((item) => <span className="full-audit__methodology-chip" key={item}><i />{item}</span>)}
+                    <span>{item.index}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.note}</p>
                   </div>
                 </article>
               ))}
@@ -348,8 +466,8 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Разбор лендинга" title="Итоги по направлениям аудита" />
-            <p className="full-audit__lead">Сначала — краткая картина по шести направлениям. Ниже можно посмотреть оценки всех проверенных категорий и подробные замечания.</p>
+            <SectionHeading eyebrow="6 направлений" title="Итоги по ключевым категориям аудита" />
+            <p className="full-audit__lead">Это главный каркас отчёта: от оффера и соответствия рекламе до доверия, CTA и мобильного сценария.</p>
             <div className="full-audit__categories">
               {auditDirections.map((direction, index) => (
                 <article className="full-audit-category" key={direction.title}>
@@ -375,24 +493,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Все категории" title="Полная таблица оценок" />
-            <div className="full-audit__score-table">
-              <div className="full-audit__score-table-head">
-                <span>Категория</span><span>Оценка</span><span>Статус</span><span>Приоритет</span>
-              </div>
-              {scoreRows.map((row) => (
-                <article className="full-audit__score-row" key={row.category}>
-                  <b>{row.category}</b>
-                  <strong>{row.score}<small>/100</small></strong>
-                  <span className={`score-status is-${getScoreTone(row.status)}`}>{row.status}</span>
-                  <span className={`score-priority is-${getPriorityTone(row.priority)}`}>{row.priority}</span>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Подробные замечания" title="Ключевые проблемы" />
+            <SectionHeading eyebrow="Подробный разбор" title="Карточки проблем со скриншотами" />
             <div className="full-audit__issues">
               {detailedIssues.map((issue, index) => (
                 <article className={issue.priority === "Критично" ? "full-audit-issue is-critical" : "full-audit-issue"} key={`${issue.title}-${index}`}>
@@ -405,69 +506,26 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       </div>
                       <b>{issue.priority}</b>
                     </div>
-                    <div className="full-audit-issue__grid">
-                      <div><b>Что не так</b><p>{issue.problem}</p></div>
-                      <div><b>Почему влияет на заявки</b><p>{issue.impact}</p></div>
-                      <div><b>Что исправить</b><p>{issue.fix}</p></div>
-                      <div><b>Пример улучшения</b><p>{issue.example}</p></div>
+                    <div className="full-audit-issue__location">
+                      <span>Где на странице</span>
+                      <b>{issue.location}</b>
+                    </div>
+                    <div className="full-audit-issue__analysis">
+                      <ScreenshotFrame title={issue.screenshot.title} note={issue.screenshot.note} markers={issue.screenshot.markers} />
+                      <div className="full-audit-issue__grid">
+                        <div><b>Что не так</b><p>{issue.problem}</p></div>
+                        <div><b>Почему влияет на заявки</b><p>{issue.impact}</p></div>
+                        <div><b>Что исправить</b><p>{issue.fix}</p></div>
+                        <div><b>Пример улучшения</b><p>{issue.example}</p></div>
+                      </div>
+                    </div>
+                    <div className="full-audit-issue__meta">
+                      <div><span>Сложность</span><b>{issue.effort}</b></div>
+                      <div><span>Ожидаемый эффект</span><b>{issue.effect}</b></div>
                     </div>
                   </div>
                 </article>
               ))}
-            </div>
-          </section>
-
-          <section className="full-audit__section full-audit__direct">
-            <div className="full-audit__direct-head">
-              <div>
-                <p className="full-audit__eyebrow">Рекламный трафик</p>
-                <h2>Соответствие трафику из Яндекс Директа</h2>
-              </div>
-              <strong>64<small>/100</small></strong>
-            </div>
-            <span className="full-audit__status status-attention">Требует внимания</span>
-            <p className="full-audit__lead">Лендинг должен подтверждать ожидание пользователя сразу после клика по рекламному объявлению. Если запрос, объявление, первый экран и CTA не совпадают по смыслу, рекламный трафик может теряться даже при нормальной настройке кампании.</p>
-            <h3>Что проверяется</h3>
-            <ul>
-              <li>Совпадает ли первый экран с рекламным объявлением.</li>
-              <li>Совпадает ли оффер на сайте с обещанием в рекламе.</li>
-              <li>Понятно ли пользователю, что он попал на нужную страницу.</li>
-              <li>Есть ли связка: запрос → объявление → первый экран → CTA → заявка.</li>
-              <li>Подходит ли CTA под температуру трафика.</li>
-              <li>Не ведётся ли разный трафик на один слишком общий лендинг.</li>
-            </ul>
-            <div className="full-audit__recommendation"><b>Рекомендация</b><p>Сравнить основные рекламные объявления с первым экраном лендинга. Если в объявлении обещается конкретный результат, этот же результат должен быть виден в заголовке, подзаголовке или рядом с CTA.</p></div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="1–2 дня" title="Быстрые улучшения" />
-            <div className="full-audit__improvements">
-              {quickImprovements.map((item, index) => <div key={item}><strong>{String(index + 1).padStart(2, "0")}</strong><span>{item}</span></div>)}
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Мобильная версия" title="Проверка мобильного сценария" />
-            <div className="full-audit__mobile">
-              <div className="phone-preview" aria-label="Схема мобильной версии">
-                <div className="phone-screen">
-                  <div className="phone-line" />
-                  <div className="phone-line phone-line--short" />
-                  <div className="phone-line" />
-                  <div className="phone-cta" />
-                  <div className="phone-line" />
-                  <div className="phone-line phone-line--short" />
-                </div>
-              </div>
-              <div>
-                <p>Автоматическая проверка кода страницы не заменяет визуальную проверку адаптива. Перед запуском рекламы вручную пройдите путь заявки на телефоне.</p>
-                <ul>
-                  <li>Проверьте первый экран на ширине 360 пикселей.</li>
-                  <li>Убедитесь, что основная кнопка видна без лишней прокрутки.</li>
-                  <li>Проверьте размеры кнопок и удобство полей формы.</li>
-                  <li>Убедитесь, что контакты доступны в один клик.</li>
-                </ul>
-              </div>
             </div>
           </section>
 
@@ -483,10 +541,62 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
           </section>
 
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Кому передать" title="Задачи для специалистов" />
+            <div className="full-audit__specialists">
+              {specialistTasks.map((group) => (
+                <article key={group.role}>
+                  <h3>{group.role}</h3>
+                  <ul>{group.tasks.map((task) => <li key={task}>{task}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <details className="full-audit__details">
+              <summary>
+                <span>Все категории</span>
+                <b>Полная таблица оценок</b>
+              </summary>
+              <div className="full-audit__score-table">
+                <div className="full-audit__score-table-head">
+                  <span>Категория</span><span>Оценка</span><span>Статус</span><span>Приоритет</span>
+                </div>
+                {scoreRows.map((row) => (
+                  <article className="full-audit__score-row" key={row.category}>
+                    <b>{row.category}</b>
+                    <strong>{row.score}<small>/100</small></strong>
+                    <span className={`score-status is-${getScoreTone(row.status)}`}>{row.status}</span>
+                    <span className={`score-priority is-${getPriorityTone(row.priority)}`}>{row.priority}</span>
+                  </article>
+                ))}
+              </div>
+            </details>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Методология" title="Что проверял аудит" />
+            <p className="full-audit__lead">Аудит оценивает не сайт «вообще», а способность лендинга превращать платный трафик из Яндекс Директа в заявки.</p>
+            <p className="full-audit__lead full-audit__lead--secondary">Проверки сгруппированы по этапам принятия решения: от первого понимания предложения до заявки и измерения результата.</p>
+            <div className="full-audit__methodology">
+              {auditGroups.map((group, index) => (
+                <article key={group.title}>
+                  <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{group.title}</h3>
+                  <p>{group.description}</p>
+                  <div>
+                    {group.items.map((item) => <span className="full-audit__methodology-chip" key={item}><i />{item}</span>)}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className="full-audit__section full-audit__potential">
             <p className="full-audit__eyebrow">Ориентир после исправлений</p>
-            <h2>Потенциал роста конверсии</h2>
-            <p>После исправления критичных проблем потенциальный рост конверсии может составить:</p>
+            <h2>Ориентир влияния после исправлений</h2>
+            <p>После исправления критичных проблем можно ожидать улучшение качества пути до заявки. Это не прогноз продаж, а оценка влияния найденных барьеров.</p>
             <strong>+15–35%</strong>
             <small>Это не гарантия результата, а ориентировочная оценка на основе найденных барьеров. Фактический результат зависит от качества трафика, ниши, цены, продукта, конкурентной среды, обработки заявок и корректности внедрения рекомендаций.</small>
           </section>
@@ -502,6 +612,31 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return <div className="full-audit__section-heading"><p className="full-audit__eyebrow">{eyebrow}</p><h2>{title}</h2></div>;
+}
+
+function ScreenshotFrame({ title, note, markers }: { title: string; note?: string; markers: string[] }) {
+  return (
+    <figure className="full-audit-screenshot" aria-label={title}>
+      <div className="full-audit-screenshot__chrome">
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="full-audit-screenshot__canvas">
+        <div className="full-audit-screenshot__hero-line" />
+        <div className="full-audit-screenshot__text-line" />
+        <div className="full-audit-screenshot__text-line is-short" />
+        <div className="full-audit-screenshot__cta" />
+        {markers.map((marker, index) => (
+          <span className={`full-audit-screenshot__marker is-${index + 1}`} key={`${marker}-${index}`}>{marker}</span>
+        ))}
+      </div>
+      <figcaption>
+        <b>{title}</b>
+        {note ? <span>{note}</span> : null}
+      </figcaption>
+    </figure>
+  );
 }
 
 function getScoreTone(status: ScoreRow["status"]) {
