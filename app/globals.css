@@ -9253,8 +9253,11 @@ h6,
 }
 
 .hero--reference .hero__title {
-  width: min(100%, 1180px) !important;
+  width: min(100%, 980px) !important;
+  display: grid !important;
+  justify-items: center !important;
   text-align: center !important;
+  text-wrap: balance !important;
 }
 
 .hero--reference .hero__subtitle {
