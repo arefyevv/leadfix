@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { AuditAnalysis } from "@/types/audit";
 
@@ -232,10 +233,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
+  const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
     const reportUrl = typeof window !== "undefined" ? window.location.href : analysis.url;
     void navigator.clipboard?.writeText(reportUrl);
+    setIsReportLinkCopied(true);
+    window.setTimeout(() => setIsReportLinkCopied(false), 1800);
   }
 
   return (
@@ -250,7 +254,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
             <div className="full-audit-sidebar__actions">
               <button className="pdf-button" type="button" onClick={() => window.print()}>Скачать PDF</button>
-              <button className="telegram-button" type="button" onClick={copyReportLink}>Скопировать ссылку на отчёт</button>
+              <button className="telegram-button" type="button" onClick={copyReportLink}>
+                {isReportLinkCopied ? "Ссылка скопирована" : "Скопировать ссылку на отчёт"}
+              </button>
             </div>
           </section>
         </aside>
@@ -282,11 +288,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                   <path className="readiness-score__arc-track" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
                   <path className="readiness-score__arc-progress" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
                   <g className="readiness-score__arc-ticks" aria-hidden="true">
-                    <text x="24" y="166">0</text>
-                    <text x="72" y="45">40</text>
-                    <text x="150" y="18">60</text>
-                    <text x="230" y="45">80</text>
-                    <text x="276" y="166">100</text>
+                    <text x="18" y="170">0</text>
+                    <text x="72" y="30">40</text>
+                    <text x="150" y="10">60</text>
+                    <text x="228" y="30">80</text>
+                    <text x="282" y="170">100</text>
                   </g>
                 </svg>
                 <strong>{reportScore}</strong>
