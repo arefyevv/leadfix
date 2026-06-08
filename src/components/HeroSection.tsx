@@ -56,57 +56,57 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               <div className="dashboard-brand">
                 <img src="/logo-black.svg" alt="LeadFix" />
               </div>
-              <small>Main Menu</small>
-              <p className="is-selected">Dashboard</p>
-              <p>Offer</p>
-              <p>CTA</p>
-              <p>Trust</p>
-              <p>Mobile UX</p>
+              <small>Разделы</small>
+              <p className="is-selected">Сводка</p>
+              <p>Оффер</p>
+              <p>Кнопки</p>
+              <p>Доверие</p>
+              <p>Мобильная версия</p>
             </aside>
 
             <main className="dashboard-main">
               <div className="dashboard-head">
-                <b>Overview</b>
-                <span>Search audit findings, pages, forms...</span>
+                <b>Обзор</b>
+                <span>Поиск по проблемам, блокам и формам...</span>
                 <i />
               </div>
 
               <div className="welcome-row">
                 <div>
-                  <strong>Conversion audit, Founder!</strong>
-                  <em>Monday, 24 December 2026</em>
+                  <strong>Аудит конверсии</strong>
+                  <em>24 декабря 2026</em>
                 </div>
-                <button type="button">Export</button>
+                <button type="button">Экспорт</button>
               </div>
 
               <div className="dash-grid">
                 <article>
-                  <small>Score</small>
+                  <small>Оценка</small>
                   <strong>61/100</strong>
-                  <em>+32% potential</em>
+                  <em>+32% потенциал</em>
                 </article>
                 <article>
-                  <small>Critical</small>
+                  <small>Критично</small>
                   <strong>2</strong>
-                  <em>fix first</em>
+                  <em>исправить сначала</em>
                 </article>
                 <article>
-                  <small>Medium</small>
+                  <small>Важно</small>
                   <strong>5</strong>
-                  <em>next sprint</em>
+                  <em>следующий этап</em>
                 </article>
                 <article>
-                  <small>Quick wins</small>
+                  <small>Быстрые победы</small>
                   <strong>4</strong>
-                  <em>1 day</em>
+                  <em>1 день</em>
                 </article>
               </div>
 
               <div className="dashboard-bottom">
                 <section>
                   <div>
-                    <b>Conversion score</b>
-                    <span>Offer clarity</span>
+                    <b>Оценка конверсии</b>
+                    <span>Ясность оффера</span>
                   </div>
                   <p>
                     <i style={{ width: "62%" }} />
@@ -119,7 +119,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                   </p>
                 </section>
                 <section>
-                  <b>Sales Overview</b>
+                  <b>Сводка заявок</b>
                   <div className="dashboard-ring" />
                 </section>
               </div>
