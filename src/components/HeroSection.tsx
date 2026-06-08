@@ -74,7 +74,6 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               <div className="welcome-row">
                 <div>
                   <strong>Аудит конверсии</strong>
-                  <em>24 декабря 2026</em>
                 </div>
                 <button type="button">Экспорт</button>
               </div>
@@ -106,17 +105,15 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                 <section>
                   <div>
                     <b>Оценка конверсии</b>
-                    <span>Ясность оффера</span>
                   </div>
-                  <p>
-                    <i style={{ width: "62%" }} />
-                  </p>
-                  <p>
-                    <i style={{ width: "42%" }} />
-                  </p>
-                  <p>
-                    <i style={{ width: "78%" }} />
-                  </p>
+                  <div className="dashboard-chart" aria-hidden="true">
+                    <i style={{ height: "42%" }} />
+                    <i style={{ height: "58%" }} />
+                    <i style={{ height: "36%" }} />
+                    <i style={{ height: "74%" }} />
+                    <i style={{ height: "62%" }} />
+                    <i style={{ height: "86%" }} />
+                  </div>
                 </section>
                 <section>
                   <b>Сводка заявок</b>
