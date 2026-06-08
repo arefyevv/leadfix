@@ -6877,7 +6877,8 @@ h6 {
 .readiness-score__verdict {
   min-width: 0;
   display: grid;
-  align-content: center;
+  align-content: start;
+  padding-top: 14px;
 }
 .readiness-score__verdict p + p {
   margin-top: 6px !important;
