@@ -47,12 +47,6 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
 
             <div className="hero__proof-row">
               <p className="hero__proof">Бесплатно покажем первые ошибки за 1 минуту</p>
-              <a
-                className="hero__after-payment"
-                href="/checkout/success?url=https%3A%2F%2Fexample.com&plan=Экспресс"
-              >
-                Страница после оплаты
-              </a>
             </div>
             <p className="form-error" aria-live="polite">
               {error}
