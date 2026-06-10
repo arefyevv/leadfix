@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
+import { enhanceAuditWithAI } from "@/lib/openaiAudit";
 
 const REQUEST_TIMEOUT_MS = 12_000;
 
@@ -57,7 +58,7 @@ export async function POST(request: Request) {
     }
 
     const html = await response.text();
-    const analysis = analyzeHtml(html, response.url || url.href);
+    const analysis = await enhanceAuditWithAI(analyzeHtml(html, response.url || url.href));
 
     return NextResponse.json({
       analysis,

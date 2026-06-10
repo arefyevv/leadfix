@@ -1,5 +1,7 @@
 import * as cheerio from "cheerio";
 import type { AuditInsight, AuditAnalysis, PreviewReport } from "@/types/audit";
+import { createAuditResultFromAnalysis } from "@/lib/audit/result";
+import { reviewAuditResult } from "@/lib/audit/quality";
 
 const TRUST_WORDS = ["отзывы", "кейсы", "клиенты", "гарантия", "сертификат", "лицензия"];
 const CTA_WORDS = ["заказать", "получить", "оставить заявку", "рассчитать", "купить", "связаться"];
@@ -17,7 +19,7 @@ function findWords(text: string, words: string[]) {
   return words.filter((word) => normalizedText.includes(word));
 }
 
-function createPreviewReport(data: Omit<AuditAnalysis, "previewReport">): PreviewReport {
+function createPreviewReport(data: Omit<AuditAnalysis, "previewReport" | "auditResult">): PreviewReport {
   let score = 100;
   const insights: AuditInsight[] = [];
 
@@ -108,7 +110,7 @@ export function analyzeHtml(html: string, url: string): AuditAnalysis {
   );
   const searchableText = compactText(`${pageText} ${buttonsAndLinks.join(" ")}`);
 
-  const analysisWithoutReport: Omit<AuditAnalysis, "previewReport"> = {
+  const analysisWithoutReport: Omit<AuditAnalysis, "previewReport" | "auditResult"> = {
     url,
     title,
     description,
@@ -125,8 +127,13 @@ export function analyzeHtml(html: string, url: string): AuditAnalysis {
     ctaSignals: findWords(searchableText, CTA_WORDS)
   };
 
-  return {
+  const analysisWithoutAuditResult = {
     ...analysisWithoutReport,
     previewReport: createPreviewReport(analysisWithoutReport)
+  };
+
+  return {
+    ...analysisWithoutAuditResult,
+    auditResult: reviewAuditResult(createAuditResultFromAnalysis(analysisWithoutAuditResult))
   };
 }

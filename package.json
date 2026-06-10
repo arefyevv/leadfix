@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "audit:dry-run": "node scripts/audit-dry-run.mjs",
+    "audit:export-criteria": "node scripts/export-criteria-from-xlsx.mjs"
   },
   "dependencies": {
     "cheerio": "^1.2.0",

@@ -14,6 +14,74 @@ export type PreviewReport = {
   insights: AuditInsight[];
 };
 
+export type AuditCategoryId = "offer" | "ads" | "mobile" | "cta" | "trust" | "forms" | "structure" | "technical";
+export type AuditIssueSeverity = "critical" | "high" | "medium" | "low";
+export type AuditCategoryStatus = "Хорошо" | "Нормально" | "Требует внимания" | "Слабое место";
+
+export type AuditCategoryScore = {
+  categoryId: AuditCategoryId;
+  title: string;
+  weight: number;
+  score: number;
+  weightedScore: number;
+  status: AuditCategoryStatus;
+  summary: string;
+};
+
+export type AuditIssue = {
+  id: string;
+  criterionId: string;
+  categoryId: AuditCategoryId;
+  title: string;
+  location: string;
+  problem: string;
+  evidence: string;
+  impact: number;
+  complexity: number;
+  priorityScore: number;
+  severity: AuditIssueSeverity;
+  confidence: number;
+  recommendation: string;
+  example: string;
+  expectedResult: string;
+  needsHumanReview: boolean;
+};
+
+export type AuditResult = {
+  metadata: {
+    methodology: string;
+    version: string;
+    language: "ru";
+    generatedBy: "leadfix_rules" | "proxyapi";
+  };
+  analyzedUrl: string;
+  overallScore: number;
+  categoryScores: AuditCategoryScore[];
+  issues: AuditIssue[];
+  quickWins: string[];
+  highImpactFixes: string[];
+  structuralImprovements: string[];
+  implementationPlan: {
+    first24h: string[];
+    firstWeek: string[];
+    nextMonth: string[];
+  };
+  rewrittenExamples: string[];
+  limitations: string[];
+  humanReviewNeeded: string[];
+  finalSummary: {
+    mainConversionLoss: string;
+    topPriority: string;
+    expectedBusinessEffect: string;
+  };
+  qualityReview: {
+    passed: boolean;
+    score: number;
+    failedChecks: string[];
+    warnings: string[];
+  };
+};
+
 export type AuditAnalysis = {
   url: string;
   title: string;
@@ -30,6 +98,9 @@ export type AuditAnalysis = {
   trustSignals: string[];
   ctaSignals: string[];
   previewReport: PreviewReport;
+  auditResult: AuditResult;
+  aiProvider?: "proxyapi";
+  aiModel?: string;
 };
 
 export type AnalyzeResponse = {

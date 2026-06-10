@@ -179,7 +179,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
         <main className="full-audit-content preview-audit-content">
         <header className="full-audit-content__hero preview-report__header">
           <div>
-            <p className="preview-report__eyebrow">Демо отчёта LeadFix</p>
+            <p className="preview-report__eyebrow">{analysis.aiProvider ? "ИИ-демо отчёта LeadFix" : "Демо отчёта LeadFix"}</p>
             <h1>
               <span>Краткий отчёт конверсии </span>
               <span className="preview-report__title-url">{displayUrl}</span>

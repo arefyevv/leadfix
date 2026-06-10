@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import type { AuditAnalysis } from "@/types/audit";
+import type { AuditAnalysis, AuditResult } from "@/types/audit";
 
 type FullReportProps = {
   analysis: AuditAnalysis;
@@ -306,8 +306,83 @@ function getDetailedIssues(): DetailedIssue[] {
   ];
 }
 
+function getReportStatus(score: number): AuditStatus {
+  if (score <= 4) return "Слабое место";
+  if (score <= 7) return "Требует внимания";
+  return "Хорошо";
+}
+
+function getPriorityByScore(score: number): ScoreRow["priority"] {
+  if (score <= 5) return "Высокий";
+  if (score <= 7) return "Средний";
+  return "Низкий";
+}
+
+function getDetailedIssuesFromAuditResult(auditResult: AuditResult): DetailedIssue[] {
+  const issues = auditResult.issues.length > 0 ? auditResult.issues : [];
+  if (issues.length === 0) return getDetailedIssues();
+
+  return issues.slice(0, 6).map((issue) => ({
+    title: issue.title,
+    priority: issue.severity === "critical" ? "Критично" : "Важно",
+    category: auditResult.categoryScores.find((category) => category.categoryId === issue.categoryId)?.title ?? issue.categoryId,
+    location: issue.location,
+    problem: issue.problem,
+    impact: issue.evidence,
+    fix: issue.recommendation,
+    example: issue.example,
+    effort: issue.complexity <= 2 ? "Низкая" : "Средняя",
+    effect: issue.expectedResult,
+    screenshot: {
+      title: `Зона проверки: ${issue.location}`,
+      note: issue.needsHumanReview ? "Нужна ручная проверка или скриншот этой зоны." : issue.evidence,
+      markers: [issue.criterionId, issue.severity === "critical" ? "Критично" : "Проверить"]
+    }
+  }));
+}
+
 export function FullReport({ analysis, reportDate }: FullReportProps) {
-  const detailedIssues = getDetailedIssues();
+  const auditResult = analysis.auditResult;
+  const reportScore = auditResult.overallScore;
+  const detailedIssues = getDetailedIssuesFromAuditResult(auditResult);
+  const scoreRows: ScoreRow[] = auditResult.categoryScores.map((category) => ({
+    category: category.title,
+    score: category.score * 10,
+    status: category.status,
+    priority: getPriorityByScore(category.score)
+  }));
+  const quickImprovements = auditResult.quickWins;
+  const executiveSummary = [
+    auditResult.finalSummary.mainConversionLoss,
+    auditResult.finalSummary.topPriority,
+    auditResult.finalSummary.expectedBusinessEffect
+  ];
+  const topProblems = auditResult.issues.slice(0, 3).map((issue) => ({
+    title: issue.title,
+    area: issue.location,
+    impact: issue.problem,
+    tone: issue.severity === "critical" ? "critical" : "important"
+  }));
+  const pageMapItems = auditResult.issues.slice(0, 4).map((issue, index) => ({
+    index: String(index + 1).padStart(2, "0"),
+    title: issue.location,
+    note: issue.recommendation,
+    tone: issue.severity === "critical" ? "critical" : "important"
+  }));
+  const implementationPriorities = [
+    { title: "Высокий приоритет", tone: "high", items: auditResult.implementationPlan.first24h },
+    { title: "Средний приоритет", tone: "medium", items: auditResult.implementationPlan.firstWeek },
+    { title: "Низкий приоритет", tone: "low", items: auditResult.implementationPlan.nextMonth }
+  ];
+  const auditDirections: AuditDirection[] = auditResult.categoryScores.map((category) => ({
+    title: category.title,
+    score: category.score * 10,
+    status: getReportStatus(category.score),
+    summary: category.summary,
+    categories: [category.title],
+    recommendation: auditResult.issues.find((issue) => issue.categoryId === category.categoryId)?.recommendation ?? "Критичных замечаний не найдено, нужна ручная проверка по скриншотам."
+  }));
+  const firstPriority = auditResult.issues[0]?.location || "Оффер и CTA";
   const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
@@ -347,8 +422,8 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <span className="preview-report__title-url">{displayUrl}</span>
             </h2>
             <div className="full-audit-content__hero-metrics">
-              <div><span>Первый приоритет</span><b>Оффер и CTA</b></div>
-              <div><span>Потенциал роста</span><b>+15–35%</b></div>
+              <div><span>Первый приоритет</span><b>{firstPriority}</b></div>
+              <div><span>Контроль качества</span><b>{auditResult.qualityReview.score}/100</b></div>
             </div>
           </header>
 
