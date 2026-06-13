@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FullReport } from "@/components/FullReport";
 import { Header } from "@/components/Header";
 import { LoadingScreen } from "@/components/LoadingScreen";
-import { fetchAudit, getAuditCache, normalizeClientUrl } from "@/lib/clientAudit";
+import { fetchAudit, getAuditCache, isAiAudit, normalizeClientUrl } from "@/lib/clientAudit";
 import type { AuditAnalysis } from "@/types/audit";
 
 export function FullReportRoute() {
@@ -30,14 +30,16 @@ export function FullReportRoute() {
       return;
     }
 
+    const requiresAi = Boolean(searchParams.get("lead"));
+
     setUrl(normalizedUrl);
     const cachedAnalysis = getAuditCache(normalizedUrl);
-    if (cachedAnalysis) {
+    if (cachedAnalysis && (!requiresAi || isAiAudit(cachedAnalysis))) {
       setAnalysis(cachedAnalysis);
       return;
     }
 
-    fetchAudit(normalizedUrl)
+    fetchAudit(normalizedUrl, { requireAi: requiresAi })
       .then(setAnalysis)
       .catch((requestError: unknown) => setError(requestError instanceof Error ? requestError.message : "Не удалось загрузить отчёт."));
   }, [searchParams]);

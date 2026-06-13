@@ -36,7 +36,7 @@ function normalizeUrl(value: unknown) {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { url?: unknown };
+    const body = (await request.json()) as { url?: unknown; requireAi?: unknown };
     const url = normalizeUrl(body.url);
     const response = await fetch(url, {
       headers: {
@@ -59,6 +59,15 @@ export async function POST(request: Request) {
 
     const html = await response.text();
     const analysis = await enhanceAuditWithAI(analyzeHtml(html, response.url || url.href));
+
+    if (body.requireAi === true && analysis.auditResult.metadata.generatedBy !== "proxyapi") {
+      return NextResponse.json(
+        {
+          error: "AI audit did not complete. Check ProxyAPI key, model, balance and server logs."
+        },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({
       analysis,

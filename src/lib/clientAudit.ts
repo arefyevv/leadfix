@@ -4,6 +4,10 @@ import type { AnalyzeResponse, AuditAnalysis } from "@/types/audit";
 
 const CACHE_PREFIX = "leadfix:audit:";
 
+type FetchAuditOptions = {
+  requireAi?: boolean;
+};
+
 export function normalizeClientUrl(value: string) {
   const rawUrl = value.trim();
   const withProtocol = /^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`;
@@ -27,11 +31,15 @@ export function setAuditCache(analysis: AuditAnalysis) {
   }
 }
 
-export async function fetchAudit(url: string) {
+export function isAiAudit(analysis: AuditAnalysis) {
+  return analysis.aiProvider === "proxyapi" || analysis.auditResult.metadata.generatedBy === "proxyapi";
+}
+
+export async function fetchAudit(url: string, options: FetchAuditOptions = {}) {
   const response = await fetch("/api/analyze", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url })
+    body: JSON.stringify({ url, requireAi: options.requireAi === true })
   });
   const data = (await response.json()) as AnalyzeResponse | { error?: string };
 
