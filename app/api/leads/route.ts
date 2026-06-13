@@ -49,10 +49,14 @@ export async function POST(request: Request) {
       request.headers.get("user-agent") || undefined
     );
     if (isYooKassaConfigured()) {
-      lead.paymentLink = await createYooKassaPayment({
-        lead,
-        amount: getPlanAmount(selectedPlan.price)
-      });
+      try {
+        lead.paymentLink = await createYooKassaPayment({
+          lead,
+          amount: getPlanAmount(selectedPlan.price)
+        });
+      } catch (paymentError) {
+        console.error("YooKassa payment failed, using fallback payment link", paymentError);
+      }
     }
 
     if (!lead.paymentLink) {
