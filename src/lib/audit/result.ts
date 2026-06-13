@@ -46,7 +46,10 @@ function createFallbackIssues(analysis: AuditAnalysis) {
 export function createAuditResultFromAnalysis(analysis: Omit<AuditAnalysis, "auditResult">): AuditResult {
   const issues = createFallbackIssues(analysis as AuditAnalysis);
   const issueCategoryIds = new Set(issues.map((issue) => issue.categoryId));
-  const overallScore = clamp(analysis.previewReport.score, 0, 100);
+  const hasOnlyManualReviewIssue =
+    analysis.previewReport.insights.length === 1 &&
+    analysis.previewReport.insights[0]?.title === "Нужна расширенная проверка по методологии";
+  const overallScore = hasOnlyManualReviewIssue ? 72 : clamp(analysis.previewReport.score, 0, 100);
 
   const categoryScores = AUDIT_CATEGORIES.map((category) => {
     const hasIssue = issueCategoryIds.has(category.id);

@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "audit:dry-run": "node scripts/audit-dry-run.mjs",
-    "audit:export-criteria": "node scripts/export-criteria-from-xlsx.mjs"
+    "audit:export-criteria": "node scripts/export-criteria-from-xlsx.mjs",
+    "audit:test-proxyapi": "node scripts/test-proxyapi.mjs"
   },
   "dependencies": {
     "cheerio": "^1.2.0",

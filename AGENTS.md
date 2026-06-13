@@ -98,7 +98,7 @@ tmp/audit-prompt-preview.txt
 
 ```env
 PROXYAPI_API_KEY=
-PROXYAPI_BASE_URL=https://api.proxyapi.ru/openai/v1
+PROXYAPI_BASE_URL=https://openai.api.proxyapi.ru/v1
 PROXYAPI_AUDIT_MODEL=gpt-5.4-mini
 ```
 

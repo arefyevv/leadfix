@@ -84,6 +84,14 @@ function createPreviewReport(data: Omit<AuditAnalysis, "previewReport" | "auditR
     });
   }
 
+  if (insights.length === 0) {
+    addInsight(28, {
+      title: "Нужна расширенная проверка по методологии",
+      description: "Базовые HTML-сигналы найдены, но без AI-анализа, скриншотов, мобильной проверки и рекламного контекста нельзя честно ставить странице максимальную готовность.",
+      priority: "Важно"
+    });
+  }
+
   return {
     score: Math.max(0, score),
     criticalIssues: insights.filter((insight) => insight.priority === "Критично").length,

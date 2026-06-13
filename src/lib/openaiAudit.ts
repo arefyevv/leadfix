@@ -2,7 +2,7 @@ import type { AuditAnalysis, AuditResult, PreviewReport } from "@/types/audit";
 import { buildAuditPrompt } from "@/lib/audit/prompt";
 import { reviewAuditResult } from "@/lib/audit/quality";
 
-const PROXYAPI_BASE_URL = "https://api.proxyapi.ru/openai/v1";
+const PROXYAPI_BASE_URL = "https://openai.api.proxyapi.ru/v1";
 const AI_TIMEOUT_MS = 18_000;
 const DEFAULT_MODEL = "gpt-5.4-mini";
 
@@ -19,11 +19,22 @@ type OpenAIResponse = {
 function extractOutputText(data: OpenAIResponse) {
   if (typeof data.output_text === "string") return data.output_text;
 
-  return data.output
+  const outputText = data.output
     ?.flatMap((item) => item.content ?? [])
     .map((content) => content.text ?? "")
     .join("")
     .trim();
+
+  return outputText;
+}
+
+function parseAuditResultOutput(outputText: string) {
+  try {
+    return JSON.parse(outputText) as unknown;
+  } catch {
+    const match = outputText.match(/\{[\s\S]*\}/);
+    return match ? JSON.parse(match[0]) as unknown : null;
+  }
 }
 
 function previewReportFromAuditResult(auditResult: AuditResult): PreviewReport {
@@ -99,14 +110,21 @@ export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<Audit
       cache: "no-store"
     });
 
-    if (!response.ok) return analysis;
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "");
+      console.error("ProxyAPI audit request failed", response.status, errorText.slice(0, 800));
+      return analysis;
+    }
 
     const data = (await response.json()) as OpenAIResponse;
     const outputText = extractOutputText(data);
     if (!outputText) return analysis;
 
-    const parsedAuditResult = JSON.parse(outputText) as unknown;
-    if (!isValidAuditResult(parsedAuditResult)) return analysis;
+    const parsedAuditResult = parseAuditResultOutput(outputText);
+    if (!isValidAuditResult(parsedAuditResult)) {
+      console.error("ProxyAPI audit response rejected by validator", outputText.slice(0, 1200));
+      return analysis;
+    }
     const auditResult = reviewAuditResult({
       ...(parsedAuditResult as Omit<AuditResult, "metadata" | "analyzedUrl">),
       metadata: {
@@ -125,7 +143,8 @@ export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<Audit
       aiProvider: "proxyapi",
       aiModel: model
     };
-  } catch {
+  } catch (error) {
+    console.error("ProxyAPI audit request failed", error);
     return analysis;
   }
 }
