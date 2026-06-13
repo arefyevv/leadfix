@@ -3,8 +3,8 @@ import type { AuditInsight, AuditAnalysis, PreviewReport } from "@/types/audit";
 import { createAuditResultFromAnalysis } from "@/lib/audit/result";
 import { reviewAuditResult } from "@/lib/audit/quality";
 
-const TRUST_WORDS = ["отзывы", "кейсы", "клиенты", "гарантия", "сертификат", "лицензия"];
-const CTA_WORDS = ["заказать", "получить", "оставить заявку", "рассчитать", "купить", "связаться"];
+const TRUST_WORDS = ["отзывы", "кейсы", "клиенты", "гарантия", "сертификат", "лицензия", "портфолио", "благодарственные письма"];
+const CTA_WORDS = ["заказать", "получить", "оставить заявку", "рассчитать", "купить", "связаться", "обсудить", "написать"];
 
 function compactText(value: string) {
   return value.replace(/\s+/g, " ").trim();
@@ -39,7 +39,7 @@ function createPreviewReport(data: Omit<AuditAnalysis, "previewReport" | "auditR
   if (data.ctaSignals.length === 0) {
     addInsight(20, {
       title: "Не найден понятный призыв к действию",
-      description: "На странице нет кнопки с ясным следующим шагом. Добавьте заметную кнопку: заказать, получить расчёт или оставить заявку.",
+      description: "На странице нет кнопки с ясным следующим шагом. Добавьте заметную кнопку: заказать, получить расчет или оставить заявку.",
       priority: "Критично"
     });
   }
