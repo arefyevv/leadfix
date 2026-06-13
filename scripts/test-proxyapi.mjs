@@ -1,6 +1,31 @@
+import { existsSync, readFileSync } from "node:fs";
+
+function loadEnvFile(filePath) {
+  if (!existsSync(filePath)) return;
+
+  const lines = readFileSync(filePath, "utf8").split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+
+    const separatorIndex = trimmed.indexOf("=");
+    if (separatorIndex === -1) continue;
+
+    const key = trimmed.slice(0, separatorIndex).trim();
+    const rawValue = trimmed.slice(separatorIndex + 1).trim();
+    if (!key || process.env[key]) continue;
+
+    process.env[key] = rawValue.replace(/^["']|["']$/g, "");
+  }
+}
+
+loadEnvFile(".env.local");
+loadEnvFile(".env");
+
 const apiKey = process.env.PROXYAPI_API_KEY;
 const baseUrl = (process.env.PROXYAPI_BASE_URL || "https://openai.api.proxyapi.ru/v1").replace(/\/$/, "");
 const model = process.env.PROXYAPI_AUDIT_MODEL || "gpt-5.4-mini";
+const timeoutMs = Number(process.env.PROXYAPI_AUDIT_TIMEOUT_MS || 120_000);
 
 if (!apiKey) {
   console.error("PROXYAPI_API_KEY is not set");
@@ -41,7 +66,8 @@ const response = await fetch(`${baseUrl}/responses`, {
         }
       }
     }
-  })
+  }),
+  signal: AbortSignal.timeout(timeoutMs)
 });
 
 const text = await response.text();
