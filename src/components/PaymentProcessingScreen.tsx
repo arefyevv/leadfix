@@ -20,8 +20,13 @@ const auditSteps = [
   "Собираем отчет и рекомендации"
 ];
 
+function isProPlan(plan: string) {
+  return plan.toLocaleLowerCase("ru-RU").includes("pro");
+}
+
 export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessingScreenProps) {
   const router = useRouter();
+  const isExpertReview = isProPlan(plan);
   const [stepIndex, setStepIndex] = useState(0);
   const [progressValue, setProgressValue] = useState(8);
   const [isReady, setIsReady] = useState(false);
@@ -33,25 +38,29 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
       return "";
     }
   }, [url]);
-  const reportHref = normalizedUrl ? `/full-report?url=${encodeURIComponent(normalizedUrl)}` : "/full-report";
+  const reportHref = normalizedUrl
+    ? `/full-report?url=${encodeURIComponent(normalizedUrl)}&plan=${encodeURIComponent(plan || "Экспресс")}${leadId ? `&lead=${encodeURIComponent(leadId)}` : ""}`
+    : "/full-report";
 
   useEffect(() => {
-    if (isReady || error) return;
+    if (isExpertReview || isReady || error) return;
 
     const timer = window.setInterval(() => {
       setProgressValue((current) => Math.min(current + Math.max(1, Math.round((95 - current) * 0.13)), 95));
     }, 650);
 
     return () => window.clearInterval(timer);
-  }, [error, isReady]);
+  }, [error, isExpertReview, isReady]);
 
   useEffect(() => {
-    if (isReady || error) return;
+    if (isExpertReview || isReady || error) return;
 
     setStepIndex(Math.min(Math.floor((progressValue / 95) * auditSteps.length), auditSteps.length - 1));
-  }, [error, isReady, progressValue]);
+  }, [error, isExpertReview, isReady, progressValue]);
 
   useEffect(() => {
+    if (isExpertReview) return;
+
     if (!normalizedUrl) {
       setError("Не получили адрес сайта для анализа. Вернитесь к заказу и укажите URL лендинга.");
       return;
@@ -74,17 +83,51 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
     return () => {
       cancelled = true;
     };
-  }, [normalizedUrl]);
+  }, [isExpertReview, normalizedUrl]);
 
   useEffect(() => {
-    if (!isReady || !normalizedUrl) return;
+    if (isExpertReview || !isReady || !normalizedUrl) return;
 
     const redirectTimer = window.setTimeout(() => {
       router.push(reportHref);
     }, 1400);
 
     return () => window.clearTimeout(redirectTimer);
-  }, [isReady, normalizedUrl, reportHref, router]);
+  }, [isExpertReview, isReady, normalizedUrl, reportHref, router]);
+
+  if (isExpertReview) {
+    return (
+      <main className="success-page processing-page screen">
+        <section className="success-card processing-card" aria-labelledby="processing-title">
+          <p className="full-audit__eyebrow">Оплата прошла</p>
+          <h1 id="processing-title">Заявка принята в ручную проверку</h1>
+          <p>
+            Тариф LeadFix Pro включает AI-анализ и экспертную проверку. Мы не показываем тот же автоматический отчет,
+            потому что финальный результат должен быть дополнен вручную.
+          </p>
+
+          <div className="success-meta processing-meta">
+            {leadId && <span>ID: {leadId}</span>}
+            {plan && <span>Тариф: {plan}</span>}
+            {normalizedUrl && <span>URL: {normalizedUrl}</span>}
+          </div>
+
+          <div className="processing-notice">
+            Финальный отчет будет подготовлен до 24 часов и продублирован на контакты, которые вы указали при заказе.
+          </div>
+
+          <div className="success-actions">
+            <a className="checkout-submit" href="https://t.me/LeadFixRu" target="_blank" rel="noreferrer">
+              Написать в поддержку
+            </a>
+            <a className="telegram-button" href="/">
+              Проверить другой сайт
+            </a>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="success-page processing-page screen">
