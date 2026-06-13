@@ -68,7 +68,7 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
 
     let cancelled = false;
 
-    fetchAudit(normalizedUrl, { requireAi: true })
+    fetchAudit(normalizedUrl, { requireAi: true, leadId })
       .then(() => {
         if (cancelled) return;
         setStepIndex(auditSteps.length - 1);

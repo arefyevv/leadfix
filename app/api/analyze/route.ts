@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
+import { readAuditReportByLeadId, saveAuditReportByLeadId } from "@/lib/auditReports";
 import { enhanceAuditWithAI } from "@/lib/openaiAudit";
 
 const REQUEST_TIMEOUT_MS = 12_000;
@@ -36,7 +37,18 @@ function normalizeUrl(value: unknown) {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { url?: unknown; requireAi?: unknown };
+    const body = (await request.json()) as { url?: unknown; requireAi?: unknown; leadId?: unknown };
+
+    if (body.requireAi === true) {
+      const storedReport = await readAuditReportByLeadId(body.leadId);
+      if (storedReport) {
+        return NextResponse.json({
+          analysis: storedReport.analysis,
+          previewReport: storedReport.previewReport
+        });
+      }
+    }
+
     const url = normalizeUrl(body.url);
     const response = await fetch(url, {
       headers: {
@@ -67,6 +79,10 @@ export async function POST(request: Request) {
         },
         { status: 502 }
       );
+    }
+
+    if (body.requireAi === true) {
+      await saveAuditReportByLeadId(body.leadId, analysis);
     }
 
     return NextResponse.json({

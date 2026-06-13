@@ -6,6 +6,7 @@ const CACHE_PREFIX = "leadfix:audit:";
 
 type FetchAuditOptions = {
   requireAi?: boolean;
+  leadId?: string;
 };
 
 export function normalizeClientUrl(value: string) {
@@ -14,18 +15,22 @@ export function normalizeClientUrl(value: string) {
   return new URL(withProtocol).href;
 }
 
-export function getAuditCache(url: string) {
+function getCacheKey(url: string, leadId?: string) {
+  return `${CACHE_PREFIX}${leadId ? `${leadId}:` : ""}${url}`;
+}
+
+export function getAuditCache(url: string, leadId?: string) {
   try {
-    const value = window.sessionStorage.getItem(`${CACHE_PREFIX}${url}`);
+    const value = window.sessionStorage.getItem(getCacheKey(url, leadId));
     return value ? (JSON.parse(value) as AuditAnalysis) : null;
   } catch {
     return null;
   }
 }
 
-export function setAuditCache(analysis: AuditAnalysis) {
+export function setAuditCache(analysis: AuditAnalysis, leadId?: string) {
   try {
-    window.sessionStorage.setItem(`${CACHE_PREFIX}${analysis.url}`, JSON.stringify(analysis));
+    window.sessionStorage.setItem(getCacheKey(analysis.url, leadId), JSON.stringify(analysis));
   } catch {
     // The report still works when storage is unavailable.
   }
@@ -39,7 +44,7 @@ export async function fetchAudit(url: string, options: FetchAuditOptions = {}) {
   const response = await fetch("/api/analyze", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, requireAi: options.requireAi === true })
+    body: JSON.stringify({ url, requireAi: options.requireAi === true, leadId: options.leadId })
   });
   const data = (await response.json()) as AnalyzeResponse | { error?: string };
 
@@ -47,6 +52,6 @@ export async function fetchAudit(url: string, options: FetchAuditOptions = {}) {
     throw new Error(("error" in data && data.error) || "Не удалось открыть сайт. Проверьте адрес или попробуйте позже.");
   }
 
-  setAuditCache(data.analysis);
+  setAuditCache(data.analysis, options.leadId);
   return data.analysis;
 }

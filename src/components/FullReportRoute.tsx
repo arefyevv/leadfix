@@ -30,16 +30,17 @@ export function FullReportRoute() {
       return;
     }
 
-    const requiresAi = Boolean(searchParams.get("lead"));
+    const leadId = searchParams.get("lead") ?? "";
+    const requiresAi = Boolean(leadId);
 
     setUrl(normalizedUrl);
-    const cachedAnalysis = getAuditCache(normalizedUrl);
+    const cachedAnalysis = getAuditCache(normalizedUrl, leadId);
     if (cachedAnalysis && (!requiresAi || isAiAudit(cachedAnalysis))) {
       setAnalysis(cachedAnalysis);
       return;
     }
 
-    fetchAudit(normalizedUrl, { requireAi: requiresAi })
+    fetchAudit(normalizedUrl, { requireAi: requiresAi, leadId })
       .then(setAnalysis)
       .catch((requestError: unknown) => setError(requestError instanceof Error ? requestError.message : "Не удалось загрузить отчёт."));
   }, [searchParams]);

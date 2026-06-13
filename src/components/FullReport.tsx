@@ -383,6 +383,41 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
     recommendation: auditResult.issues.find((issue) => issue.categoryId === category.categoryId)?.recommendation ?? "Критичных замечаний не найдено, нужна ручная проверка по скриншотам."
   }));
   const firstPriority = auditResult.issues[0]?.location || "Оффер и CTA";
+  const lossZones = auditResult.issues.slice(0, 4).map((issue) => issue.location).join(", ") || firstPriority;
+  const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
+  const highIssuesCount = auditResult.issues.filter((issue) => issue.severity === "high").length;
+  const trafficVerdict = reportScore >= 80 && criticalIssuesCount === 0
+    ? {
+      title: "Да, можно запускать с точечными правками",
+      summary: auditResult.finalSummary.expectedBusinessEffect
+    }
+    : reportScore >= 60
+      ? {
+        title: "Да, но только после приоритетных правок",
+        summary: auditResult.finalSummary.topPriority
+      }
+      : {
+        title: "Нет, сначала закрыть критичные барьеры",
+        summary: auditResult.finalSummary.mainConversionLoss
+      };
+  const potentialLift = criticalIssuesCount > 0 ? "+15–35%" : highIssuesCount > 0 ? "+10–25%" : "+5–15%";
+  const specialistTasksDynamic = [
+    {
+      role: "Дизайнер",
+      tasks: auditResult.structuralImprovements.slice(0, 3)
+    },
+    {
+      role: "Маркетолог / копирайтер",
+      tasks: [...auditResult.rewrittenExamples, ...auditResult.highImpactFixes].slice(0, 3)
+    },
+    {
+      role: "Разработчик / Tilda-специалист",
+      tasks: [...auditResult.implementationPlan.first24h, ...auditResult.humanReviewNeeded].slice(0, 3)
+    }
+  ].filter((group) => group.tasks.length > 0);
+  const providerLabel = analysis.aiProvider
+    ? `ProxyAPI / ${analysis.aiModel || "модель не указана"}`
+    : "LeadFix rules";
   const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
@@ -424,6 +459,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <div className="full-audit-content__hero-metrics">
               <div><span>Первый приоритет</span><b>{firstPriority}</b></div>
               <div><span>Контроль качества</span><b>{auditResult.qualityReview.score}/100</b></div>
+              <div><span>Источник анализа</span><b>{providerLabel}</b></div>
             </div>
           </header>
 
@@ -456,7 +492,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <p className="full-audit__eyebrow">Общая оценка</p>
               <h2>{activeScoreLevel.title}</h2>
               <p>{activeScoreLevel.summary}</p>
-              <p>Главные зоны потерь: оффер, CTA, доверие и мобильный сценарий.</p>
+              <p>Главные зоны потерь: {lossZones}.</p>
               <div className="readiness-score__scale" style={{ "--score-position": `${reportScore}%` } as CSSProperties} aria-label="Шкала общей оценки">
                 <div className="readiness-score__scale-track">
                   <span className="readiness-score__scale-marker"><b>{reportScore}</b></span>
@@ -494,8 +530,8 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
             <div className="full-audit__traffic-verdict">
               <b>Можно лить трафик?</b>
-              <strong>Да, но с ограничениями</strong>
-              <p>До масштабирования стоит закрыть критичные правки первого экрана, CTA, доверия и мобильной формы.</p>
+              <strong>{trafficVerdict.title}</strong>
+              <p>{trafficVerdict.summary}</p>
             </div>
           </section>
 
@@ -619,7 +655,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <section className="full-audit__section">
             <SectionHeading eyebrow="Кому передать" title="Задачи для специалистов" />
             <div className="full-audit__specialists">
-              {specialistTasks.map((group) => (
+              {(specialistTasksDynamic.length > 0 ? specialistTasksDynamic : specialistTasks).map((group) => (
                 <article key={group.role}>
                   <h3>{group.role}</h3>
                   <ul>{group.tasks.map((task) => <li key={task}>{task}</li>)}</ul>
@@ -671,8 +707,8 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <section className="full-audit__section full-audit__potential">
             <p className="full-audit__eyebrow">Ориентир после исправлений</p>
             <h2>Ориентир влияния после исправлений</h2>
-            <p>После исправления критичных проблем можно ожидать улучшение качества пути до заявки. Это не прогноз продаж, а оценка влияния найденных барьеров.</p>
-            <strong>+15–35%</strong>
+            <p>{auditResult.finalSummary.expectedBusinessEffect}</p>
+            <strong>{potentialLift}</strong>
             <small>Это не гарантия результата, а ориентировочная оценка на основе найденных барьеров. Фактический результат зависит от качества трафика, ниши, цены, продукта, конкурентной среды, обработки заявок и корректности внедрения рекомендаций.</small>
           </section>
 
