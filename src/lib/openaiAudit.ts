@@ -4,7 +4,7 @@ import { reviewAuditResult } from "@/lib/audit/quality";
 
 const PROXYAPI_BASE_URL = "https://api.proxyapi.ru/openai/v1";
 const AI_TIMEOUT_MS = 18_000;
-const DEFAULT_MODEL = "gpt-5-mini";
+const DEFAULT_MODEL = "gpt-5.4-mini";
 
 type OpenAIResponse = {
   output_text?: string;

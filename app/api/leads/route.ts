@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auditPlans } from "@/components/plans";
 import { createLead, notifyLead, saveLead } from "@/lib/leads";
-import { createYooKassaPayment, getPlanAmount } from "@/lib/payments";
+import { createYooKassaPayment, getPlanAmount, isYooKassaConfigured } from "@/lib/payments";
 import type { LeadRequest } from "@/types/lead";
 
 function isValidEmail(value: string) {
@@ -48,10 +48,12 @@ export async function POST(request: Request) {
       },
       request.headers.get("user-agent") || undefined
     );
-    lead.paymentLink = await createYooKassaPayment({
-      lead,
-      amount: getPlanAmount(selectedPlan.price)
-    });
+    if (isYooKassaConfigured()) {
+      lead.paymentLink = await createYooKassaPayment({
+        lead,
+        amount: getPlanAmount(selectedPlan.price)
+      });
+    }
 
     if (!lead.paymentLink) {
       return NextResponse.json({ error: "Не настроена ссылка на оплату" }, { status: 500 });

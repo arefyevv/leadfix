@@ -80,6 +80,10 @@ export async function createYooKassaPayment({ lead, amount }: CreatePaymentInput
   return data.confirmation.confirmation_url;
 }
 
+export function isYooKassaConfigured() {
+  return Boolean(process.env.YOOKASSA_SHOP_ID && process.env.YOOKASSA_SECRET_KEY);
+}
+
 export function getPlanAmount(price: string) {
   const normalized = price.replace(/\s/g, "").replace(",", ".");
   const match = normalized.match(/\d+(?:\.\d+)?/);
