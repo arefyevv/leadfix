@@ -464,8 +464,8 @@ function getGaugeSegments(score: number) {
   });
 }
 
-function getGaugeBadgeStyle(score: number): CSSProperties {
-  const point = getGaugePoint(score, 128);
+function getGaugeMarkerStyle(score: number): CSSProperties {
+  const point = getGaugePoint(score, 136);
 
   return {
     left: `${(point.x / 300) * 100}%`,
@@ -535,8 +535,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
   const gaugeSegments = getGaugeSegments(reportScore);
-  const gaugeBadgeStyle = getGaugeBadgeStyle(reportScore);
-  const pointsToGoodScore = Math.max(0, 80 - reportScore);
+  const gaugeMarkerStyle = getGaugeMarkerStyle(reportScore);
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
@@ -609,20 +608,17 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     ))}
                   </g>
                   <g className="readiness-score__arc-labels" aria-hidden="true">
-                    <text x="18" y="162">0</text>
-                    <text x="58" y="60">40</text>
-                    <text x="150" y="28">60</text>
-                    <text x="242" y="60">80</text>
-                    <text x="282" y="162">100</text>
+                    <text x="20" y="172">0</text>
+                    <text x="42" y="54">40</text>
+                    <text x="150" y="13">60</text>
+                    <text x="258" y="54">80</text>
+                    <text x="280" y="172">100</text>
                   </g>
                 </svg>
-                <span className="readiness-score__badge" style={gaugeBadgeStyle}>
-                  <i aria-hidden="true" />
-                  +{pointsToGoodScore}
-                </span>
+                <span className="readiness-score__marker" style={gaugeMarkerStyle} aria-hidden="true" />
                 <strong>{reportScore}</strong>
               </div>
-              <p>Готовность лендинга к платному трафику: {reportScore}/100</p>
+              <p>Готовность сайта к платному трафику: {reportScore}/100</p>
             </div>
             <div className="readiness-score__verdict">
               <p className="full-audit__eyebrow">Краткий итог</p>
