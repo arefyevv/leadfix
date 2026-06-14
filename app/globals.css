@@ -10526,7 +10526,7 @@ h6,
 
 /* Full report in the same document style as the preview report. */
 .full-report.full-audit.full-audit-document {
-  --report-bg: #f4f7fa;
+  --report-bg: #f5f6f8;
   --report-card: #ffffff;
   --report-card-soft: #f8fafc;
   --report-line: #e3e9f0;
@@ -10539,9 +10539,7 @@ h6,
   max-width: 100vw;
   overflow-x: clip;
   color: var(--report-text);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0) 260px),
-    var(--report-bg);
+  background: var(--report-bg);
 }
 
 .full-audit-document .full-report__inner.full-audit__layout {
@@ -10848,7 +10846,7 @@ h6,
 
 /* Full paid report polish: calmer SaaS document UI with denser hierarchy. */
 .full-report.full-audit.full-audit-document {
-  --report-bg: #eef2f6;
+  --report-bg: #f5f6f8;
   --report-card: #ffffff;
   --report-card-soft: #f6f8fb;
   --report-card-strong: #111827;
@@ -10862,10 +10860,7 @@ h6,
   --report-warning: #b7791f;
   --report-danger: #d64f45;
   padding: 108px clamp(14px, 2vw, 28px) 42px;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(31, 191, 120, .13), transparent 30%),
-    radial-gradient(circle at 82% 10%, rgba(56, 104, 173, .09), transparent 32%),
-    linear-gradient(180deg, #f8fafc 0%, var(--report-bg) 360px, #e9eef4 100%);
+  background: var(--report-bg);
 }
 
 .full-audit-document .full-report__inner.full-audit__layout {
@@ -11215,13 +11210,13 @@ h6,
 
 .full-audit-document .full-audit__top-problems article.is-critical,
 .full-audit-document .full-audit-content .full-audit-issue.is-critical {
-  border-color: rgba(214, 79, 69, .22);
-  background: #fff7f5;
+  border-color: rgba(214, 79, 69, .14);
+  background: #fffafa;
 }
 
 .full-audit-document .full-audit__top-problems article.is-important {
-  border-color: rgba(183, 121, 31, .22);
-  background: #fff8ec;
+  border-color: rgba(183, 121, 31, .14);
+  background: #fffaf3;
 }
 
 .full-audit-document .full-audit__quick-panel li,
@@ -11255,17 +11250,17 @@ h6,
 }
 
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-problem {
-  border-color: rgba(214, 79, 69, .18);
-  background: #fff7f5;
+  border-color: rgba(214, 79, 69, .12);
+  background: #fffafa;
 }
 
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-problem b {
-  color: #b94a3f;
+  color: #a9564f;
 }
 
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-solution {
-  border-color: rgba(31, 191, 120, .2);
-  background: #eefaf4;
+  border-color: rgba(31, 191, 120, .13);
+  background: #f6fcf8;
 }
 
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-solution b {
@@ -11273,9 +11268,9 @@ h6,
 }
 
 .full-audit-document .full-audit-category__recommendation {
-  border: 1px solid rgba(31, 191, 120, .18);
+  border: 1px solid rgba(31, 191, 120, .13);
   border-radius: 14px;
-  background: #eefaf4;
+  background: #f6fcf8;
 }
 
 .full-audit-document .full-audit-category__recommendation b,
@@ -11393,13 +11388,13 @@ h6,
 }
 
 .full-audit-document .full-audit-priority.is-critical {
-  border-color: rgba(214, 79, 69, .24);
-  background: #fff7f5;
+  border-color: rgba(214, 79, 69, .14);
+  background: #fffafa;
 }
 
 .full-audit-document .full-audit-priority.is-important {
-  border-color: rgba(183, 121, 31, .24);
-  background: #fff8ec;
+  border-color: rgba(183, 121, 31, .14);
+  background: #fffaf3;
 }
 
 .full-audit-document .full-audit-priority__number {
