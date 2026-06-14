@@ -6861,43 +6861,59 @@ h6 {
   width: min(100%, 300px);
   position: relative;
   display: grid;
-  place-items: end center;
+  place-items: center;
 }
 .readiness-score__arc svg {
   width: 100%;
   height: auto;
   overflow: visible;
 }
-.readiness-score__arc-track,
-.readiness-score__arc-progress {
-  fill: none;
-  stroke-linecap: butt;
-  stroke-width: 24;
+.readiness-score__arc-segments line {
+  stroke-linecap: round;
+  stroke-width: 3.8;
 }
-.readiness-score__arc-track {
-  stroke: #e9edf3;
-}
-.readiness-score__arc-progress {
-  stroke: url(#readiness-arc-gradient);
-  stroke-dasharray: var(--score) 100;
-}
-.readiness-score__arc-ticks text {
+.readiness-score__arc-labels text {
   fill: #7b8799;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   text-anchor: middle;
 }
 .readiness-score__arc strong {
   position: absolute;
   left: 50%;
-  bottom: 4px;
+  bottom: 12px;
   transform: translateX(-50%);
   color: #16233d;
-  font-size: clamp(58px, 7vw, 82px);
-  font-weight: 800;
-  line-height: .88;
+  font-size: clamp(58px, 7vw, 86px);
+  font-weight: 720;
+  line-height: .9;
   letter-spacing: 0;
   text-align: center;
+}
+.readiness-score__badge {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 62px;
+  padding: 9px 13px;
+  transform: translate(-50%, -50%);
+  color: #0b8b55;
+  border: 1px solid rgba(31, 191, 120, .12);
+  border-radius: 999px;
+  background: rgba(239, 252, 244, .92);
+  box-shadow: 0 12px 24px rgba(31, 191, 120, .12);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+.readiness-score__badge i {
+  width: 0;
+  height: 0;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid #11a96b;
+  border-left: 7px solid transparent;
 }
 .readiness-score__gauge > p {
   max-width: 220px;
@@ -11072,20 +11088,18 @@ h6,
 }
 
 .full-audit-document .readiness-score__gauge {
-  min-height: 260px;
+  min-height: 286px;
   border-radius: 16px;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(31, 191, 120, .13), transparent 62%),
-    var(--report-card-soft);
+  background: var(--report-card-soft);
 }
 
 .full-audit-document .readiness-score__arc {
-  width: min(100%, 280px);
+  width: min(100%, 310px);
 }
 
 .full-audit-document .readiness-score__arc strong {
   color: var(--report-text);
-  font-size: clamp(54px, 6vw, 76px);
+  font-size: clamp(64px, 6.4vw, 88px);
   font-variant-numeric: tabular-nums;
 }
 

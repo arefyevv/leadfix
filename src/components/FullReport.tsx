@@ -430,6 +430,49 @@ function formatConfidence(confidence: number) {
   return `${Math.round(confidence > 1 ? confidence : confidence * 100)}%`;
 }
 
+function getGaugeSegmentColor(value: number) {
+  if (value < 40) return "#f1b4b0";
+  if (value < 60) return "#f2c58f";
+  if (value < 75) return "#e4d985";
+  return "#8fdca2";
+}
+
+function getGaugePoint(value: number, radius: number) {
+  const angle = (180 - value * 1.8) * (Math.PI / 180);
+  return {
+    x: 150 + Math.cos(angle) * radius,
+    y: 150 - Math.sin(angle) * radius
+  };
+}
+
+function getGaugeSegments(score: number) {
+  return Array.from({ length: 76 }, (_, index) => {
+    const value = (index / 75) * 100;
+    const inner = getGaugePoint(value, 104);
+    const outer = getGaugePoint(value, 132);
+
+    return {
+      id: index,
+      value,
+      x1: inner.x,
+      y1: inner.y,
+      x2: outer.x,
+      y2: outer.y,
+      color: getGaugeSegmentColor(value),
+      opacity: value <= score ? 1 : 0.22
+    };
+  });
+}
+
+function getGaugeBadgeStyle(score: number): CSSProperties {
+  const point = getGaugePoint(score, 128);
+
+  return {
+    left: `${(point.x / 300) * 100}%`,
+    top: `${(point.y / 188) * 100}%`
+  };
+}
+
 function getQualityReviewNote(result: AuditResult) {
   const notes = [
     ...result.qualityReview.failedChecks,
@@ -491,6 +534,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const siteHeading = analysis.h1[0] || "Главный заголовок не найден";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
+  const gaugeSegments = getGaugeSegments(reportScore);
+  const gaugeBadgeStyle = getGaugeBadgeStyle(reportScore);
+  const pointsToGoodScore = Math.max(0, 80 - reportScore);
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
@@ -548,24 +594,32 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <section className="full-audit-content__score readiness-score" aria-label="Готовность лендинга к платному трафику">
             <div className={`readiness-score__gauge is-${activeScoreLevel.tone}`}>
               <div className="readiness-score__arc" style={{ "--score": reportScore } as CSSProperties}>
-                <svg viewBox="0 0 300 172" role="img" aria-label={`Оценка ${reportScore} из 100`}>
-                  <defs>
-                    <linearGradient id="readiness-arc-gradient" x1="24" y1="0" x2="276" y2="0" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#f25d58" />
-                      <stop offset="52%" stopColor="#f6c04e" />
-                      <stop offset="100%" stopColor="#35c76f" />
-                    </linearGradient>
-                  </defs>
-                  <path className="readiness-score__arc-track" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
-                  <path className="readiness-score__arc-progress" d="M24 148 A126 126 0 0 1 276 148" pathLength="100" />
-                  <g className="readiness-score__arc-ticks" aria-hidden="true">
-                    <text x="18" y="170">0</text>
-                    <text x="72" y="30">40</text>
-                    <text x="150" y="10">60</text>
-                    <text x="228" y="30">80</text>
-                    <text x="282" y="170">100</text>
+                <svg viewBox="0 0 300 188" role="img" aria-label={`Оценка ${reportScore} из 100`}>
+                  <g className="readiness-score__arc-segments" aria-hidden="true">
+                    {gaugeSegments.map((segment) => (
+                      <line
+                        key={segment.id}
+                        x1={segment.x1}
+                        y1={segment.y1}
+                        x2={segment.x2}
+                        y2={segment.y2}
+                        stroke={segment.color}
+                        opacity={segment.opacity}
+                      />
+                    ))}
+                  </g>
+                  <g className="readiness-score__arc-labels" aria-hidden="true">
+                    <text x="18" y="162">0</text>
+                    <text x="58" y="60">40</text>
+                    <text x="150" y="28">60</text>
+                    <text x="242" y="60">80</text>
+                    <text x="282" y="162">100</text>
                   </g>
                 </svg>
+                <span className="readiness-score__badge" style={gaugeBadgeStyle}>
+                  <i aria-hidden="true" />
+                  +{pointsToGoodScore}
+                </span>
                 <strong>{reportScore}</strong>
               </div>
               <p>Готовность лендинга к платному трафику: {reportScore}/100</p>
