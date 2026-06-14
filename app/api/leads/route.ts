@@ -55,8 +55,17 @@ export async function POST(request: Request) {
           amount: getPlanAmount(selectedPlan.price)
         });
       } catch (paymentError) {
-        console.error("YooKassa payment failed, using fallback payment link", paymentError);
+        console.error("YooKassa payment failed, using fallback payment link", {
+          leadId: lead.id,
+          plan,
+          error: paymentError instanceof Error ? paymentError.message : paymentError
+        });
       }
+    } else {
+      console.warn("YooKassa is not configured, using fallback payment link", {
+        leadId: lead.id,
+        plan
+      });
     }
 
     if (!lead.paymentLink) {

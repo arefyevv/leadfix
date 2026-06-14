@@ -103,3 +103,11 @@ PROXYAPI_AUDIT_MODEL=gpt-5.4-mini
 ```
 
 Без `PROXYAPI_API_KEY` сайт должен работать без AI.
+
+Production-процесс должен запускаться через:
+
+```bash
+pm2 start ecosystem.config.cjs --update-env
+```
+
+`ecosystem.config.cjs` читает `.env` и `.env.local`, чтобы PM2 стабильно видел `YOOKASSA_*` и `PROXYAPI_*`.

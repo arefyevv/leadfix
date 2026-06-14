@@ -19,6 +19,21 @@ function getBasicAuthHeader(shopId: string, secretKey: string) {
   return `Basic ${Buffer.from(`${shopId}:${secretKey}`).toString("base64")}`;
 }
 
+function getYooKassaCredentials() {
+  const shopId = process.env.YOOKASSA_SHOP_ID?.trim();
+  const secretKey = process.env.YOOKASSA_SECRET_KEY?.trim();
+
+  if (!shopId || !secretKey) {
+    throw new Error("YOOKASSA_SHOP_ID or YOOKASSA_SECRET_KEY is not configured");
+  }
+
+  if (!/^\d+$/.test(shopId)) {
+    throw new Error("YOOKASSA_SHOP_ID must contain only digits");
+  }
+
+  return { shopId, secretKey };
+}
+
 function getReturnUrl(lead: LeadRecord) {
   const baseUrl = process.env.YOOKASSA_RETURN_URL || process.env.LEADFIX_PAYMENT_RETURN_URL;
 
@@ -35,12 +50,13 @@ function getReturnUrl(lead: LeadRecord) {
 }
 
 export async function createYooKassaPayment({ lead, amount }: CreatePaymentInput) {
-  const shopId = process.env.YOOKASSA_SHOP_ID;
-  const secretKey = process.env.YOOKASSA_SECRET_KEY;
-
-  if (!shopId || !secretKey) {
-    throw new Error("YOOKASSA_SHOP_ID or YOOKASSA_SECRET_KEY is not configured");
-  }
+  const { shopId, secretKey } = getYooKassaCredentials();
+  console.info("YooKassa payment request started", {
+    leadId: lead.id,
+    plan: lead.plan,
+    amount: formatAmount(amount),
+    shopIdLength: shopId.length
+  });
 
   const response = await fetch("https://api.yookassa.ru/v3/payments", {
     method: "POST",
@@ -74,14 +90,23 @@ export async function createYooKassaPayment({ lead, amount }: CreatePaymentInput
 
   if (!response.ok || !("confirmation" in data) || !data.confirmation?.confirmation_url) {
     const message = "description" in data ? data.description : "YooKassa payment URL was not returned";
+    console.error("YooKassa payment response rejected", {
+      status: response.status,
+      message
+    });
     throw new Error(message || "YooKassa payment URL was not returned");
   }
+
+  console.info("YooKassa payment URL created", {
+    leadId: lead.id,
+    status: response.status
+  });
 
   return data.confirmation.confirmation_url;
 }
 
 export function isYooKassaConfigured() {
-  return Boolean(process.env.YOOKASSA_SHOP_ID && process.env.YOOKASSA_SECRET_KEY);
+  return Boolean(process.env.YOOKASSA_SHOP_ID?.trim() && process.env.YOOKASSA_SECRET_KEY?.trim());
 }
 
 export function getPlanAmount(price: string) {
