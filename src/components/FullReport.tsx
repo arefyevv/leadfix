@@ -598,11 +598,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     ))}
                   </g>
                   <g className="readiness-score__arc-labels" aria-hidden="true">
-                    <text x="18" y="168">0</text>
+                    <text x="30" y="168">0</text>
                     <text x="38" y="42">40</text>
                     <text x="150" y="0">60</text>
                     <text x="262" y="42">80</text>
-                    <text x="282" y="168">100</text>
+                    <text x="270" y="168">100</text>
                   </g>
                 </svg>
                 <strong>{reportScore}</strong>

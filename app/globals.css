@@ -6849,8 +6849,8 @@ h6 {
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 8px;
-  padding: 22px 18px 18px;
+  gap: 10px;
+  padding: 22px 18px;
   border: 1px solid #e4eaf3;
   border-radius: 16px;
   background:
@@ -6894,7 +6894,7 @@ h6 {
 .readiness-score__gauge > p {
   width: min(100%, 300px);
   max-width: 300px;
-  margin: -8px 0 0;
+  margin: -2px 0 0;
   color: #5f6f86;
   font-size: clamp(11px, .95vw, 13px);
   font-weight: 800;
@@ -11085,7 +11085,7 @@ h6,
 .full-audit-document .readiness-score__gauge > p {
   width: min(100%, 286px);
   max-width: 286px;
-  margin-top: -10px;
+  margin-top: -4px;
   font-size: clamp(9px, .72vw, 11px);
   white-space: nowrap;
 }
@@ -11621,7 +11621,7 @@ h6,
 
   .full-audit-document .readiness-score__gauge > p {
     width: min(100%, 310px);
-    margin-top: -8px;
+    margin-top: -2px;
     font-size: clamp(10px, 2.65vw, 11px);
     white-space: nowrap;
   }
