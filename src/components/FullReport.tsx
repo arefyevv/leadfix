@@ -695,10 +695,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <b>{formatReportText(issue.location)}</b>
                     </div>
                     <div className="full-audit-issue__grid">
-                      <div><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
-                      <div><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
-                      <div><b>Что исправить</b><p>{formatReportText(issue.recommendation)}</p></div>
-                      <div><b>Какой результат ожидаем</b><p>{formatReportText(issue.expectedResult)}</p></div>
+                      <div className="is-problem"><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
+                      <div className="is-problem"><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
+                      <div className="is-solution"><b>Что исправить</b><p>{formatReportText(issue.recommendation)}</p></div>
+                      <div className="is-solution"><b>Какой результат ожидаем</b><p>{formatReportText(issue.expectedResult)}</p></div>
                     </div>
                     <div className="full-audit-issue__meta">
                       <div><span>Сложность</span><b>{issue.complexity}/5</b></div>

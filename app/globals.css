@@ -11216,12 +11216,12 @@ h6,
 .full-audit-document .full-audit__top-problems article.is-critical,
 .full-audit-document .full-audit-content .full-audit-issue.is-critical {
   border-color: rgba(214, 79, 69, .22);
-  background: linear-gradient(90deg, rgba(214, 79, 69, .075), var(--report-card-soft) 46%);
+  background: #fff7f5;
 }
 
 .full-audit-document .full-audit__top-problems article.is-important {
   border-color: rgba(183, 121, 31, .22);
-  background: linear-gradient(90deg, rgba(183, 121, 31, .075), var(--report-card-soft) 46%);
+  background: #fff8ec;
 }
 
 .full-audit-document .full-audit__quick-panel li,
@@ -11252,6 +11252,24 @@ h6,
 .full-audit-document .full-audit-content .full-audit-category__scores div,
 .full-audit-document .full-audit-content .full-audit-issue__grid > div {
   border-radius: 13px;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-problem {
+  border-color: rgba(214, 79, 69, .18);
+  background: #fff7f5;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-problem b {
+  color: #b94a3f;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-solution {
+  border-color: rgba(31, 191, 120, .2);
+  background: #eefaf4;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-solution b {
+  color: var(--report-accent-strong);
 }
 
 .full-audit-document .full-audit-category__recommendation {
@@ -11376,12 +11394,12 @@ h6,
 
 .full-audit-document .full-audit-priority.is-critical {
   border-color: rgba(214, 79, 69, .24);
-  background: linear-gradient(90deg, rgba(214, 79, 69, .075), var(--report-card-soft) 46%);
+  background: #fff7f5;
 }
 
 .full-audit-document .full-audit-priority.is-important {
   border-color: rgba(183, 121, 31, .24);
-  background: linear-gradient(90deg, rgba(183, 121, 31, .075), var(--report-card-soft) 46%);
+  background: #fff8ec;
 }
 
 .full-audit-document .full-audit-priority__number {
