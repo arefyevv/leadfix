@@ -524,6 +524,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
     : "Правила LeadFix без внешней модели";
   const siteHeading = analysis.h1[0] || "Главный заголовок не найден";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+  const reportPlan = "Экспресс";
   const activeScoreLevel = getScoreLevel(reportScore);
   const gaugeSegments = getGaugeSegments(reportScore);
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
@@ -540,9 +541,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
       <div className="full-report__inner full-audit__layout">
         <aside className="full-audit-sidebar">
           <section className="full-audit-sidebar__site">
+            <div className="full-audit-sidebar__brand">
+              <img src="/leadfix-logo-black.svg" alt="LeadFix" />
+            </div>
             <div className="full-audit-sidebar__meta">
-              <div><span>Дата аудита</span><b>{reportDate}</b></div>
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
+              <div><span>Дата аудита</span><b>{reportDate}</b></div>
+              <div><span>Тариф</span><b>{reportPlan}</b></div>
               <div><span>Главный заголовок сайта</span><b>{formatReportText(siteHeading)}</b></div>
             </div>
             <div className="full-audit-sidebar__actions">
@@ -598,11 +603,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     ))}
                   </g>
                   <g className="readiness-score__arc-labels" aria-hidden="true">
-                    <text x="30" y="168">0</text>
+                    <text x="30" y="176">0</text>
                     <text x="38" y="42">40</text>
                     <text x="150" y="0">60</text>
                     <text x="262" y="42">80</text>
-                    <text x="270" y="168">100</text>
+                    <text x="270" y="176">100</text>
                   </g>
                 </svg>
                 <strong>{reportScore}</strong>

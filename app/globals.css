@@ -10887,34 +10887,29 @@ h6,
 
 .full-audit-document .full-audit-sidebar__site {
   position: relative;
-  padding: 72px 20px 18px;
+  padding: 20px 20px 18px;
   overflow: hidden;
 }
 
 .full-audit-document .full-audit-sidebar__site::before {
-  content: "LeadFix";
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  color: var(--report-text);
-  font-size: 18px;
-  font-weight: 850;
+  display: none;
 }
 
 .full-audit-document .full-audit-sidebar__site::after {
-  content: "полный отчёт";
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 5px 8px;
-  color: var(--report-accent-strong);
-  background: rgba(31, 191, 120, .11);
-  border: 1px solid rgba(31, 191, 120, .18);
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 750;
-  letter-spacing: 0;
-  text-transform: lowercase;
+  display: none;
+}
+
+.full-audit-document .full-audit-sidebar__brand {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+  margin-bottom: 18px;
+}
+
+.full-audit-document .full-audit-sidebar__brand img {
+  display: block;
+  width: 112px;
+  height: auto;
 }
 
 .full-audit-document .full-audit-sidebar__meta div {
@@ -10933,10 +10928,15 @@ h6,
   text-transform: uppercase;
 }
 
+.full-audit-document .full-audit-sidebar__meta span {
+  font-weight: 400;
+}
+
 .full-audit-document .full-audit-sidebar__meta b,
 .full-audit-document .full-audit-sidebar__meta a {
   color: var(--report-text);
   font-size: 14px;
+  font-weight: 650;
   line-height: 1.32;
 }
 
@@ -11078,15 +11078,32 @@ h6,
 
 .full-audit-document .readiness-score__arc strong {
   color: var(--report-text);
-  font-size: clamp(64px, 6.4vw, 88px);
+  font-size: clamp(54px, 5.2vw, 72px);
   font-variant-numeric: tabular-nums;
+}
+
+.full-audit-document .readiness-score__gauge.is-critical .readiness-score__arc strong {
+  color: #e0665f;
+}
+
+.full-audit-document .readiness-score__gauge.is-weak .readiness-score__arc strong {
+  color: #e18b46;
+}
+
+.full-audit-document .readiness-score__gauge.is-medium .readiness-score__arc strong {
+  color: #c9a83b;
+}
+
+.full-audit-document .readiness-score__gauge.is-good .readiness-score__arc strong,
+.full-audit-document .readiness-score__gauge.is-strong .readiness-score__arc strong {
+  color: #31a869;
 }
 
 .full-audit-document .readiness-score__gauge > p {
   width: min(100%, 286px);
   max-width: 286px;
-  margin-top: -4px;
-  font-size: clamp(9px, .72vw, 11px);
+  margin-top: -2px;
+  font-size: clamp(10px, .82vw, 12px);
   white-space: nowrap;
 }
 
@@ -11587,7 +11604,7 @@ h6,
   }
 
   .full-audit-document .full-audit-sidebar__site {
-    padding-top: 62px;
+    padding-top: 16px;
   }
 
   .full-audit-document .full-audit-sidebar__meta b,
