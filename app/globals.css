@@ -6867,14 +6867,15 @@ h6 {
   width: 100%;
   height: auto;
   overflow: visible;
+  padding-top: 10px;
 }
 .readiness-score__arc-segments line {
   stroke-linecap: round;
   stroke-width: 3.8;
 }
 .readiness-score__arc-labels text {
-  fill: #7b8799;
-  font-size: 11px;
+  fill: #727d8d;
+  font-size: 12px;
   font-weight: 800;
   text-anchor: middle;
 }
@@ -6890,22 +6891,12 @@ h6 {
   letter-spacing: 0;
   text-align: center;
 }
-.readiness-score__marker {
-  position: absolute;
-  z-index: 1;
-  width: 0;
-  height: 0;
-  transform: translate(-50%, -50%) rotate(180deg);
-  border-right: 6px solid transparent;
-  border-bottom: 11px solid #12a96c;
-  border-left: 6px solid transparent;
-  filter: drop-shadow(0 2px 4px rgba(18, 169, 108, .18));
-}
 .readiness-score__gauge > p {
-  max-width: none;
-  margin: -2px 0 0;
+  width: min(100%, 300px);
+  max-width: 300px;
+  margin: -8px 0 0;
   color: #5f6f86;
-  font-size: clamp(9px, .72vw, 10px);
+  font-size: clamp(11px, .95vw, 13px);
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
@@ -11091,7 +11082,10 @@ h6,
 }
 
 .full-audit-document .readiness-score__gauge > p {
-  font-size: clamp(7px, .58vw, 8px);
+  width: min(100%, 310px);
+  max-width: 310px;
+  margin-top: -10px;
+  font-size: clamp(10px, .82vw, 12px);
   white-space: nowrap;
 }
 
@@ -11624,7 +11618,9 @@ h6,
   }
 
   .full-audit-document .readiness-score__gauge > p {
-    font-size: clamp(7px, 2vw, 8px);
+    width: min(100%, 310px);
+    margin-top: -8px;
+    font-size: clamp(10px, 2.65vw, 11px);
     white-space: nowrap;
   }
 

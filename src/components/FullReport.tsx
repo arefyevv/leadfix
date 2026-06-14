@@ -431,10 +431,10 @@ function formatConfidence(confidence: number) {
 }
 
 function getGaugeSegmentColor(value: number) {
-  if (value < 40) return "#f1b4b0";
-  if (value < 60) return "#f2c58f";
-  if (value < 75) return "#e4d985";
-  return "#8fdca2";
+  if (value < 40) return "#ee8f8b";
+  if (value < 60) return "#f0ad67";
+  if (value < 75) return "#d9ca54";
+  return "#63cd82";
 }
 
 function getGaugePoint(value: number, radius: number) {
@@ -459,18 +459,9 @@ function getGaugeSegments(score: number) {
       x2: outer.x,
       y2: outer.y,
       color: getGaugeSegmentColor(value),
-      opacity: value <= score ? 1 : 0.22
+      opacity: value <= score ? 1 : 0.12
     };
   });
-}
-
-function getGaugeMarkerStyle(score: number): CSSProperties {
-  const point = getGaugePoint(score, 136);
-
-  return {
-    left: `${(point.x / 300) * 100}%`,
-    top: `${(point.y / 188) * 100}%`
-  };
 }
 
 function getQualityReviewNote(result: AuditResult) {
@@ -535,7 +526,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
   const gaugeSegments = getGaugeSegments(reportScore);
-  const gaugeMarkerStyle = getGaugeMarkerStyle(reportScore);
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
@@ -608,14 +598,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     ))}
                   </g>
                   <g className="readiness-score__arc-labels" aria-hidden="true">
-                    <text x="20" y="172">0</text>
-                    <text x="42" y="54">40</text>
-                    <text x="150" y="13">60</text>
-                    <text x="258" y="54">80</text>
-                    <text x="280" y="172">100</text>
+                    <text x="18" y="168">0</text>
+                    <text x="38" y="42">40</text>
+                    <text x="150" y="0">60</text>
+                    <text x="262" y="42">80</text>
+                    <text x="282" y="168">100</text>
                   </g>
                 </svg>
-                <span className="readiness-score__marker" style={gaugeMarkerStyle} aria-hidden="true" />
                 <strong>{reportScore}</strong>
               </div>
               <p>Готовность сайта к платному трафику: {reportScore}/100</p>
