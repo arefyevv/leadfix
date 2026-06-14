@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import type { AuditAnalysis, AuditResult } from "@/types/audit";
+import type { AuditAnalysis, AuditCategoryId, AuditResult } from "@/types/audit";
 
 type FullReportProps = {
   analysis: AuditAnalysis;
@@ -341,84 +341,139 @@ function getDetailedIssuesFromAuditResult(auditResult: AuditResult): DetailedIss
   }));
 }
 
+const categoryPlainText: Record<AuditCategoryId, { label: string; help: string }> = {
+  offer: {
+    label: "Оффер и первый экран",
+    help: "Понятно ли за первые секунды, что предлагают, кому это нужно и какую пользу получит клиент."
+  },
+  ads: {
+    label: "Соответствие рекламе",
+    help: "Совпадает ли страница с ожиданием человека после клика по объявлению или поисковому запросу."
+  },
+  mobile: {
+    label: "Мобильная версия",
+    help: "Удобно ли пройти путь до заявки со смартфона без лишней прокрутки и ошибок."
+  },
+  cta: {
+    label: "Кнопки и путь к заявке",
+    help: "Понятно ли, куда нажимать и что произойдёт после действия. CTA — это призыв к действию."
+  },
+  trust: {
+    label: "Доверие и доказательства",
+    help: "Есть ли факты, кейсы, отзывы и гарантии, которые снижают сомнения перед заявкой."
+  },
+  forms: {
+    label: "Формы и снижение трения",
+    help: "Не мешает ли форма оставить заявку: лишние поля, непонятный следующий шаг, страх перед отправкой."
+  },
+  structure: {
+    label: "Структура страницы",
+    help: "Логично ли выстроены блоки: от первого понимания ценности до решения оставить заявку."
+  },
+  technical: {
+    label: "Скорость и технические барьеры",
+    help: "Нет ли проблем, которые мешают загрузке, клику, отправке формы или просмотру страницы."
+  }
+};
+
+const methodologySteps = [
+  "Проверяем, где пользователь теряет понимание ценности.",
+  "Находим барьеры на пути к заявке.",
+  "Расставляем проблемы по влиянию и сложности исправления.",
+  "Формируем порядок внедрения: сначала то, что быстрее влияет на заявки."
+];
+
+function getCategoryLabel(categoryId: AuditCategoryId, fallback: string) {
+  return categoryPlainText[categoryId]?.label ?? fallback;
+}
+
+function getCategoryHelp(categoryId: AuditCategoryId) {
+  return categoryPlainText[categoryId]?.help ?? "Оцениваем влияние этой зоны на путь пользователя к заявке.";
+}
+
+function getSeverityLabel(severity: "critical" | "high" | "medium" | "low") {
+  if (severity === "critical") return "Критично";
+  if (severity === "high") return "Важно";
+  if (severity === "medium") return "Средне";
+  return "Низкий риск";
+}
+
+function getSeverityTone(severity: "critical" | "high" | "medium" | "low") {
+  if (severity === "critical") return "critical";
+  if (severity === "high") return "important";
+  if (severity === "medium") return "medium";
+  return "low";
+}
+
+function getTrafficVerdict(reportScore: number, criticalIssuesCount: number, summary: AuditResult["finalSummary"]) {
+  if (reportScore >= 80 && criticalIssuesCount === 0) {
+    return {
+      title: "Можно запускать трафик",
+      summary: "Критичных барьеров мало. Дальше лучше усиливать отдельные слабые места и проверять эффект по заявкам."
+    };
+  }
+
+  if (reportScore >= 60) {
+    return {
+      title: "Можно, но после приоритетных правок",
+      summary: summary.topPriority
+    };
+  }
+
+  return {
+    title: "Сначала закрыть критичные барьеры",
+    summary: summary.mainConversionLoss
+  };
+}
+
+function formatConfidence(confidence: number) {
+  return `${Math.round(confidence > 1 ? confidence : confidence * 100)}%`;
+}
+
+function formatReportText(text: string) {
+  return text
+    .replace(/\bCTA\b/g, "кнопка / призыв к действию (CTA)")
+    .replace(/\bHTML\b/g, "код страницы (HTML)");
+}
+
 export function FullReport({ analysis, reportDate }: FullReportProps) {
   const auditResult = analysis.auditResult;
   const reportScore = auditResult.overallScore;
-  const detailedIssues = getDetailedIssuesFromAuditResult(auditResult);
   const scoreRows: ScoreRow[] = auditResult.categoryScores.map((category) => ({
-    category: category.title,
+    category: getCategoryLabel(category.categoryId, category.title),
     score: category.score * 10,
     status: category.status,
     priority: getPriorityByScore(category.score)
   }));
-  const quickImprovements = auditResult.quickWins;
-  const executiveSummary = [
-    auditResult.finalSummary.mainConversionLoss,
-    auditResult.finalSummary.topPriority,
-    auditResult.finalSummary.expectedBusinessEffect
-  ];
-  const topProblems = auditResult.issues.slice(0, 3).map((issue) => ({
-    title: issue.title,
-    area: issue.location,
-    impact: issue.problem,
-    tone: issue.severity === "critical" ? "critical" : "important"
-  }));
-  const pageMapItems = auditResult.issues.slice(0, 4).map((issue, index) => ({
-    index: String(index + 1).padStart(2, "0"),
-    title: issue.location,
-    note: issue.recommendation,
-    tone: issue.severity === "critical" ? "critical" : "important"
-  }));
+  const priorityIssues = [...auditResult.issues]
+    .sort((a, b) => b.priorityScore - a.priorityScore)
+    .slice(0, 5);
   const implementationPriorities = [
-    { title: "Высокий приоритет", tone: "high", items: auditResult.implementationPlan.first24h },
-    { title: "Средний приоритет", tone: "medium", items: auditResult.implementationPlan.firstWeek },
-    { title: "Низкий приоритет", tone: "low", items: auditResult.implementationPlan.nextMonth }
+    { title: "Сначала: 24 часа", tone: "high", items: auditResult.implementationPlan.first24h },
+    { title: "Затем: первая неделя", tone: "medium", items: auditResult.implementationPlan.firstWeek },
+    { title: "После: следующий месяц", tone: "low", items: auditResult.implementationPlan.nextMonth }
   ];
-  const auditDirections: AuditDirection[] = auditResult.categoryScores.map((category) => ({
-    title: category.title,
+  const auditDirections = auditResult.categoryScores.map((category) => ({
+    ...category,
+    title: getCategoryLabel(category.categoryId, category.title),
     score: category.score * 10,
     status: getReportStatus(category.score),
-    summary: category.summary,
-    categories: [category.title],
-    recommendation: auditResult.issues.find((issue) => issue.categoryId === category.categoryId)?.recommendation ?? "Критичных замечаний не найдено, нужна ручная проверка по скриншотам."
+    help: getCategoryHelp(category.categoryId),
+    issues: auditResult.issues.filter((issue) => issue.categoryId === category.categoryId)
   }));
-  const firstPriority = auditResult.issues[0]?.location || "Оффер и CTA";
-  const lossZones = auditResult.issues.slice(0, 4).map((issue) => issue.location).join(", ") || firstPriority;
+  const firstPriority = priorityIssues[0]?.location || "Оффер и путь к заявке";
+  const lossZones = priorityIssues.slice(0, 3).map((issue) => issue.location).join(", ") || firstPriority;
   const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
   const highIssuesCount = auditResult.issues.filter((issue) => issue.severity === "high").length;
-  const trafficVerdict = reportScore >= 80 && criticalIssuesCount === 0
-    ? {
-      title: "Да, можно запускать с точечными правками",
-      summary: auditResult.finalSummary.expectedBusinessEffect
-    }
-    : reportScore >= 60
-      ? {
-        title: "Да, но только после приоритетных правок",
-        summary: auditResult.finalSummary.topPriority
-      }
-      : {
-        title: "Нет, сначала закрыть критичные барьеры",
-        summary: auditResult.finalSummary.mainConversionLoss
-      };
+  const trafficVerdict = getTrafficVerdict(reportScore, criticalIssuesCount, auditResult.finalSummary);
   const potentialLift = criticalIssuesCount > 0 ? "+15–35%" : highIssuesCount > 0 ? "+10–25%" : "+5–15%";
-  const specialistTasksDynamic = [
-    {
-      role: "Дизайнер",
-      tasks: auditResult.structuralImprovements.slice(0, 3)
-    },
-    {
-      role: "Маркетолог / копирайтер",
-      tasks: [...auditResult.rewrittenExamples, ...auditResult.highImpactFixes].slice(0, 3)
-    },
-    {
-      role: "Разработчик / Tilda-специалист",
-      tasks: [...auditResult.implementationPlan.first24h, ...auditResult.humanReviewNeeded].slice(0, 3)
-    }
-  ].filter((group) => group.tasks.length > 0);
+  const manualChecks = auditResult.humanReviewNeeded.length > 0
+    ? auditResult.humanReviewNeeded
+    : ["Проверить страницу на смартфоне, клики по кнопкам и отправку формы."];
   const providerLabel = analysis.aiProvider
-    ? `ProxyAPI / ${analysis.aiModel || "модель не указана"}`
-    : "LeadFix rules";
-  const siteHeading = analysis.h1[0] || "УТП сайта не найдено в H1";
+    ? `ИИ-анализ через ProxyAPI${analysis.aiModel ? `, модель: ${analysis.aiModel}` : ""}`
+    : "Правила LeadFix без внешней модели";
+  const siteHeading = analysis.h1[0] || "Главный заголовок не найден";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const activeScoreLevel = getScoreLevel(reportScore);
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
@@ -438,7 +493,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <div className="full-audit-sidebar__meta">
               <div><span>Дата аудита</span><b>{reportDate}</b></div>
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>
-              <div><span>УТП сайта</span><b>{siteHeading}</b></div>
+              <div><span>Главный заголовок сайта</span><b>{formatReportText(siteHeading)}</b></div>
             </div>
             <div className="full-audit-sidebar__actions">
               <button className="pdf-button" type="button" onClick={() => window.print()}>Скачать PDF</button>
@@ -453,13 +508,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <header className="full-audit-content__hero">
             <p className="full-audit__eyebrow">Полный отчёт LeadFix</p>
             <h2>
-              <span>Полный отчёт конверсии </span>
+              <span>Аудит лендинга </span>
               <span className="preview-report__title-url">{displayUrl}</span>
             </h2>
             <div className="full-audit-content__hero-metrics">
-              <div><span>Первый приоритет</span><b>{firstPriority}</b></div>
-              <div><span>Контроль качества</span><b>{auditResult.qualityReview.score}/100</b></div>
-              <div><span>Источник анализа</span><b>{providerLabel}</b></div>
+              <div><span>Что исправить сначала</span><b>{formatReportText(firstPriority)}</b></div>
+              <div><span>Найдено проблем</span><b>{auditResult.issues.length}</b></div>
+              <div><span>Проверка качества отчёта</span><b>{auditResult.qualityReview.score}/100</b></div>
             </div>
           </header>
 
@@ -489,10 +544,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <p>Готовность к платному трафику</p>
             </div>
             <div className="readiness-score__verdict">
-              <p className="full-audit__eyebrow">Общая оценка</p>
+              <p className="full-audit__eyebrow">Краткий итог</p>
               <h2>{activeScoreLevel.title}</h2>
               <p>{activeScoreLevel.summary}</p>
-              <p>Главные зоны потерь: {lossZones}.</p>
+              <p>Главные зоны потерь: {formatReportText(lossZones)}.</p>
               <div className="readiness-score__scale" style={{ "--score-position": `${reportScore}%` } as CSSProperties} aria-label="Шкала общей оценки">
                 <div className="readiness-score__scale-track">
                   <span className="readiness-score__scale-marker"><b>{reportScore}</b></span>
@@ -509,7 +564,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </div>
             <dl className="readiness-score__metrics">
               {auditDirections.map((direction) => (
-                <div key={direction.title}>
+                <div key={direction.categoryId}>
                   <dt>{direction.title}</dt>
                   <dd>{direction.score}</dd>
                   <span style={{ "--value": `${direction.score}%` } as CSSProperties} />
@@ -519,57 +574,46 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section full-audit__executive">
-            <SectionHeading eyebrow="Короткий вывод" title="Что происходит с лендингом" />
-            <div className="full-audit__executive-grid">
-              {executiveSummary.map((item, index) => (
-                <article key={item}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <p>{item}</p>
-                </article>
-              ))}
+            <SectionHeading eyebrow="Решение по трафику" title={trafficVerdict.title} />
+            <div className="full-audit__summary-grid">
+              <article className="full-audit__summary-card">
+                <span>Главная потеря</span>
+                <p>{formatReportText(auditResult.finalSummary.mainConversionLoss)}</p>
+              </article>
+              <article className="full-audit__summary-card">
+                <span>Первое действие</span>
+                <p>{formatReportText(auditResult.finalSummary.topPriority)}</p>
+              </article>
+              <article className="full-audit__summary-card">
+                <span>Ожидаемый эффект</span>
+                <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
+              </article>
             </div>
             <div className="full-audit__traffic-verdict">
-              <b>Можно лить трафик?</b>
+              <b>Вывод</b>
               <strong>{trafficVerdict.title}</strong>
-              <p>{trafficVerdict.summary}</p>
+              <p>{formatReportText(trafficVerdict.summary)}</p>
             </div>
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Сначала исправить" title="Топ проблем и быстрые победы" />
-            <div className="full-audit__top-grid">
-              <div className="full-audit__top-problems">
-                {topProblems.map((item, index) => (
-                  <article className={`is-${item.tone}`} key={item.title}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <b>{item.area}</b>
-                      <h3>{item.title}</h3>
-                      <p>{item.impact}</p>
+            <SectionHeading eyebrow="Сначала исправить" title="Приоритетные проблемы" />
+            <p className="full-audit__lead">Это не отдельный список рекомендаций, а самые важные найденные проблемы, отсортированные по влиянию на заявки и сложности исправления.</p>
+            <div className="full-audit__priority-list">
+              {priorityIssues.map((issue, index) => (
+                <article className={`full-audit-priority is-${getSeverityTone(issue.severity)}`} key={issue.id}>
+                  <div className="full-audit-priority__number">{String(index + 1).padStart(2, "0")}</div>
+                  <div className="full-audit-priority__body">
+                    <div className="full-audit-priority__head">
+                      <span>{getCategoryLabel(issue.categoryId, issue.categoryId)}</span>
+                      <b>{getSeverityLabel(issue.severity)}</b>
                     </div>
-                  </article>
-                ))}
-              </div>
-              <div className="full-audit__quick-panel">
-                <h3>Быстрые победы на 1–2 дня</h3>
-                <ul>
-                  {quickImprovements.slice(0, 5).map((item) => <li key={item}>{item}</li>)}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Визуальная привязка" title="Карта проблемных блоков лендинга" />
-            <p className="full-audit__lead">В финальном отчёте каждый пункт должен быть привязан к конкретному скриншоту блока. Ниже — структура таких скриншотов: зона страницы, маркер проблемы и действие.</p>
-            <div className="full-audit__page-map">
-              {pageMapItems.map((item) => (
-                <article className={`is-${item.tone}`} key={item.title}>
-                  <ScreenshotFrame title={item.title} markers={[item.index, item.tone === "critical" ? "Проблема" : "Усилить"]} />
-                  <div>
-                    <span>{item.index}</span>
-                    <h3>{item.title}</h3>
-                    <p>{item.note}</p>
+                    <h3>{formatReportText(issue.title)}</h3>
+                    <p>{formatReportText(issue.problem)}</p>
+                    <div className="full-audit-priority__meta">
+                      <span>Где: {formatReportText(issue.location)}</span>
+                      <span>Приоритет: {issue.priorityScore}/10</span>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -577,11 +621,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="6 направлений" title="Итоги по ключевым категориям аудита" />
-            <p className="full-audit__lead">Это главный каркас отчёта: от оффера и соответствия рекламе до доверия, CTA и мобильного сценария.</p>
+            <SectionHeading eyebrow="8 зон проверки" title="Разбор по структуре методологии" />
+            <p className="full-audit__lead">Отчёт идёт по рабочей структуре LeadFix: каждая зона показывает оценку, смысл проверки и связанные проблемы. Так проще понять, где лендинг теряет заявки.</p>
             <div className="full-audit__categories">
               {auditDirections.map((direction, index) => (
-                <article className="full-audit-category" key={direction.title}>
+                <article className="full-audit-category" key={direction.categoryId}>
                   <div className="full-audit-category__top">
                     <div>
                       <span className="full-audit-category__index">{String(index + 1).padStart(2, "0")}</span>
@@ -590,49 +634,48 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     <strong>{direction.score}<small>/100</small></strong>
                   </div>
                   <span className={`full-audit__status status-${direction.status === "Хорошо" ? "good" : direction.status === "Слабое место" ? "critical" : "attention"}`}>{direction.status}</span>
-                  <p>{direction.summary}</p>
-                  <div className="full-audit-category__scores">
-                    {direction.categories.map((category) => {
-                      const score = scoreRows.find((row) => row.category === category);
-                      return <div key={category}><span>{category}</span><b>{score?.score ?? "—"}<small>/100</small></b></div>;
-                    })}
+                  <p>{formatReportText(direction.help)}</p>
+                  <div className="full-audit-category__recommendation">
+                    <b>Вывод по зоне</b>
+                    <span>{formatReportText(direction.summary)}</span>
                   </div>
-                  <div className="full-audit-category__recommendation"><b>Что исправить</b><span>{direction.recommendation}</span></div>
+                  <div className="full-audit-category__issues">
+                    {direction.issues.length > 0 ? direction.issues.slice(0, 2).map((issue) => (
+                      <span key={issue.id}>{formatReportText(issue.title)}</span>
+                    )) : <span className="full-audit-category__empty">Критичных проблем в этой зоне не найдено.</span>}
+                  </div>
                 </article>
               ))}
             </div>
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Подробный разбор" title="Карточки проблем со скриншотами" />
+            <SectionHeading eyebrow="Подробный разбор" title="Все найденные проблемы" />
             <div className="full-audit__issues">
-              {detailedIssues.map((issue, index) => (
-                <article className={issue.priority === "Критично" ? "full-audit-issue is-critical" : "full-audit-issue"} key={`${issue.title}-${index}`}>
+              {auditResult.issues.map((issue, index) => (
+                <article className={issue.severity === "critical" ? "full-audit-issue is-critical" : "full-audit-issue"} key={issue.id}>
                   <div className="full-audit-issue__index">{String(index + 1).padStart(2, "0")}</div>
                   <div className="full-audit-issue__body">
                     <div className="full-audit-issue__head">
                       <div>
-                        <span>{issue.category}</span>
-                        <h3>{issue.title}</h3>
+                        <span>{getCategoryLabel(issue.categoryId, issue.categoryId)}</span>
+                        <h3>{formatReportText(issue.title)}</h3>
                       </div>
-                      <b>{issue.priority}</b>
+                      <b>{getSeverityLabel(issue.severity)}</b>
                     </div>
                     <div className="full-audit-issue__location">
                       <span>Где на странице</span>
-                      <b>{issue.location}</b>
+                      <b>{formatReportText(issue.location)}</b>
                     </div>
-                    <div className="full-audit-issue__analysis">
-                      <ScreenshotFrame title={issue.screenshot.title} note={issue.screenshot.note} markers={issue.screenshot.markers} />
-                      <div className="full-audit-issue__grid">
-                        <div><b>Что не так</b><p>{issue.problem}</p></div>
-                        <div><b>Почему влияет на заявки</b><p>{issue.impact}</p></div>
-                        <div><b>Что исправить</b><p>{issue.fix}</p></div>
-                        <div><b>Пример улучшения</b><p>{issue.example}</p></div>
-                      </div>
+                    <div className="full-audit-issue__grid">
+                      <div><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
+                      <div><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
+                      <div><b>Что исправить</b><p>{formatReportText(issue.recommendation)}</p></div>
+                      <div><b>Какой результат ожидаем</b><p>{formatReportText(issue.expectedResult)}</p></div>
                     </div>
                     <div className="full-audit-issue__meta">
-                      <div><span>Сложность</span><b>{issue.effort}</b></div>
-                      <div><span>Ожидаемый эффект</span><b>{issue.effect}</b></div>
+                      <div><span>Сложность</span><b>{issue.complexity}/5</b></div>
+                      <div><span>Уверенность проверки</span><b>{formatConfidence(issue.confidence)}</b></div>
                     </div>
                   </div>
                 </article>
@@ -641,26 +684,21 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Порядок работ" title="Приоритетный план внедрения" />
+            <SectionHeading eyebrow="Порядок работ" title="План внедрения" />
             <div className="full-audit__implementation">
               {implementationPriorities.map((group) => (
                 <article className={`is-${group.tone}`} key={group.title}>
                   <h3>{group.title}</h3>
-                  <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                  <ul>{group.items.map((item) => <li key={item}>{formatReportText(item)}</li>)}</ul>
                 </article>
               ))}
             </div>
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Кому передать" title="Задачи для специалистов" />
-            <div className="full-audit__specialists">
-              {(specialistTasksDynamic.length > 0 ? specialistTasksDynamic : specialistTasks).map((group) => (
-                <article key={group.role}>
-                  <h3>{group.role}</h3>
-                  <ul>{group.tasks.map((task) => <li key={task}>{task}</li>)}</ul>
-                </article>
-              ))}
+            <SectionHeading eyebrow="Проверить вручную" title="Что нельзя оценить только по HTML" />
+            <div className="full-audit__check-list">
+              {manualChecks.map((item) => <article key={item}>{formatReportText(item)}</article>)}
             </div>
           </section>
 
@@ -687,18 +725,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Методология" title="Что проверял аудит" />
-            <p className="full-audit__lead">Аудит оценивает не сайт «вообще», а способность лендинга превращать платный трафик из Яндекс Директа в заявки.</p>
-            <p className="full-audit__lead full-audit__lead--secondary">Проверки сгруппированы по этапам принятия решения: от первого понимания предложения до заявки и измерения результата.</p>
+            <SectionHeading eyebrow="Как читать отчёт" title="Методология простыми словами" />
+            <p className="full-audit__lead">Аудит оценивает не красоту страницы, а способность лендинга превращать платный трафик в заявки. Внутренние критерии и prompt не показываются в отчёте.</p>
             <div className="full-audit__methodology">
-              {auditGroups.map((group, index) => (
-                <article key={group.title}>
+              {methodologySteps.map((step, index) => (
+                <article key={step}>
                   <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{group.title}</h3>
-                  <p>{group.description}</p>
-                  <div>
-                    {group.items.map((item) => <span className="full-audit__methodology-chip" key={item}><i />{item}</span>)}
-                  </div>
+                  <h3>{step}</h3>
                 </article>
               ))}
             </div>
@@ -706,10 +739,24 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section full-audit__potential">
             <p className="full-audit__eyebrow">Ориентир после исправлений</p>
-            <h2>Ориентир влияния после исправлений</h2>
-            <p>{auditResult.finalSummary.expectedBusinessEffect}</p>
+            <h2>Что может измениться после правок</h2>
+            <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
             <strong>{potentialLift}</strong>
-            <small>Это не гарантия результата, а ориентировочная оценка на основе найденных барьеров. Фактический результат зависит от качества трафика, ниши, цены, продукта, конкурентной среды, обработки заявок и корректности внедрения рекомендаций.</small>
+            <small>Это не гарантия роста продаж, а ориентир по снижению найденных барьеров. Фактический результат зависит от трафика, ниши, цены, продукта, обработки заявок и качества внедрения.</small>
+          </section>
+
+          <section className="full-audit__section">
+            <details className="full-audit__details full-audit__tech-details">
+              <summary>
+                <span>Техническая информация</span>
+                <b>Источник анализа и ограничения</b>
+              </summary>
+              <div className="full-audit__check-list">
+                <article>{providerLabel}</article>
+                {auditResult.limitations.map((item) => <article key={item}>{formatReportText(item)}</article>)}
+                {auditResult.qualityReview.warnings.map((item) => <article key={item}>{formatReportText(item)}</article>)}
+              </div>
+            </details>
           </section>
 
           <footer className="full-audit__disclaimer">
