@@ -430,6 +430,20 @@ function formatConfidence(confidence: number) {
   return `${Math.round(confidence > 1 ? confidence : confidence * 100)}%`;
 }
 
+function getQualityReviewNote(result: AuditResult) {
+  const notes = [
+    ...result.qualityReview.failedChecks,
+    ...result.qualityReview.warnings,
+    ...result.limitations
+  ].filter(Boolean);
+
+  if (notes.length === 0) {
+    return ["Данных достаточно: отчёт прошёл внутреннюю проверку качества без заметных ограничений."];
+  }
+
+  return notes;
+}
+
 function formatReportText(text: string) {
   return text
     .replace(/\bCTA\b/g, "кнопка / призыв к действию (CTA)")
@@ -470,6 +484,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const manualChecks = auditResult.humanReviewNeeded.length > 0
     ? auditResult.humanReviewNeeded
     : ["Проверить страницу на смартфоне, клики по кнопкам и отправку формы."];
+  const qualityReviewNotes = getQualityReviewNote(auditResult);
   const providerLabel = analysis.aiProvider
     ? `ИИ-анализ через ProxyAPI${analysis.aiModel ? `, модель: ${analysis.aiModel}` : ""}`
     : "Правила LeadFix без внешней модели";
@@ -514,7 +529,19 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <div className="full-audit-content__hero-metrics">
               <div><span>Что исправить сначала</span><b>{formatReportText(firstPriority)}</b></div>
               <div><span>Найдено проблем</span><b>{auditResult.issues.length}</b></div>
-              <div><span>Проверка качества отчёта</span><b>{auditResult.qualityReview.score}/100</b></div>
+              <div className="full-audit-quality-metric">
+                <span>Надёжность анализа</span>
+                <b>{auditResult.qualityReview.score}/100</b>
+                <details>
+                  <summary>Почему не 100?</summary>
+                  <p>Это не оценка лендинга. Это показывает, насколько LeadFix уверен в выводах отчёта.</p>
+                  <ul>
+                    {qualityReviewNotes.slice(0, 4).map((item) => (
+                      <li key={item}>{formatReportText(item)}</li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
             </div>
           </header>
 
@@ -541,7 +568,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                 </svg>
                 <strong>{reportScore}</strong>
               </div>
-              <p>Готовность к платному трафику</p>
+              <p>Готовность лендинга к платному трафику: {reportScore}/100</p>
             </div>
             <div className="readiness-score__verdict">
               <p className="full-audit__eyebrow">Краткий итог</p>

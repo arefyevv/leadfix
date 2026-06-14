@@ -11031,6 +11031,45 @@ h6,
   line-height: 1.18;
 }
 
+.full-audit-document .full-audit-quality-metric {
+  align-content: start;
+}
+
+.full-audit-document .full-audit-quality-metric details {
+  margin-top: 8px;
+}
+
+.full-audit-document .full-audit-quality-metric summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--report-accent-strong);
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.25;
+  list-style-position: outside;
+}
+
+.full-audit-document .full-audit-quality-metric details[open] summary {
+  margin-bottom: 8px;
+}
+
+.full-audit-document .full-audit-quality-metric p {
+  margin: 0 0 8px;
+  color: var(--report-muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.full-audit-document .full-audit-quality-metric ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 16px;
+  color: var(--report-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .full-audit-document .readiness-score.full-audit-content__score {
   grid-template-columns: minmax(230px, .42fr) minmax(0, 1fr);
   gap: 18px;
