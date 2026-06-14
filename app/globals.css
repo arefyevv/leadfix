@@ -11060,19 +11060,20 @@ h6,
 }
 
 .full-audit-document .readiness-score.full-audit-content__score {
-  grid-template-columns: minmax(230px, .42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 326px) minmax(0, 1fr);
   gap: 18px;
   padding: 18px;
 }
 
 .full-audit-document .readiness-score__gauge {
   min-height: 286px;
+  width: 100%;
   border-radius: 16px;
   background: var(--report-card-soft);
 }
 
 .full-audit-document .readiness-score__arc {
-  width: min(100%, 310px);
+  width: min(100%, 286px);
 }
 
 .full-audit-document .readiness-score__arc strong {
@@ -11082,10 +11083,10 @@ h6,
 }
 
 .full-audit-document .readiness-score__gauge > p {
-  width: min(100%, 310px);
-  max-width: 310px;
+  width: min(100%, 286px);
+  max-width: 286px;
   margin-top: -10px;
-  font-size: clamp(10px, .82vw, 12px);
+  font-size: clamp(9px, .72vw, 11px);
   white-space: nowrap;
 }
 
@@ -11116,6 +11117,7 @@ h6,
 
 .full-audit-document .full-audit-content__score dl.readiness-score__metrics {
   gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
 }
 
 .full-audit-document .full-audit-content__score dl.readiness-score__metrics div {
