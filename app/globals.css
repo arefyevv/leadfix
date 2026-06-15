@@ -11228,11 +11228,53 @@ h6,
   box-shadow: none;
 }
 
+.full-audit-document .full-audit__details {
+  display: block;
+  grid-template-columns: none;
+  gap: 0;
+  margin-top: 0;
+}
+
 .full-audit-document .full-audit__executive-grid article,
 .full-audit-document .full-audit__traffic-verdict,
 .full-audit-document .full-audit__top-problems article,
 .full-audit-document .full-audit__quick-panel {
   padding: 18px;
+}
+
+.full-audit-document .full-audit__details summary {
+  width: 100%;
+  box-sizing: border-box;
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 18px 20px;
+}
+
+.full-audit-document .full-audit__details summary span {
+  grid-column: 1;
+  color: var(--report-accent-strong);
+  font-size: 11px;
+  letter-spacing: .03em;
+}
+
+.full-audit-document .full-audit__details summary b {
+  grid-column: 2;
+  justify-self: stretch;
+  color: var(--report-text);
+  font-size: clamp(18px, 1.65vw, 24px);
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.full-audit-document .full-audit__details summary::after {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
+}
+
+.full-audit-document .full-audit__methodology-details .full-audit__lead {
+  margin: 0 18px 18px !important;
 }
 
 .full-audit-document .full-audit__top-problems article {
@@ -11672,6 +11714,28 @@ h6,
   .full-audit-document .full-audit-content__hero h2 {
     font-size: clamp(27px, 8.4vw, 36px);
     white-space: normal;
+  }
+
+  .full-audit-document .full-audit__details summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    padding: 16px;
+  }
+
+  .full-audit-document .full-audit__details summary span {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .full-audit-document .full-audit__details summary b {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(18px, 5vw, 24px);
+  }
+
+  .full-audit-document .full-audit__details summary::after {
+    grid-column: 2;
+    grid-row: 1 / 3;
   }
 
   .full-audit-document .full-audit-content__hero-metrics div {

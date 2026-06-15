@@ -501,6 +501,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
     { title: "Затем: первая неделя", tone: "medium", items: auditResult.implementationPlan.firstWeek },
     { title: "После: следующий месяц", tone: "low", items: auditResult.implementationPlan.nextMonth }
   ];
+  const visibleImplementationPriorities = implementationPriorities.map((group) => ({
+    ...group,
+    items: group.items.slice(0, 3)
+  }));
   const auditDirections = auditResult.categoryScores.map((category) => ({
     ...category,
     title: getCategoryLabel(category.categoryId, category.title),
@@ -513,12 +517,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const lossZones = priorityIssues.slice(0, 3).map((issue) => issue.location).join(", ") || firstPriority;
   const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
   const highIssuesCount = auditResult.issues.filter((issue) => issue.severity === "high").length;
-  const trafficVerdict = getTrafficVerdict(reportScore, criticalIssuesCount, auditResult.finalSummary);
   const potentialLift = criticalIssuesCount > 0 ? "+15–35%" : highIssuesCount > 0 ? "+10–25%" : "+5–15%";
   const manualChecks = auditResult.humanReviewNeeded.length > 0
     ? auditResult.humanReviewNeeded
     : ["Проверить страницу на смартфоне, клики по кнопкам и отправку формы."];
-  const qualityReviewNotes = getQualityReviewNote(auditResult);
   const providerLabel = analysis.aiProvider
     ? `ИИ-анализ через ProxyAPI${analysis.aiModel ? `, модель: ${analysis.aiModel}` : ""}`
     : "Правила LeadFix без внешней модели";
@@ -644,32 +646,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </dl>
           </section>
 
-          <section className="full-audit__section full-audit__executive">
-            <SectionHeading eyebrow="Решение по трафику" title={trafficVerdict.title} />
-            <div className="full-audit__summary-grid">
-              <article className="full-audit__summary-card">
-                <span>Главная потеря</span>
-                <p>{formatReportText(auditResult.finalSummary.mainConversionLoss)}</p>
-              </article>
-              <article className="full-audit__summary-card">
-                <span>Первое действие</span>
-                <p>{formatReportText(auditResult.finalSummary.topPriority)}</p>
-              </article>
-              <article className="full-audit__summary-card">
-                <span>Ожидаемый эффект</span>
-                <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
-              </article>
-            </div>
-            <div className="full-audit__traffic-verdict">
-              <b>Вывод</b>
-              <strong>{trafficVerdict.title}</strong>
-              <p>{formatReportText(trafficVerdict.summary)}</p>
-            </div>
-          </section>
-
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Сначала исправить" title="Приоритетные проблемы" />
-            <p className="full-audit__lead">Это не отдельный список рекомендаций, а самые важные найденные проблемы, отсортированные по влиянию на заявки и сложности исправления.</p>
+            <SectionHeading eyebrow="Что исправить первым" title="Приоритетные проблемы" />
+            <p className="full-audit__lead">Начните с этих проблем: они сильнее всего мешают заявкам и быстрее всего двигают лендинг к запуску платного трафика.</p>
             <div className="full-audit__priority-list">
               {priorityIssues.map((issue, index) => (
                 <article className={`full-audit-priority is-${getSeverityTone(issue.severity)}`} key={issue.id}>
@@ -692,8 +671,20 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="8 зон проверки" title="Разбор по структуре методологии" />
-            <p className="full-audit__lead">Отчёт идёт по рабочей структуре LeadFix: каждая зона показывает оценку, смысл проверки и связанные проблемы. Так проще понять, где лендинг теряет заявки.</p>
+            <SectionHeading eyebrow="План правок" title="Что сделать и в каком порядке" />
+            <div className="full-audit__implementation">
+              {visibleImplementationPriorities.map((group) => (
+                <article className={`is-${group.tone}`} key={group.title}>
+                  <h3>{group.title}</h3>
+                  <ul>{group.items.map((item) => <li key={item}>{formatReportText(item)}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="full-audit__section">
+            <SectionHeading eyebrow="Карта отчёта" title="8 зон, где лендинг может терять заявки" />
+            <p className="full-audit__lead">Это навигация по структуре проверки. Смотрите слабые зоны, связанные проблемы и переходите к детальному разбору ниже.</p>
             <div className="full-audit__categories">
               {auditDirections.map((direction, index) => (
                 <article className="full-audit-category" key={direction.categoryId}>
@@ -721,7 +712,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <SectionHeading eyebrow="Подробный разбор" title="Все найденные проблемы" />
+            <SectionHeading eyebrow="Детальный разбор" title="Почему эти проблемы мешают заявкам" />
             <div className="full-audit__issues">
               {auditResult.issues.map((issue, index) => (
                 <article className={`full-audit-issue is-${getSeverityTone(issue.severity)}`} key={issue.id}>
@@ -743,6 +734,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <div className="is-problem"><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
                       <div className="is-solution"><b>Что исправить</b><p>{formatReportText(issue.recommendation)}</p></div>
                       <div className="is-solution"><b>Какой результат ожидаем</b><p>{formatReportText(issue.expectedResult)}</p></div>
+                      <div className="is-solution"><b>Пример решения</b><p>{formatReportText(issue.example)}</p></div>
                     </div>
                     <div className="full-audit-issue__meta">
                       <div><span>Сложность</span><b>{issue.complexity}/5</b></div>
@@ -751,25 +743,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                   </div>
                 </article>
               ))}
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Порядок работ" title="План внедрения" />
-            <div className="full-audit__implementation">
-              {implementationPriorities.map((group) => (
-                <article className={`is-${group.tone}`} key={group.title}>
-                  <h3>{group.title}</h3>
-                  <ul>{group.items.map((item) => <li key={item}>{formatReportText(item)}</li>)}</ul>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Проверить вручную" title="Что нельзя оценить только по HTML" />
-            <div className="full-audit__check-list">
-              {manualChecks.map((item) => <article key={item}>{formatReportText(item)}</article>)}
             </div>
           </section>
 
@@ -797,15 +770,21 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section">
             <SectionHeading eyebrow="Как читать отчёт" title="Методология простыми словами" />
-            <p className="full-audit__lead">Аудит оценивает не красоту страницы, а способность лендинга превращать платный трафик в заявки. Внутренние критерии и prompt не показываются в отчёте.</p>
-            <div className="full-audit__methodology">
-              {methodologySteps.map((step, index) => (
-                <article key={step}>
-                  <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{step}</h3>
-                </article>
-              ))}
-            </div>
+            <details className="full-audit__details full-audit__methodology-details">
+              <summary>
+                <span>Методика</span>
+                <b>Как LeadFix читает лендинг</b>
+              </summary>
+              <p className="full-audit__lead">Аудит оценивает не красоту страницы, а способность лендинга превращать платный трафик в заявки. Внутренние критерии и prompt не показываются в отчёте.</p>
+              <div className="full-audit__methodology">
+                {methodologySteps.map((step, index) => (
+                  <article key={step}>
+                    <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{step}</h3>
+                  </article>
+                ))}
+              </div>
+            </details>
           </section>
 
           <section className="full-audit__section full-audit__potential">
@@ -814,6 +793,18 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
             <strong>{potentialLift}</strong>
             <small>Это не гарантия роста продаж, а ориентир по снижению найденных барьеров. Фактический результат зависит от трафика, ниши, цены, продукта, обработки заявок и качества внедрения.</small>
+          </section>
+
+          <section className="full-audit__section">
+            <details className="full-audit__details full-audit__tech-details">
+              <summary>
+                <span>Проверить вручную</span>
+                <b>Что нельзя оценить только по HTML</b>
+              </summary>
+              <div className="full-audit__check-list">
+                {manualChecks.map((item) => <article key={item}>{formatReportText(item)}</article>)}
+              </div>
+            </details>
           </section>
 
           <section className="full-audit__section">
