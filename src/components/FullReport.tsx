@@ -535,7 +535,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
     { value: auditResult.issues.length, label: ["Проблем", "найдено"] },
     { value: isDemoReport ? 1 : criticalIssuesCount, label: ["Критическая"] },
     { value: isDemoReport ? 3 : mediumIssuesCount, label: ["Средних"] },
-    { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: ["Рекомендация"] }
+    { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: ["Быстрая", "правка"] }
   ];
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
