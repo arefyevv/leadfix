@@ -530,10 +530,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const isDemoReport = displayUrl === "demo.leadfix.ru";
   const mediumIssuesCount = auditResult.issues.filter((issue) => issue.severity === "medium").length;
   const heroMetricCards = [
-    { value: auditResult.issues.length, label: "Проблем найдено" },
-    { value: isDemoReport ? 1 : criticalIssuesCount, label: "Критическая" },
-    { value: isDemoReport ? 3 : mediumIssuesCount, label: "Средних" },
-    { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: "Рекомендация" }
+    { value: auditResult.issues.length, label: ["Проблем", "найдено"] },
+    { value: isDemoReport ? 1 : criticalIssuesCount, label: ["Критическая"] },
+    { value: isDemoReport ? 3 : mediumIssuesCount, label: ["Средних"] },
+    { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: ["Рекомендация"] }
   ];
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
@@ -575,9 +575,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             </h2>
             <div className="full-audit-content__hero-metrics">
               {heroMetricCards.map((metric) => (
-                <div className="full-audit-content__hero-stat" key={metric.label}>
+                <div className="full-audit-content__hero-stat" key={metric.label.join(" ")}>
                   <b>{metric.value}</b>
-                  <span>{metric.label}</span>
+                  <span className="full-audit-content__hero-stat-label">
+                    {metric.label.map((labelLine) => <span key={labelLine}>{labelLine}</span>)}
+                  </span>
                 </div>
               ))}
             </div>
@@ -722,7 +724,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <SectionHeading eyebrow="Подробный разбор" title="Все найденные проблемы" />
             <div className="full-audit__issues">
               {auditResult.issues.map((issue, index) => (
-                <article className={issue.severity === "critical" ? "full-audit-issue is-critical" : "full-audit-issue"} key={issue.id}>
+                <article className={`full-audit-issue is-${getSeverityTone(issue.severity)}`} key={issue.id}>
                   <div className="full-audit-issue__index">{String(index + 1).padStart(2, "0")}</div>
                   <div className="full-audit-issue__body">
                     <div className="full-audit-issue__head">

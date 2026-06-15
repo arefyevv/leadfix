@@ -10977,11 +10977,11 @@ h6,
 }
 
 .full-audit-document .full-audit-content__hero h2 {
-  max-width: 780px;
-  font-size: clamp(30px, 3.6vw, 48px);
+  max-width: 100%;
+  font-size: clamp(30px, 3.05vw, 42px);
   line-height: 1.02;
-  text-wrap: balance;
-  white-space: normal;
+  text-wrap: normal;
+  white-space: nowrap;
 }
 
 .full-audit-document .preview-report__title-url {
@@ -11004,7 +11004,11 @@ h6,
 
 .full-audit-document .full-audit-content__hero-metrics div {
   min-height: 112px;
-  align-content: end;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  align-content: center;
+  gap: 14px;
   padding: 16px;
   border-radius: 16px;
 }
@@ -11017,8 +11021,14 @@ h6,
   letter-spacing: 0;
 }
 
-.full-audit-document .full-audit-content__hero-metrics span {
-  margin-top: 10px;
+.full-audit-document .full-audit-content__hero-stat-label {
+  display: grid;
+  gap: 1px;
+  margin-top: 0;
+}
+
+.full-audit-document .full-audit-content__hero-stat-label span {
+  margin-top: 0;
   color: var(--report-soft);
   font-size: 12px;
   font-weight: 650;
@@ -11461,6 +11471,27 @@ h6,
   font-size: 12px;
 }
 
+.full-audit-document .full-audit-priority.is-critical .full-audit-priority__head b,
+.full-audit-document .full-audit-issue.is-critical .full-audit-issue__head > b {
+  color: #ffffff;
+  border-color: #d64f45;
+  background: #d64f45;
+}
+
+.full-audit-document .full-audit-priority.is-important .full-audit-priority__head b,
+.full-audit-document .full-audit-issue.is-important .full-audit-issue__head > b {
+  color: #ffffff;
+  border-color: #d98928;
+  background: #d98928;
+}
+
+.full-audit-document .full-audit-priority.is-medium .full-audit-priority__head b,
+.full-audit-document .full-audit-issue.is-medium .full-audit-issue__head > b {
+  color: #ffffff;
+  border-color: #8a94a3;
+  background: #8a94a3;
+}
+
 .full-audit-document .full-audit-priority h3 {
   margin: 0;
   color: var(--report-text);
@@ -11640,6 +11671,7 @@ h6,
 
   .full-audit-document .full-audit-content__hero h2 {
     font-size: clamp(27px, 8.4vw, 36px);
+    white-space: normal;
   }
 
   .full-audit-document .full-audit-content__hero-metrics div {
