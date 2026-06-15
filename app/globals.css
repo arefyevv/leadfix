@@ -10973,15 +10973,7 @@ h6,
 }
 
 .full-audit-document .full-audit-content__hero::after {
-  content: "";
-  position: absolute;
-  right: clamp(20px, 4vw, 44px);
-  top: clamp(20px, 3vw, 34px);
-  width: 92px;
-  height: 42px;
-  border-radius: 14px;
-  background:
-    linear-gradient(90deg, #edf3f8 24px, transparent 24px 34px, #edf3f8 34px 58px, transparent 58px 68px, #edf3f8 68px);
+  display: none;
 }
 
 .full-audit-document .full-audit-content__hero h2 {
@@ -10993,7 +10985,8 @@ h6,
 }
 
 .full-audit-document .preview-report__title-url {
-  color: var(--report-accent-strong);
+  color: #2e67e9;
+  text-transform: uppercase;
 }
 
 .full-audit-document .full-audit__eyebrow,
@@ -11004,20 +10997,34 @@ h6,
 }
 
 .full-audit-document .full-audit-content__hero-metrics {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 0;
 }
 
 .full-audit-document .full-audit-content__hero-metrics div {
-  min-height: 92px;
+  min-height: 112px;
+  align-content: end;
   padding: 16px;
   border-radius: 16px;
 }
 
 .full-audit-document .full-audit-content__hero-metrics b {
-  font-size: 17px;
+  color: var(--report-text);
+  font-size: clamp(34px, 3.2vw, 48px);
+  font-weight: 850;
+  line-height: .92;
+  letter-spacing: 0;
+}
+
+.full-audit-document .full-audit-content__hero-metrics span {
+  margin-top: 10px;
+  color: var(--report-soft);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .02em;
   line-height: 1.18;
+  text-transform: uppercase;
 }
 
 .full-audit-document .full-audit-quality-metric {
@@ -11057,6 +11064,10 @@ h6,
   color: var(--report-muted);
   font-size: 12px;
   line-height: 1.35;
+}
+
+.full-audit-document .readiness-score__verdict .readiness-score__eyebrow {
+  color: #2e67e9;
 }
 
 .full-audit-document .readiness-score.full-audit-content__score {
@@ -11532,13 +11543,16 @@ h6,
 }
 
 @media (max-width: 860px) {
-  .full-audit-document .full-audit-content__hero-metrics,
   .full-audit-document .readiness-score.full-audit-content__score,
   .full-audit-document .full-audit__top-grid,
   .full-audit-document .full-audit__summary-grid,
   .full-audit-document .full-audit-issue,
   .full-audit-document .full-audit-issue__analysis {
     grid-template-columns: 1fr;
+  }
+
+  .full-audit-document .full-audit-content__hero-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .full-audit-document .full-audit-issue__index {

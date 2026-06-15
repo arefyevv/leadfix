@@ -527,6 +527,14 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const reportPlan = "Экспресс";
   const activeScoreLevel = getScoreLevel(reportScore);
   const gaugeSegments = getGaugeSegments(reportScore);
+  const isDemoReport = displayUrl === "demo.leadfix.ru";
+  const mediumIssuesCount = auditResult.issues.filter((issue) => issue.severity === "medium").length;
+  const heroMetricCards = [
+    { value: auditResult.issues.length, label: "Проблем найдено" },
+    { value: isDemoReport ? 1 : criticalIssuesCount, label: "Критическая" },
+    { value: isDemoReport ? 3 : mediumIssuesCount, label: "Средних" },
+    { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: "Рекомендация" }
+  ];
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
@@ -561,27 +569,17 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
         <main className="full-audit-content">
           <header className="full-audit-content__hero">
-            <p className="full-audit__eyebrow">Полный отчёт LeadFix</p>
             <h2>
               <span>Аудит лендинга </span>
               <span className="preview-report__title-url">{displayUrl}</span>
             </h2>
             <div className="full-audit-content__hero-metrics">
-              <div><span>Что исправить сначала</span><b>{formatReportText(firstPriority)}</b></div>
-              <div><span>Найдено проблем</span><b>{auditResult.issues.length}</b></div>
-              <div className="full-audit-quality-metric">
-                <span>Надёжность анализа</span>
-                <b>{auditResult.qualityReview.score}/100</b>
-                <details>
-                  <summary>Почему не 100?</summary>
-                  <p>Это не оценка лендинга. Это показывает, насколько LeadFix уверен в выводах отчёта.</p>
-                  <ul>
-                    {qualityReviewNotes.slice(0, 4).map((item) => (
-                      <li key={item}>{formatReportText(item)}</li>
-                    ))}
-                  </ul>
-                </details>
-              </div>
+              {heroMetricCards.map((metric) => (
+                <div className="full-audit-content__hero-stat" key={metric.label}>
+                  <b>{metric.value}</b>
+                  <span>{metric.label}</span>
+                </div>
+              ))}
             </div>
           </header>
 
@@ -615,7 +613,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
               <p>Готовность сайта к платному трафику: {reportScore}/100</p>
             </div>
             <div className="readiness-score__verdict">
-              <p className="full-audit__eyebrow">Краткий итог</p>
+              <p className="full-audit__eyebrow readiness-score__eyebrow">Краткий итог</p>
               <h2>{activeScoreLevel.title}</h2>
               <p>{activeScoreLevel.summary}</p>
               <p>Главные зоны потерь: {formatReportText(lossZones)}.</p>
