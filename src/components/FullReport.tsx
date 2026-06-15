@@ -614,7 +614,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                 </svg>
                 <strong>{reportScore}</strong>
               </div>
-              <p>Готовность сайта к платному трафику: {reportScore}/100</p>
+              <p>Готовность сайта к платному трафику</p>
             </div>
             <div className="readiness-score__verdict">
               <p className="full-audit__eyebrow readiness-score__eyebrow">Краткий итог</p>
@@ -648,7 +648,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section">
             <SectionHeading eyebrow="Что исправить первым" title="Приоритетные проблемы" />
-            <p className="full-audit__lead">Начните с этих проблем: они сильнее всего мешают заявкам и быстрее всего двигают лендинг к запуску платного трафика.</p>
+            <p className="full-audit__lead">Короткий список главных проблем. Подробный разбор и примеры решений находятся ниже.</p>
             <div className="full-audit__priority-list">
               {priorityIssues.map((issue, index) => (
                 <article className={`full-audit-priority is-${getSeverityTone(issue.severity)}`} key={issue.id}>
@@ -659,7 +659,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <b>{getSeverityLabel(issue.severity)}</b>
                     </div>
                     <h3>{formatReportText(issue.title)}</h3>
-                    <p>{formatReportText(issue.problem)}</p>
                     <div className="full-audit-priority__meta">
                       <span>Где: {formatReportText(issue.location)}</span>
                       <span>Приоритет: {issue.priorityScore}/10</span>
@@ -684,7 +683,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section">
             <SectionHeading eyebrow="Карта отчёта" title="8 зон, где лендинг может терять заявки" />
-            <p className="full-audit__lead">Это навигация по структуре проверки. Смотрите слабые зоны, связанные проблемы и переходите к детальному разбору ниже.</p>
+            <p className="full-audit__lead">Навигация по зонам проверки: оценка, статус и найденные слабые места.</p>
             <div className="full-audit__categories">
               {auditDirections.map((direction, index) => (
                 <article className="full-audit-category" key={direction.categoryId}>
@@ -792,7 +791,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <h2>Что может измениться после правок</h2>
             <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
             <strong>{potentialLift}</strong>
-            <small>Это не гарантия роста продаж, а ориентир по снижению найденных барьеров. Фактический результат зависит от трафика, ниши, цены, продукта, обработки заявок и качества внедрения.</small>
+            <small>Ориентир по снижению найденных барьеров после внедрения правок.</small>
           </section>
 
           <section className="full-audit__section">
