@@ -516,8 +516,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const firstPriority = priorityIssues[0]?.location || "Оффер и путь к заявке";
   const lossZones = priorityIssues.slice(0, 3).map((issue) => issue.location).join(", ") || firstPriority;
   const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
-  const highIssuesCount = auditResult.issues.filter((issue) => issue.severity === "high").length;
-  const potentialLift = criticalIssuesCount > 0 ? "+15–35%" : highIssuesCount > 0 ? "+10–25%" : "+5–15%";
   const manualChecks = auditResult.humanReviewNeeded.length > 0
     ? auditResult.humanReviewNeeded
     : ["Проверить страницу на смартфоне, клики по кнопкам и отправку формы."];
@@ -787,11 +785,11 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section full-audit__potential">
-            <p className="full-audit__eyebrow">Ориентир после исправлений</p>
-            <h2>Что может измениться после правок</h2>
-            <p>{formatReportText(auditResult.finalSummary.expectedBusinessEffect)}</p>
-            <strong>{potentialLift}</strong>
-            <small>Ориентир по снижению найденных барьеров после внедрения правок.</small>
+            <p className="full-audit__eyebrow">После исправлений</p>
+            <h2>Что даст исправление проблем</h2>
+            <p>Правки снижают барьеры перед заявкой: пользователь быстрее понимает предложение, видит доказательства и легче оставляет контакт.</p>
+            <strong>Меньше потерь на ключевых шагах</strong>
+            <small>Фактический результат зависит от трафика, ниши, цены, продукта и качества внедрения.</small>
           </section>
 
           <section className="full-audit__section">

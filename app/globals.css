@@ -7773,11 +7773,13 @@ h6 {
 }
 .full-audit__potential > strong {
   display: block;
-  margin-top: 12px;
+  max-width: 760px;
+  margin-top: 18px;
   color: #5ce4aa;
-  font-size: clamp(64px, 9vw, 112px);
-  line-height: .92;
-  letter-spacing: -.08em;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: .96;
+  letter-spacing: 0;
+  text-wrap: balance;
 }
 .full-audit__potential small {
   max-width: 800px;
