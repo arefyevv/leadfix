@@ -570,7 +570,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
         <aside className="full-audit-sidebar">
           <section className="full-audit-sidebar__site">
             <div className="full-audit-sidebar__brand">
-              <img src="/leadfix-logo-black.svg" alt="LeadFix" />
+              <a href="/" aria-label="На главную LeadFix">
+                <img src="/leadfix-logo-black.svg" alt="LeadFix" />
+              </a>
             </div>
             <div className="full-audit-sidebar__meta">
               <div><span>Адрес сайта</span><a href={analysis.url} target="_blank" rel="noreferrer">{analysis.url}</a></div>

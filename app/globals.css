@@ -10955,6 +10955,12 @@ h6,
   margin-bottom: 18px;
 }
 
+.full-audit-document .full-audit-sidebar__brand a {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+}
+
 .full-audit-document .full-audit-sidebar__brand img {
   display: block;
   width: 112px;
