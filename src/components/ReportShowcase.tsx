@@ -33,11 +33,11 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
 ];
 
 const zoneViewportPositions: Record<AnalysisKey, number> = {
-  offer: 0.04,
-  cta: 0.43,
-  trust: 0.58,
-  mobile: 0.58,
-  structure: 0.76
+  offer: 0.36,
+  cta: 0.36,
+  trust: 0.36,
+  mobile: 0.36,
+  structure: 0.43
 };
 
 export function ReportShowcase() {
