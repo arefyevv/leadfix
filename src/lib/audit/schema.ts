@@ -84,7 +84,7 @@ export const auditResultJsonSchema = {
           example: { type: "string", minLength: 10, maxLength: 260 },
           expectedResult: { type: "string", minLength: 20, maxLength: 220 },
           needsHumanReview: { type: "boolean" },
-          screenshotId: { type: "string", enum: ["desktop", "mobile", "none"] }
+          screenshotId: { type: "string", enum: ["desktop", "mobile", "hero", "cases", "trust", "form", "pricing", "faq", "cta", "none"] }
         }
       }
     },

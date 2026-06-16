@@ -486,9 +486,37 @@ function formatReportText(text: string) {
     .replace(/\bHTML\b/g, "код страницы (HTML)");
 }
 
-function getIssueScreenshot(issue: AuditResult["issues"][number], screenshots: AuditAnalysis["screenshots"]) {
+function getIssueScreenshot(
+  issue: AuditResult["issues"][number],
+  screenshots: AuditAnalysis["screenshots"],
+  shownScreenshotIds?: Set<string>
+) {
+  if (!issue.screenshotId || issue.screenshotId === "none") return undefined;
+  if (shownScreenshotIds?.has(issue.screenshotId)) return undefined;
+  if (isGenericScreenshotMismatch(issue)) return undefined;
+
   const screenshot = screenshots?.find((item) => item.id === issue.screenshotId);
+  if (screenshot && shownScreenshotIds) shownScreenshotIds.add(issue.screenshotId);
   return screenshot?.url;
+}
+
+function isGenericScreenshotMismatch(issue: AuditResult["issues"][number]) {
+  if (issue.screenshotId !== "desktop") return false;
+  const targetText = `${issue.location} ${issue.title} ${issue.categoryId}`.toLowerCase();
+  const shouldUseSpecificBlock = [
+    "кейс",
+    "отзыв",
+    "форма",
+    "контакт",
+    "тариф",
+    "цена",
+    "стоимость",
+    "faq",
+    "вопрос",
+    "ответ"
+  ].some((keyword) => targetText.includes(keyword));
+
+  return shouldUseSpecificBlock;
 }
 
 export function FullReport({ analysis, reportDate }: FullReportProps) {
@@ -542,6 +570,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
     { value: isDemoReport ? 3 : mediumIssuesCount, label: ["Средних"] },
     { value: isDemoReport ? 1 : Math.min(priorityIssues.length, 1), label: ["Рекомендация"] }
   ];
+  const shownIssueScreenshotIds = new Set<string>();
   const [isReportLinkCopied, setIsReportLinkCopied] = useState(false);
 
   function copyReportLink() {
@@ -718,7 +747,10 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <section className="full-audit__section">
             <SectionHeading eyebrow="Детальный разбор" title="Почему эти проблемы мешают заявкам" />
             <div className="full-audit__issues">
-              {auditResult.issues.map((issue, index) => (
+              {auditResult.issues.map((issue, index) => {
+                const issueScreenshotUrl = getIssueScreenshot(issue, analysis.screenshots, shownIssueScreenshotIds);
+
+                return (
                 <article className={`full-audit-issue is-${getSeverityTone(issue.severity)}`} key={issue.id}>
                   <div className="full-audit-issue__index">{String(index + 1).padStart(2, "0")}</div>
                   <div className="full-audit-issue__body">
@@ -733,14 +765,16 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <span>Где на странице</span>
                       <b>{formatReportText(issue.location)}</b>
                     </div>
-                    {getIssueScreenshot(issue, analysis.screenshots) ? (
+                    {issueScreenshotUrl ? (
                       <ScreenshotFrame
                         title={`Скриншот: ${formatReportText(issue.location)}`}
                         note={formatReportText(issue.evidence)}
                         markers={[issue.criterionId, getSeverityLabel(issue.severity)]}
-                        imageUrl={getIssueScreenshot(issue, analysis.screenshots)}
+                        imageUrl={issueScreenshotUrl}
                       />
-                    ) : null}
+                    ) : (
+                      <p className="full-audit-issue__screenshot-note">Скриншот этой зоны не найден. Ориентируйтесь на указанное место на странице и описание проблемы.</p>
+                    )}
                     <div className="full-audit-issue__grid">
                       <div className="is-problem"><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
                       <div className="is-problem"><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
@@ -754,7 +788,8 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                     </div>
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </section>
 

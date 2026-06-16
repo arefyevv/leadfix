@@ -45,11 +45,13 @@ export type AuditIssue = {
   example: string;
   expectedResult: string;
   needsHumanReview: boolean;
-  screenshotId?: "desktop" | "mobile" | "none";
+  screenshotId?: AuditScreenshotId | "none";
 };
 
+export type AuditScreenshotId = "desktop" | "mobile" | "hero" | "cases" | "trust" | "form" | "pricing" | "faq" | "cta";
+
 export type AuditScreenshot = {
-  id: "desktop" | "mobile";
+  id: AuditScreenshotId;
   url: string;
   width: number;
   height: number;

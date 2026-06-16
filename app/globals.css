@@ -7190,6 +7190,17 @@ h6 {
   font-size: 14px;
   line-height: 1.35;
 }
+
+.full-audit-issue__screenshot-note {
+  margin: 12px 0 0 !important;
+  padding: 12px 14px;
+  color: #647186 !important;
+  background: #f8fafc;
+  border: 1px solid #e9eef5;
+  border-radius: 10px;
+  font-size: 13px !important;
+  line-height: 1.45;
+}
 .full-audit-issue__analysis {
   display: grid;
   grid-template-columns: minmax(240px, .82fr) minmax(0, 1fr);
