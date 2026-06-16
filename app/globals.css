@@ -12437,3 +12437,33 @@ body:has(.full-audit-document) .cookie-notice {
     border-left: 0;
   }
 }
+
+.full-audit-document .preview-report__title-url {
+  text-transform: none !important;
+}
+
+.full-audit-document .full-audit__eyebrow,
+.full-audit-document .full-audit-content .full-audit__eyebrow,
+.full-audit-document .full-audit-content__hero .full-audit__eyebrow,
+.full-audit-document .readiness-score__verdict .readiness-score__eyebrow {
+  color: #9aa6b5 !important;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.full-audit-document .full-audit__status,
+.full-audit-document .score-status,
+.full-audit-document .score-priority {
+  font-weight: 400;
+}
+
+.full-audit-document .full-audit-content .full-audit__implementation article,
+.full-audit-document .full-audit-content .full-audit__implementation article.is-high,
+.full-audit-document .full-audit-content .full-audit__implementation article.is-medium {
+  border: 1px solid var(--report-line);
+  border-top-width: 1px;
+  box-shadow: none !important;
+  filter: none;
+}
