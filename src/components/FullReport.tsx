@@ -522,12 +522,6 @@ function isGenericScreenshotMismatch(issue: AuditResult["issues"][number]) {
 export function FullReport({ analysis, reportDate }: FullReportProps) {
   const auditResult = analysis.auditResult;
   const reportScore = auditResult.overallScore;
-  const scoreRows: ScoreRow[] = auditResult.categoryScores.map((category) => ({
-    category: getCategoryLabel(category.categoryId, category.title),
-    score: category.score * 10,
-    status: category.status,
-    priority: getPriorityByScore(category.score)
-  }));
   const priorityIssues = [...auditResult.issues]
     .sort((a, b) => b.priorityScore - a.priorityScore)
     .slice(0, 5);
@@ -551,12 +545,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const firstPriority = priorityIssues[0]?.location || "Оффер и путь к заявке";
   const lossZones = priorityIssues.slice(0, 3).map((issue) => issue.location).join(", ") || firstPriority;
   const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
-  const manualChecks = auditResult.humanReviewNeeded.length > 0
-    ? auditResult.humanReviewNeeded
-    : ["Проверить страницу на смартфоне, клики по кнопкам и отправку формы."];
-  const providerLabel = analysis.aiProvider
-    ? `ИИ-анализ через ProxyAPI${analysis.aiModel ? `, модель: ${analysis.aiModel}` : ""}`
-    : "Правила LeadFix без внешней модели";
   const siteHeading = analysis.h1[0] || "Главный заголовок не найден";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
   const reportPlan = "Экспресс";
@@ -802,28 +790,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section">
-            <details className="full-audit__details">
-              <summary>
-                <span>Все категории</span>
-                <b>Полная таблица оценок</b>
-              </summary>
-              <div className="full-audit__score-table">
-                <div className="full-audit__score-table-head">
-                  <span>Категория</span><span>Оценка</span><span>Статус</span><span>Приоритет</span>
-                </div>
-                {scoreRows.map((row) => (
-                  <article className="full-audit__score-row" key={row.category}>
-                    <b>{row.category}</b>
-                    <strong>{row.score}<small>/100</small></strong>
-                    <span className={`score-status is-${getScoreTone(row.status)}`}>{row.status}</span>
-                    <span className={`score-priority is-${getPriorityTone(row.priority)}`}>{row.priority}</span>
-                  </article>
-                ))}
-              </div>
-            </details>
-          </section>
-
-          <section className="full-audit__section">
             <SectionHeading eyebrow="Как читать отчёт" title="Методология простыми словами" />
             <details className="full-audit__details full-audit__methodology-details">
               <summary>
@@ -850,34 +816,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
             <small>Фактический результат зависит от трафика, ниши, цены, продукта и качества внедрения.</small>
           </section>
 
-          <section className="full-audit__section">
-            <details className="full-audit__details full-audit__tech-details">
-              <summary>
-                <span>Проверить вручную</span>
-                <b>Что нельзя оценить только по HTML</b>
-              </summary>
-              <div className="full-audit__check-list">
-                {manualChecks.map((item) => <article key={item}>{formatReportText(item)}</article>)}
-              </div>
-            </details>
-          </section>
-
-          <section className="full-audit__section">
-            <details className="full-audit__details full-audit__tech-details">
-              <summary>
-                <span>Техническая информация</span>
-                <b>Источник анализа и ограничения</b>
-              </summary>
-              <div className="full-audit__check-list">
-                <article>{providerLabel}</article>
-                {auditResult.limitations.map((item) => <article key={item}>{formatReportText(item)}</article>)}
-                {auditResult.qualityReview.warnings.map((item) => <article key={item}>{formatReportText(item)}</article>)}
-              </div>
-            </details>
-          </section>
-
           <footer className="full-audit__disclaimer">
-            Отчёт является аналитической рекомендацией и показывает возможные точки потери заявок на лендинге. Он не является гарантией роста продаж или финансового результата. Итоговая эффективность зависит от рекламного трафика, ниши, продукта, цены, отдела продаж и качества внедрения рекомендаций.
+            <p><b>Как формируется отчёт.</b> LeadFix проверяет лендинг по 8 зонам: оффер, кнопки, доверие, форма, мобильная версия, структура, технические барьеры и соответствие рекламе. Итоговый приоритет зависит от влияния на заявку и сложности исправления.</p>
+            <p>Отчёт основан на автоматическом анализе страницы и не заменяет ручную проверку формы, мобильной версии и рекламных объявлений. Он не является гарантией роста продаж или финансового результата.</p>
           </footer>
         </main>
       </div>

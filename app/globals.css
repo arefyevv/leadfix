@@ -7815,6 +7815,19 @@ h6 {
   line-height: 1.5;
 }
 
+.full-audit__disclaimer p {
+  margin: 0;
+}
+
+.full-audit__disclaimer p + p {
+  margin-top: 6px;
+}
+
+.full-audit__disclaimer b {
+  color: inherit;
+  font-weight: 750;
+}
+
 /* Preview report uses the same workspace language as the paid report. */
 .preview-audit .preview-report__header {
   align-items: start;
