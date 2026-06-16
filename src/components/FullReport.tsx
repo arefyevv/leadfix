@@ -784,7 +784,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <section className="full-audit__section full-audit__potential">
-            <p className="full-audit__eyebrow">После исправлений</p>
             <h2>Что даст исправление проблем</h2>
             <p>Правки снижают барьеры перед заявкой: пользователь быстрее понимает предложение, видит доказательства и легче оставляет контакт.</p>
             <strong>Меньше потерь на ключевых шагах</strong>
