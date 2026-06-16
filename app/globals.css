@@ -9105,6 +9105,35 @@ h6 {
   height: 16px;
   fill: currentColor;
 }
+
+@media (max-width: 1180px) {
+  .site-footer__main {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .site-footer__nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+@media (max-width: 920px) {
+  .site-footer__nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 20px;
+  }
+
+  .site-footer__bottom {
+    display: grid;
+    justify-content: start;
+  }
+
+  .site-footer__contacts {
+    justify-content: start;
+  }
+}
+
 .legal-page {
   min-height: 100vh;
   padding: 112px 20px 64px;
