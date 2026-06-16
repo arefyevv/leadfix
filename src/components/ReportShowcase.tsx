@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ReportShowcaseLottieIcon } from "./ReportShowcaseLottieIcon";
 
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
@@ -131,9 +132,11 @@ export function ReportShowcase() {
                 onMouseEnter={() => setHoveredCard(card.key)}
                 tabIndex={0}
               >
-                <span />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
+                <ReportShowcaseLottieIcon />
+                <div className="report-showcase__card-copy">
+                  <h3>{card.title}</h3>
+                  <p>{card.text}</p>
+                </div>
               </article>
             ))}
           </div>
