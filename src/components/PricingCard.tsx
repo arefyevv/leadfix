@@ -14,7 +14,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
   const isCheckout = variant === "checkout";
   const isFreePlan = plan.name === "Тест сайта";
   const ctaHref = isFreePlan ? "/#audit" : `/checkout?plan=${encodeURIComponent(plan.name)}`;
-  const ctaLabel = isFreePlan ? "Запустить тест" : "Выбрать тариф";
+  const ctaLabel = isFreePlan ? "Запустить тест" : "Получить отчёт";
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
 
   const content = (
@@ -65,7 +65,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
       )}
 
       {isCheckout ? (
-        <span className="pricing-card__cta">Выбрать тариф</span>
+        <span className="pricing-card__cta">{ctaLabel}</span>
       ) : (
         <a className="pricing-card__cta" href={ctaHref}>{ctaLabel}</a>
       )}
