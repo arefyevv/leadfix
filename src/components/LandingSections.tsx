@@ -145,7 +145,6 @@ const faq = [
 ];
 
 export function LandingSections() {
-  const [openAuditIndex, setOpenAuditIndex] = useState<number | null>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   return (
@@ -200,46 +199,17 @@ export function LandingSections() {
         </div>
         <div className="audit-accordion-layout">
           <div className="audit-accordion">
-            {auditChecks.map((item, index) => {
-              const isOpen = openAuditIndex === index;
-
-              return (
-                <article
-                  className={isOpen ? "audit-accordion__item is-active" : "audit-accordion__item"}
-                  key={item.title}
-                >
-                  <div className="audit-accordion__head">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <h3>{item.title}</h3>
-                  </div>
-                  <p>{item.summary}</p>
-                  <button
-                    type="button"
-                    onClick={() => setOpenAuditIndex(index)}
-                    aria-haspopup="dialog"
-                  >
-                    Подробнее
-                  </button>
-                </article>
-              );
-            })}
+            {auditChecks.map((item, index) => (
+              <article className="audit-accordion__item" key={item.title}>
+                <div className="audit-accordion__head">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{item.title}</h3>
+                </div>
+                <p>{item.summary}</p>
+              </article>
+            ))}
           </div>
         </div>
-        {openAuditIndex !== null && (
-          <div className="audit-modal" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title" onClick={() => setOpenAuditIndex(null)}>
-            <div className="audit-modal__card" onClick={(event) => event.stopPropagation()}>
-              <button className="audit-modal__close" type="button" aria-label="Закрыть" onClick={() => setOpenAuditIndex(null)}>×</button>
-              <span>{String(openAuditIndex + 1).padStart(2, "0")}</span>
-              <h3 id="audit-modal-title">{auditChecks[openAuditIndex].title}</h3>
-              <p>{auditChecks[openAuditIndex].summary}</p>
-              <ul>
-                {auditChecks[openAuditIndex].details.map((detail) => (
-                  <li key={detail}>{detail}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
       </section>
 
       <ReportShowcase />

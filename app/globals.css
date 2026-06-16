@@ -12473,3 +12473,96 @@ body:has(.full-audit-document) .cookie-notice {
   box-shadow: none !important;
   filter: none;
 }
+
+/* Compact audit map on the landing page. */
+#audit-checks .audit-accordion-layout {
+  max-width: 980px !important;
+  margin: 34px auto 0 !important;
+}
+
+#audit-checks .audit-accordion {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px 14px !important;
+}
+
+#audit-checks .audit-accordion__item {
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 42px 1fr !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 14px !important;
+  row-gap: 5px !important;
+  padding: 16px 18px !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  border-color: rgba(16, 16, 20, .09) !important;
+  box-shadow: none !important;
+}
+
+#audit-checks .audit-accordion__item:hover,
+#audit-checks .audit-accordion__item.is-active {
+  transform: none !important;
+  background: #fbfcfd !important;
+  border-color: rgba(46, 103, 233, .22) !important;
+}
+
+#audit-checks .audit-accordion__head {
+  display: contents !important;
+}
+
+#audit-checks .audit-accordion__head span {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+  width: 34px !important;
+  height: 34px !important;
+  margin-top: 2px !important;
+  color: #0f172a !important;
+  background: #d9f7e9 !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+#audit-checks .audit-accordion__head h3 {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  line-height: 1.16 !important;
+  font-weight: 650 !important;
+}
+
+#audit-checks .audit-accordion__item p {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  max-width: 42ch !important;
+  color: rgba(16, 16, 20, .62) !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+#audit-checks .audit-accordion__item button {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  #audit-checks .audit-accordion-layout {
+    margin-top: 26px !important;
+  }
+
+  #audit-checks .audit-accordion {
+    grid-template-columns: 1fr !important;
+  }
+
+  #audit-checks .audit-accordion__item {
+    padding: 15px 16px !important;
+  }
+
+  #audit-checks .audit-accordion__head h3 {
+    font-size: 16px !important;
+  }
+
+  #audit-checks .audit-accordion__item p {
+    font-size: 13px !important;
+  }
+}
