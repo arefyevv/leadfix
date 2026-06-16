@@ -8472,8 +8472,8 @@ h6 {
 /* Landing pricing uses the compact checkout card rhythm, with the middle plan still highlighted. */
 #pricing .landing-pricing {
   align-items: stretch !important;
-  gap: 14px !important;
-  margin-top: 42px !important;
+  gap: 22px !important;
+  margin-top: 48px !important;
 }
 
 #pricing .landing-pricing .pricing-card {
@@ -8481,10 +8481,10 @@ h6 {
   display: grid !important;
   grid-template-rows: auto auto auto 1fr auto !important;
   align-content: stretch !important;
-  min-height: 690px !important;
-  height: 690px !important;
-  padding: 24px 24px 184px !important;
-  gap: 8px !important;
+  min-height: 744px !important;
+  height: 744px !important;
+  padding: 30px 30px 210px !important;
+  gap: 12px !important;
   color: #16233d !important;
   border-color: #e4eaf3 !important;
   border-radius: 14px !important;
@@ -8508,9 +8508,9 @@ h6 {
 #pricing .landing-pricing .pricing-card__intro {
   display: grid !important;
   grid-template-rows: auto auto auto !important;
-  gap: 7px !important;
-  margin-top: 18px !important;
-  margin-bottom: 2px !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+  margin-bottom: 8px !important;
 }
 
 #pricing .landing-pricing .pricing-card__intro h3,
@@ -8540,8 +8540,8 @@ h6 {
 
 #pricing .landing-pricing .pricing-card__group {
   display: grid !important;
-  gap: 8px !important;
-  margin-top: 16px !important;
+  gap: 12px !important;
+  margin-top: 22px !important;
 }
 
 #pricing .landing-pricing .pricing-card__group > span,
@@ -8555,7 +8555,7 @@ h6 {
 
 #pricing .landing-pricing .pricing-card ul {
   display: grid !important;
-  gap: 6px !important;
+  gap: 10px !important;
   margin: 0 !important;
   padding: 0 !important;
   list-style: none !important;
@@ -8652,16 +8652,16 @@ h6 {
 
 #pricing .landing-pricing .pricing-card__fit {
   position: absolute !important;
-  right: 24px !important;
-  bottom: 92px !important;
-  left: 24px !important;
+  right: 30px !important;
+  bottom: 104px !important;
+  left: 30px !important;
   display: grid !important;
   align-content: start !important;
-  gap: 5px !important;
-  min-height: 72px !important;
+  gap: 8px !important;
+  min-height: 88px !important;
   margin: 0 !important;
-  padding: 10px !important;
-  border-radius: 9px !important;
+  padding: 14px !important;
+  border-radius: 12px !important;
   background: #f8fafc !important;
 }
 
@@ -8672,10 +8672,10 @@ h6 {
 
 #pricing .landing-pricing .pricing-card__cta {
   position: absolute !important;
-  right: 24px !important;
-  bottom: 24px !important;
-  left: 24px !important;
-  min-height: 58px !important;
+  right: 30px !important;
+  bottom: 30px !important;
+  left: 30px !important;
+  min-height: 60px !important;
   display: grid !important;
   place-items: center !important;
   align-self: end !important;
@@ -8693,8 +8693,8 @@ h6 {
 
 #pricing .landing-pricing .pricing-card--recommended,
 #pricing .landing-pricing .pricing-card.is-selected {
-  min-height: 690px !important;
-  height: 690px !important;
+  min-height: 744px !important;
+  height: 744px !important;
   transform: none !important;
   color: #ffffff !important;
   border-color: rgba(174, 205, 255, .22) !important;
@@ -8760,7 +8760,7 @@ h6 {
   #pricing .landing-pricing .pricing-card {
     height: auto !important;
     min-height: 0 !important;
-    padding-bottom: 24px !important;
+    padding-bottom: 30px !important;
   }
 
   #pricing .landing-pricing .pricing-card__intro {
