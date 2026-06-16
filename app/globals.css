@@ -7828,6 +7828,16 @@ h6 {
   font-weight: 750;
 }
 
+.full-audit-document .full-audit__disclaimer {
+  color: #5f6b7f;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.full-audit-document .full-audit__disclaimer b {
+  color: #23324a;
+}
+
 /* Preview report uses the same workspace language as the paid report. */
 .preview-audit .preview-report__header {
   align-items: start;
@@ -11192,10 +11202,22 @@ h6,
   grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
 }
 
+.full-audit-document .readiness-score__metrics-title {
+  grid-column: 1 / -1;
+  align-self: end;
+  margin-top: 2px;
+  color: var(--report-text);
+  font-size: 13px;
+  font-weight: 820;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
 .full-audit-document .full-audit-content__score dl.readiness-score__metrics div {
-  min-height: 94px;
-  padding: 13px;
+  min-height: 82px;
+  padding: 13px 14px;
   border-radius: 15px;
+  background: #f8fafc;
 }
 
 .full-audit-document .readiness-score__metrics dd {
@@ -11204,12 +11226,14 @@ h6,
   font-variant-numeric: tabular-nums;
 }
 
-.full-audit-document .readiness-score__metrics span {
-  background: #e4eaf1;
-}
-
-.full-audit-document .readiness-score__metrics span::before {
-  background: linear-gradient(90deg, var(--report-accent), #83d7b3);
+.full-audit-document .readiness-score__metrics small {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 2px;
+  color: #6b778a;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.2;
 }
 
 .full-audit-document .full-audit-content .full-audit__section {
@@ -11472,6 +11496,21 @@ h6,
   background:
     radial-gradient(circle at 80% 0%, rgba(31, 191, 120, .14), transparent 46%),
     var(--report-card);
+}
+
+.full-audit-document .full-audit__potential .full-audit__eyebrow,
+.full-audit-document .full-audit__potential h2,
+.full-audit-document .full-audit__potential p,
+.full-audit-document .full-audit__potential small,
+.full-audit-document .full-audit__potential strong {
+  color: #ffffff !important;
+}
+
+.full-audit-document .full-audit__potential strong {
+  max-width: 100%;
+  font-size: clamp(32px, 3.9vw, 48px);
+  line-height: 1.02;
+  white-space: nowrap;
 }
 
 .full-audit-document .full-audit__summary-grid {

@@ -378,13 +378,6 @@ const categoryPlainText: Record<AuditCategoryId, { label: string; help: string }
   }
 };
 
-const methodologySteps = [
-  "Проверяем, где пользователь теряет понимание ценности.",
-  "Находим барьеры на пути к заявке.",
-  "Расставляем проблемы по влиянию и сложности исправления.",
-  "Формируем порядок внедрения: сначала то, что быстрее влияет на заявки."
-];
-
 function getCategoryLabel(categoryId: AuditCategoryId, fallback: string) {
   return categoryPlainText[categoryId]?.label ?? fallback;
 }
@@ -595,7 +588,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           <header className="full-audit-content__hero">
             <h2>
               <span>Аудит лендинга </span>
-              <span className="preview-report__title-url">{displayUrl}</span>
+              <span className="preview-report__title-url">{displayUrl.toLowerCase()}</span>
             </h2>
             <div className="full-audit-content__hero-metrics">
               {heroMetricCards.map((metric) => (
@@ -657,12 +650,13 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                 </div>
               </div>
             </div>
+            <div className="readiness-score__metrics-title">Оценка по зонам</div>
             <dl className="readiness-score__metrics">
               {auditDirections.map((direction) => (
                 <div key={direction.categoryId}>
                   <dt>{direction.title}</dt>
                   <dd>{direction.score}</dd>
-                  <span style={{ "--value": `${direction.score}%` } as CSSProperties} />
+                  <small>{direction.status}</small>
                 </div>
               ))}
             </dl>
@@ -787,25 +781,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                 );
               })}
             </div>
-          </section>
-
-          <section className="full-audit__section">
-            <SectionHeading eyebrow="Как читать отчёт" title="Методология простыми словами" />
-            <details className="full-audit__details full-audit__methodology-details">
-              <summary>
-                <span>Методика</span>
-                <b>Как LeadFix читает лендинг</b>
-              </summary>
-              <p className="full-audit__lead">Аудит оценивает не красоту страницы, а способность лендинга превращать платный трафик в заявки. Внутренние критерии и prompt не показываются в отчёте.</p>
-              <div className="full-audit__methodology">
-                {methodologySteps.map((step, index) => (
-                  <article key={step}>
-                    <span className="full-audit__methodology-index">{String(index + 1).padStart(2, "0")}</span>
-                    <h3>{step}</h3>
-                  </article>
-                ))}
-              </div>
-            </details>
           </section>
 
           <section className="full-audit__section full-audit__potential">
