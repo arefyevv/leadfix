@@ -12877,7 +12877,8 @@ body:has(.full-audit-document) .cookie-notice {
   width: 17px;
   height: 17px;
   flex: 0 0 auto;
-  margin-top: .18em;
+  align-self: start;
+  margin-top: 1px;
   border-radius: 50%;
   background: var(--accent) !important;
 }
