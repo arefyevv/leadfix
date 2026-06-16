@@ -776,11 +776,19 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <p className="full-audit-issue__screenshot-note">Скриншот этой зоны не найден. Ориентируйтесь на указанное место на странице и описание проблемы.</p>
                     )}
                     <div className="full-audit-issue__grid">
-                      <div className="is-problem"><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
-                      <div className="is-problem"><b>Почему мешает</b><p>{formatReportText(issue.evidence)}</p></div>
-                      <div className="is-solution"><b>Что исправить</b><p>{formatReportText(issue.recommendation)}</p></div>
-                      <div className="is-solution"><b>Что изменится</b><p>{formatReportText(issue.expectedResult)}</p></div>
-                      <div className="is-solution"><b>Пример формулировки</b><p>{formatReportText(issue.example)}</p></div>
+                      <div className="is-problem">
+                        <b>Проблема</b>
+                        <p>{formatReportText(issue.problem)}</p>
+                        <b>Почему мешает</b>
+                        <p>{formatReportText(issue.evidence)}</p>
+                      </div>
+                      <div className="is-solution">
+                        <b>Что исправить</b>
+                        <p>{formatReportText(issue.recommendation)}</p>
+                        <b>Что изменится</b>
+                        <p>{formatReportText(issue.expectedResult)}</p>
+                      </div>
+                      <div className="is-example"><b>Пример формулировки</b><p>{formatReportText(issue.example)}</p></div>
                     </div>
                     <div className="full-audit-issue__meta">
                       <div><span>Сложность</span><b>{issue.complexity}/5</b></div>

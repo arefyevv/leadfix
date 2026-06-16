@@ -11352,6 +11352,16 @@ h6,
   border-radius: 13px;
 }
 
+.full-audit-document .full-audit-content .full-audit-issue__grid > div {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div b:not(:first-child) {
+  margin-top: 8px;
+}
+
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-problem {
   border-color: rgba(214, 79, 69, .12);
   background: #fffafa;
@@ -11368,6 +11378,16 @@ h6,
 
 .full-audit-document .full-audit-content .full-audit-issue__grid > div.is-solution b {
   color: var(--report-accent-strong);
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-example {
+  grid-column: 1 / -1;
+  border-color: var(--report-line);
+  background: #f8fafc;
+}
+
+.full-audit-document .full-audit-content .full-audit-issue__grid > div.is-example b {
+  color: #69778c;
 }
 
 .full-audit-document .full-audit-category__recommendation {
