@@ -9046,7 +9046,7 @@ h6 {
 }
 .site-footer__nav {
   display: grid;
-  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
   gap: 42px;
 }
 .site-footer__nav div {
