@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "wins";
+type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
 const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = [
   {
@@ -23,17 +23,42 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
   {
     key: "mobile",
     title: "Мобильная версия",
-    text: "Смотрим, удобно ли читать, нажимать и оставить заявку с телефона."
+    text: "Смотрим, удобно ли читать, нажимать и оставлять заявку с телефона."
   },
   {
-    key: "wins",
-    title: "План правок",
-    text: "Собираем найденные проблемы в понятный порядок: что исправить сначала и что можно отложить."
+    key: "structure",
+    title: "Структура и путь к заявке",
+    text: "Смотрим, ведёт ли страница к заявке по понятному сценарию или распадается на слабо связанные блоки."
   }
 ];
 
+const zoneViewportPositions: Record<AnalysisKey, number> = {
+  offer: 0.04,
+  cta: 0.43,
+  trust: 0.58,
+  mobile: 0.58,
+  structure: 0.76
+};
+
 export function ReportShowcase() {
   const [activeCard, setActiveCard] = useState<AnalysisKey | null>(null);
+  const shotViewportRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const viewport = shotViewportRef.current;
+    if (!viewport || !activeCard) return;
+
+    const maxScrollTop = viewport.scrollHeight - viewport.clientHeight;
+    if (maxScrollTop <= 0) return;
+
+    const targetTop = zoneViewportPositions[activeCard] * viewport.scrollHeight;
+    const nextScrollTop = Math.max(0, Math.min(maxScrollTop, targetTop - viewport.clientHeight * 0.16));
+
+    viewport.scrollTo({
+      top: nextScrollTop,
+      behavior: "smooth"
+    });
+  }, [activeCard]);
 
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
@@ -52,16 +77,35 @@ export function ReportShowcase() {
           onMouseLeave={() => setActiveCard(null)}
         >
           <figure className="report-showcase__shot report-showcase__shot--main">
-            <img
-              src="/screenshots/report-real-overview.png"
-              alt="Фрагмент полного отчёта LeadFix с оценкой и выводом"
-              loading="lazy"
-            />
-            <span className="report-showcase__zone report-showcase__zone--offer" aria-hidden="true" />
-            <span className="report-showcase__zone report-showcase__zone--cta" aria-hidden="true" />
-            <span className="report-showcase__zone report-showcase__zone--trust" aria-hidden="true" />
-            <span className="report-showcase__zone report-showcase__zone--mobile" aria-hidden="true" />
-            <span className="report-showcase__zone report-showcase__zone--wins" aria-hidden="true" />
+            <div className="report-showcase__shot-viewport" ref={shotViewportRef}>
+              <div className="report-showcase__shot-canvas">
+                <img
+                  className="report-showcase__image report-showcase__image--base"
+                  src="/screenshots/report-real-overview.png"
+                  alt="Фрагмент полного отчёта LeadFix с оценкой и выводом"
+                  loading="lazy"
+                />
+                <img
+                  className="report-showcase__image report-showcase__image--blur"
+                  src="/screenshots/report-real-overview.png"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                />
+                <img
+                  className="report-showcase__image report-showcase__image--focus"
+                  src="/screenshots/report-real-overview.png"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                />
+                <span className="report-showcase__zone report-showcase__zone--offer" aria-hidden="true" />
+                <span className="report-showcase__zone report-showcase__zone--cta" aria-hidden="true" />
+                <span className="report-showcase__zone report-showcase__zone--trust" aria-hidden="true" />
+                <span className="report-showcase__zone report-showcase__zone--mobile" aria-hidden="true" />
+                <span className="report-showcase__zone report-showcase__zone--structure" aria-hidden="true" />
+              </div>
+            </div>
           </figure>
 
           <div className="report-showcase__cards" aria-label="Типы анализа в отчёте">

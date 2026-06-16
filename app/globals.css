@@ -12893,10 +12893,44 @@ body:has(.full-audit-document) .cookie-notice {
   height: clamp(560px, 52vw, 720px) !important;
 }
 
-.report-showcase__stage--real .report-showcase__shot img {
-  object-fit: cover;
-  object-position: top left;
-  transition: opacity .22s ease, filter .22s ease;
+.report-showcase__shot-viewport {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: inherit;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.report-showcase__shot-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.report-showcase__shot-canvas {
+  position: relative;
+}
+
+.report-showcase__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.report-showcase__image--blur,
+.report-showcase__image--focus {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .22s ease, filter .22s ease, clip-path .22s ease;
+}
+
+.report-showcase__image--blur {
+  filter: blur(9px) saturate(.72) brightness(.8);
+}
+
+.report-showcase__image--focus {
+  clip-path: inset(0 0 100% 0 round 16px);
 }
 
 .report-showcase__zone {
@@ -12941,24 +12975,45 @@ body:has(.full-audit-document) .cookie-notice {
   height: 16%;
 }
 
-.report-showcase__zone--wins {
+.report-showcase__zone--structure {
   left: 4%;
   top: 76%;
   width: 92%;
   height: 19%;
 }
 
-.report-showcase__stage--real.is-highlighting .report-showcase__shot img {
-  filter: saturate(.84) brightness(.92);
+.report-showcase__stage--real.is-highlighting .report-showcase__image--blur,
+.report-showcase__stage--real.is-highlighting .report-showcase__image--focus {
+  opacity: 1;
 }
 
 .report-showcase__stage--real.is-offer .report-showcase__zone--offer,
 .report-showcase__stage--real.is-cta .report-showcase__zone--cta,
 .report-showcase__stage--real.is-trust .report-showcase__zone--trust,
 .report-showcase__stage--real.is-mobile .report-showcase__zone--mobile,
-.report-showcase__stage--real.is-wins .report-showcase__zone--wins {
+.report-showcase__stage--real.is-structure .report-showcase__zone--structure {
   opacity: 1;
   transform: scale(1);
+}
+
+.report-showcase__stage--real.is-offer .report-showcase__image--focus {
+  clip-path: inset(4% 4% 71% 4% round 16px);
+}
+
+.report-showcase__stage--real.is-cta .report-showcase__image--focus {
+  clip-path: inset(43% 4% 44% 4% round 16px);
+}
+
+.report-showcase__stage--real.is-trust .report-showcase__image--focus {
+  clip-path: inset(58% 6% 26% 42% round 16px);
+}
+
+.report-showcase__stage--real.is-mobile .report-showcase__image--focus {
+  clip-path: inset(58% 61% 26% 4% round 16px);
+}
+
+.report-showcase__stage--real.is-structure .report-showcase__image--focus {
+  clip-path: inset(76% 4% 5% 4% round 16px);
 }
 
 @media (max-width: 1180px) {
