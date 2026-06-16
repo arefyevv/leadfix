@@ -12864,7 +12864,7 @@ body:has(.full-audit-document) .cookie-notice {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);
   gap: 0 14px;
-  align-items: center;
+  align-items: start;
   align-content: center;
   padding: clamp(13px, 1.35vw, 17px) !important;
   border-radius: 18px !important;
@@ -12877,6 +12877,7 @@ body:has(.full-audit-document) .cookie-notice {
   width: 22px;
   height: 22px;
   flex: 0 0 auto;
+  margin-top: 2px;
 }
 
 .report-showcase__lottie > div,
@@ -12888,7 +12889,7 @@ body:has(.full-audit-document) .cookie-notice {
 .report-showcase__card-copy {
   grid-column: 2;
   display: grid;
-  align-content: center;
+  align-content: start;
   gap: 10px;
   min-width: 0;
 }
