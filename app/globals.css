@@ -12878,12 +12878,18 @@ body:has(.full-audit-document) .cookie-notice {
   height: 22px;
   flex: 0 0 auto;
   margin-top: 2px;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .report-showcase__lottie > div,
 .report-showcase__lottie svg {
   width: 100%;
   height: 100%;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .report-showcase__card-copy {
