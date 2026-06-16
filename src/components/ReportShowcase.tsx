@@ -33,32 +33,41 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
 ];
 
 const zoneViewportPositions: Record<AnalysisKey, number> = {
-  offer: 0.36,
-  cta: 0.36,
-  trust: 0.36,
-  mobile: 0.36,
-  structure: 0.43
+  offer: 0.02,
+  cta: 0.48,
+  trust: 0.48,
+  mobile: 0.62,
+  structure: 0.84
 };
 
 export function ReportShowcase() {
-  const [activeCard, setActiveCard] = useState<AnalysisKey | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<AnalysisKey | null>(null);
+  const [selectedCard, setSelectedCard] = useState<AnalysisKey | null>(null);
+  const activeCard = hoveredCard ?? selectedCard;
   const shotViewportRef = useRef<HTMLDivElement | null>(null);
+  const shotCanvasRef = useRef<HTMLDivElement | null>(null);
+  const [canvasOffset, setCanvasOffset] = useState(0);
 
   useEffect(() => {
     const viewport = shotViewportRef.current;
-    if (!viewport || !activeCard) return;
+    const canvas = shotCanvasRef.current;
+    if (!viewport || !canvas) return;
 
-    const maxScrollTop = viewport.scrollHeight - viewport.clientHeight;
-    if (maxScrollTop <= 0) return;
+    if (!selectedCard) {
+      setCanvasOffset(0);
+      return;
+    }
 
-    const targetTop = zoneViewportPositions[activeCard] * viewport.scrollHeight;
-    const nextScrollTop = Math.max(0, Math.min(maxScrollTop, targetTop - viewport.clientHeight * 0.16));
+    const maxOffset = Math.max(0, canvas.scrollHeight - viewport.clientHeight);
+    if (maxOffset <= 0) {
+      setCanvasOffset(0);
+      return;
+    }
 
-    viewport.scrollTo({
-      top: nextScrollTop,
-      behavior: "smooth"
-    });
-  }, [activeCard]);
+    const targetTop = zoneViewportPositions[selectedCard] * canvas.scrollHeight;
+    const nextOffset = Math.max(0, Math.min(maxOffset, targetTop - viewport.clientHeight * 0.16));
+    setCanvasOffset(nextOffset);
+  }, [selectedCard]);
 
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
@@ -74,11 +83,15 @@ export function ReportShowcase() {
 
         <div
           className={`report-showcase__stage report-showcase__stage--real${activeCard ? ` is-highlighting is-${activeCard}` : ""}`}
-          onMouseLeave={() => setActiveCard(null)}
+          onMouseLeave={() => setHoveredCard(null)}
         >
           <figure className="report-showcase__shot report-showcase__shot--main">
             <div className="report-showcase__shot-viewport" ref={shotViewportRef}>
-              <div className="report-showcase__shot-canvas">
+              <div
+                className="report-showcase__shot-canvas"
+                ref={shotCanvasRef}
+                style={{ transform: `translateY(-${canvasOffset}px)` }}
+              >
                 <img
                   className="report-showcase__image report-showcase__image--base"
                   src="/screenshots/report-real-overview.png"
@@ -113,8 +126,9 @@ export function ReportShowcase() {
               <article
                 className={activeCard === card.key ? "is-active" : undefined}
                 key={card.key}
-                onFocus={() => setActiveCard(card.key)}
-                onMouseEnter={() => setActiveCard(card.key)}
+                onClick={() => setSelectedCard(card.key)}
+                onFocus={() => setSelectedCard(card.key)}
+                onMouseEnter={() => setHoveredCard(card.key)}
                 tabIndex={0}
               >
                 <span />
