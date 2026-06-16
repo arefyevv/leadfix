@@ -12,9 +12,16 @@ export function SiteFooter() {
             <div>
               <b>Сервис</b>
               <a href="/#audit-checks">Что проверяем</a>
-              <a href="/#cases">Пример аудита</a>
+              <a href="/primer-audita-lendinga">Пример аудита</a>
               <a href="/#pricing">Тарифы</a>
               <a href="/#faq">FAQ</a>
+            </div>
+            <div>
+              <b>SEO-страницы</b>
+              <a href="/audit-lendinga-pered-reklamoy">Перед запуском рекламы</a>
+              <a href="/pochemu-net-zayavok-s-saita">Почему нет заявок</a>
+              <a href="/o-servise">О сервисе</a>
+              <a href="/primer-audita-lendinga">HTML-пример аудита</a>
             </div>
             <div>
               <b>Документы</b>

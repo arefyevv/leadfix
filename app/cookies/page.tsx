@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: "Политика cookies LeadFix: какие cookie-файлы используются, зачем они нужны и как ими управлять.",
   alternates: {
     canonical: "/cookies"
+  },
+  robots: {
+    index: false,
+    follow: true
   }
 };
 

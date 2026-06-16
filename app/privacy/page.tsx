@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: "Политика конфиденциальности LeadFix: обработка персональных данных, cookies, аналитика, хранение и права пользователя.",
   alternates: {
     canonical: "/privacy"
+  },
+  robots: {
+    index: false,
+    follow: true
   }
 };
 

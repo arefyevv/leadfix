@@ -13,28 +13,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1
     },
     {
-      url: `${baseUrl}/privacy`,
+      url: `${baseUrl}/primer-audita-lendinga`,
       lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.3
+      changeFrequency: "weekly",
+      priority: 0.9
     },
     {
-      url: `${baseUrl}/cookies`,
+      url: `${baseUrl}/audit-lendinga-pered-reklamoy`,
       lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.3
+      changeFrequency: "weekly",
+      priority: 0.8
     },
     {
-      url: `${baseUrl}/offer`,
+      url: `${baseUrl}/pochemu-net-zayavok-s-saita`,
       lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.3
+      changeFrequency: "weekly",
+      priority: 0.8
     },
     {
-      url: `${baseUrl}/personal-data-consent`,
+      url: `${baseUrl}/o-servise`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.3
+      priority: 0.7
     }
   ];
 }

@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: "Согласие пользователя LeadFix на обработку персональных данных при использовании сайта и сервиса.",
   alternates: {
     canonical: "/personal-data-consent"
+  },
+  robots: {
+    index: false,
+    follow: true
   }
 };
 

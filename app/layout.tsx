@@ -20,10 +20,10 @@ const interTight = Inter_Tight({
 export const metadata: Metadata = {
   metadataBase: new URL("https://leadfix.ru"),
   title: {
-    default: "LeadFix — аудит лендинга и поиск точек потери заявок",
+    default: "LeadFix — аудит лендинга и поиск причин потери заявок",
     template: "%s | LeadFix"
   },
-  description: "LeadFix проверяет оффер, CTA, доверие, структуру, формы и мобильную версию лендинга, чтобы быстро найти причины потери заявок.",
+  description: "LeadFix помогает понять, где лендинг теряет заявки: оффер, CTA, доверие, формы, структура, мобильная версия и технические барьеры.",
   applicationName: "LeadFix",
   keywords: [
     "аудит лендинга",
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     url: "https://leadfix.ru",
     siteName: "LeadFix",
-    title: "LeadFix — аудит лендинга и поиск точек потери заявок",
-    description: "Проверьте оффер, CTA, доверие, структуру и мобильную версию сайта перед запуском рекламы.",
+    title: "LeadFix — аудит лендинга и поиск причин потери заявок",
+    description: "Проверьте оффер, CTA, доверие, формы, структуру и мобильную версию лендинга перед запуском рекламы.",
     images: [
       {
         url: "/leadfix-logo.png",
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LeadFix — аудит лендинга и поиск точек потери заявок",
-    description: "Проверьте, где сайт теряет заявки: оффер, CTA, доверие, структура и мобильная версия.",
+    title: "LeadFix — аудит лендинга и поиск причин потери заявок",
+    description: "Проверьте, где лендинг теряет заявки: оффер, CTA, доверие, формы, структура и мобильная версия.",
     images: ["/leadfix-logo.png"]
   },
   robots: {
@@ -72,7 +72,11 @@ export const metadata: Metadata = {
     yandex: "6a5c525b3269f922"
   },
   icons: {
-    icon: "/favicon.svg"
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-120.png", sizes: "120x120", type: "image/png" }
+    ],
+    apple: [{ url: "/favicon-120.png", sizes: "120x120", type: "image/png" }]
   }
 };
 
@@ -106,7 +110,7 @@ const structuredData = {
       },
       areaServed: "RU",
       serviceType: "Аудит лендингов и посадочных страниц",
-      description: "Проверка оффера, CTA, доверия, структуры, форм и мобильной версии сайта для поиска точек потери заявок."
+      description: "Проверка оффера, CTA, доверия, структуры, форм и мобильной версии сайта для поиска причин потери заявок."
     }
   ]
 };

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Демо полного отчета LeadFix",
   robots: {
     index: false,
-    follow: false
+    follow: true
   }
 };
 

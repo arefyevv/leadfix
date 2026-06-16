@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/report", "/full-report", "/checkout", "/checkout/success", "/api/"]
+        disallow: ["/api/"]
       }
     ],
     sitemap: "https://leadfix.ru/sitemap.xml",

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Формируем аудит",
   robots: {
     index: false,
-    follow: false
+    follow: true
   }
 };
 

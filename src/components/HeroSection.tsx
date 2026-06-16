@@ -20,17 +20,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="hero__inner">
             <div className="hero__label">
               <span className="hero__label-icon" aria-hidden="true" />
-              <span>Аудит лендингов под заявки</span>
+              <span>Аудит лендинга перед запуском рекламы</span>
             </div>
 
             <h1 className="hero__title" id="leadfix-hero-title">
-              <span>Покажем, где ваш лендинг </span>
-              <span>теряет заявки</span>
+              <span>Аудит лендинга:</span>
+              <span>покажем, где страница теряет заявки</span>
             </h1>
 
             <p className="hero__subtitle">
-              Проверяем страницу как маркетолог, UX-дизайнер и директолог: находим слабый оффер,
-              незаметные CTA, недоверие, лишние поля и мобильные ошибки. На выходе — список правок по влиянию на заявки.
+              Проверяем оффер, CTA, доверие, формы, структуру и мобильную версию лендинга.
+              На выходе вы получаете понятный список проблем и приоритет правок перед запуском рекламы.
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
@@ -46,7 +46,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
             </form>
 
             <div className="hero__proof-row">
-              <p className="hero__proof">Бесплатно покажем первые ошибки за 1 минуту</p>
+              <p className="hero__proof">Первые ошибки покажем бесплатно за 1 минуту</p>
             </div>
             <p className="form-error" aria-live="polite">
               {error}

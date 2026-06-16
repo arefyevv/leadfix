@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Предварительный отчёт",
   robots: {
     index: false,
-    follow: false
+    follow: true
   }
 };
 

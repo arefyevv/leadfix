@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Полный отчёт",
   robots: {
     index: false,
-    follow: false
+    follow: true
   }
 };
 

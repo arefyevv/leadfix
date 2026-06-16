@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "wins";
 
 const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = [
@@ -29,6 +33,8 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
 ];
 
 export function ReportShowcase() {
+  const [activeCard, setActiveCard] = useState<AnalysisKey | null>(null);
+
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
       <div className="report-showcase__inner">
@@ -41,29 +47,42 @@ export function ReportShowcase() {
           </p>
         </div>
 
-        <div className="report-showcase__cards" aria-label="Типы анализа в отчёте">
-          {analysisCards.map((card) => (
-            <article
-              key={card.key}
-            >
-              <span />
-              <h3>{card.title}</h3>
-              <p>{card.text}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="report-showcase__stage report-showcase__stage--real">
+        <div
+          className={`report-showcase__stage report-showcase__stage--real${activeCard ? ` is-highlighting is-${activeCard}` : ""}`}
+          onMouseLeave={() => setActiveCard(null)}
+        >
           <figure className="report-showcase__shot report-showcase__shot--main">
-            <img src="/screenshots/report-real-overview.png" alt="Фрагмент полного отчёта LeadFix с оценкой и выводом" loading="lazy" />
+            <img
+              src="/screenshots/report-real-overview.png"
+              alt="Фрагмент полного отчёта LeadFix с оценкой и выводом"
+              loading="lazy"
+            />
+            <span className="report-showcase__zone report-showcase__zone--offer" aria-hidden="true" />
+            <span className="report-showcase__zone report-showcase__zone--cta" aria-hidden="true" />
+            <span className="report-showcase__zone report-showcase__zone--trust" aria-hidden="true" />
+            <span className="report-showcase__zone report-showcase__zone--mobile" aria-hidden="true" />
+            <span className="report-showcase__zone report-showcase__zone--wins" aria-hidden="true" />
           </figure>
-          <figure className="report-showcase__shot report-showcase__shot--detail">
-            <img src="/screenshots/report-real-details.png" alt="Фрагмент полного отчёта LeadFix с подробным разбором проблем" loading="lazy" />
-          </figure>
+
+          <div className="report-showcase__cards" aria-label="Типы анализа в отчёте">
+            {analysisCards.map((card) => (
+              <article
+                className={activeCard === card.key ? "is-active" : undefined}
+                key={card.key}
+                onFocus={() => setActiveCard(card.key)}
+                onMouseEnter={() => setActiveCard(card.key)}
+                tabIndex={0}
+              >
+                <span />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="report-showcase__cta">
-          <a href="/checkout">Проверить сайт</a>
+          <a href="/primer-audita-lendinga">Посмотреть пример аудита</a>
           <p>Первые ошибки покажем бесплатно</p>
         </div>
       </div>

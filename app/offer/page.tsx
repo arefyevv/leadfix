@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: "Публичная оферта LeadFix на оказание информационно-аналитических услуг по аудиту сайтов и лендингов.",
   alternates: {
     canonical: "/offer"
+  },
+  robots: {
+    index: false,
+    follow: true
   }
 };
 
