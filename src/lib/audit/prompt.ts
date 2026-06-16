@@ -127,6 +127,7 @@ export function buildAuditPrompt(analysis: AuditAnalysis) {
     [
       "Верни полный AuditResult JSON.",
       "Каждая проблема должна ссылаться на criterionId из criteria.csv.",
+      "Если вывод основан на приложенном скриншоте, укажи screenshotId: desktop или mobile. Если только на HTML/text, укажи screenshotId: none.",
       "evidence должен опираться на конкретный фрагмент из pageSnapshot или на явно указанное отсутствие элемента.",
       "impact: 1-10, где 10 означает прямой риск потери заявки.",
       "complexity: 1-10, где 1 означает быструю правку текста/CTA, 10 означает сложную переработку структуры, дизайна или интеграций.",

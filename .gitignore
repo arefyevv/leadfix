@@ -6,4 +6,5 @@ node_modules
 tsconfig.tsbuildinfo
 data/*.jsonl
 data/audit-reports/
+data/audit-screenshots/
 tmp/

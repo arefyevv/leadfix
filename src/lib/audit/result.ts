@@ -34,7 +34,8 @@ function issueFromPreview(analysis: AuditAnalysis, index: number): AuditIssue {
     recommendation: insight?.description ?? "Проверить критерий вручную и добавить доказательство в отчёт перед выдачей клиенту.",
     example: categoryId === "offer" ? "Найдём, где лендинг теряет заявки, и покажем план исправлений за 48 часов." : "Получить аудит лендинга",
     expectedResult: "Пользователь быстрее понимает ценность предложения и следующий шаг к заявке.",
-    needsHumanReview: confidence < 0.7
+    needsHumanReview: confidence < 0.7,
+    screenshotId: "none"
   };
 }
 

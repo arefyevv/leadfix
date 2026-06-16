@@ -35,6 +35,7 @@ type DetailedIssue = {
     title: string;
     note: string;
     markers: string[];
+    imageUrl?: string;
   };
 };
 
@@ -318,7 +319,7 @@ function getPriorityByScore(score: number): ScoreRow["priority"] {
   return "Низкий";
 }
 
-function getDetailedIssuesFromAuditResult(auditResult: AuditResult): DetailedIssue[] {
+function getDetailedIssuesFromAuditResult(auditResult: AuditResult, screenshots: AuditAnalysis["screenshots"]): DetailedIssue[] {
   const issues = auditResult.issues.length > 0 ? auditResult.issues : [];
   if (issues.length === 0) return getDetailedIssues();
 
@@ -336,7 +337,8 @@ function getDetailedIssuesFromAuditResult(auditResult: AuditResult): DetailedIss
     screenshot: {
       title: `Зона проверки: ${issue.location}`,
       note: issue.needsHumanReview ? "Нужна ручная проверка или скриншот этой зоны." : issue.evidence,
-      markers: [issue.criterionId, issue.severity === "critical" ? "Критично" : "Проверить"]
+      markers: [issue.criterionId, issue.severity === "critical" ? "Критично" : "Проверить"],
+      imageUrl: screenshots?.find((screenshot) => screenshot.id === issue.screenshotId)?.url
     }
   }));
 }
@@ -482,6 +484,11 @@ function formatReportText(text: string) {
   return text
     .replace(/\bCTA\b/g, "кнопка / призыв к действию (CTA)")
     .replace(/\bHTML\b/g, "код страницы (HTML)");
+}
+
+function getIssueScreenshot(issue: AuditResult["issues"][number], screenshots: AuditAnalysis["screenshots"]) {
+  const screenshot = screenshots?.find((item) => item.id === issue.screenshotId);
+  return screenshot?.url;
 }
 
 export function FullReport({ analysis, reportDate }: FullReportProps) {
@@ -726,6 +733,14 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <span>Где на странице</span>
                       <b>{formatReportText(issue.location)}</b>
                     </div>
+                    {getIssueScreenshot(issue, analysis.screenshots) ? (
+                      <ScreenshotFrame
+                        title={`Скриншот: ${formatReportText(issue.location)}`}
+                        note={formatReportText(issue.evidence)}
+                        markers={[issue.criterionId, getSeverityLabel(issue.severity)]}
+                        imageUrl={getIssueScreenshot(issue, analysis.screenshots)}
+                      />
+                    ) : null}
                     <div className="full-audit-issue__grid">
                       <div className="is-problem"><b>Что не так</b><p>{formatReportText(issue.problem)}</p></div>
                       <div className="is-problem"><b>Почему это мешает заявкам</b><p>{formatReportText(issue.evidence)}</p></div>
@@ -831,7 +846,7 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   return <div className="full-audit__section-heading"><p className="full-audit__eyebrow">{eyebrow}</p><h2>{title}</h2></div>;
 }
 
-function ScreenshotFrame({ title, note, markers }: { title: string; note?: string; markers: string[] }) {
+function ScreenshotFrame({ title, note, markers, imageUrl }: { title: string; note?: string; markers: string[]; imageUrl?: string }) {
   return (
     <figure className="full-audit-screenshot" aria-label={title}>
       <div className="full-audit-screenshot__chrome">
@@ -840,10 +855,17 @@ function ScreenshotFrame({ title, note, markers }: { title: string; note?: strin
         <span />
       </div>
       <div className="full-audit-screenshot__canvas">
-        <div className="full-audit-screenshot__hero-line" />
-        <div className="full-audit-screenshot__text-line" />
-        <div className="full-audit-screenshot__text-line is-short" />
-        <div className="full-audit-screenshot__cta" />
+        {imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className="full-audit-screenshot__image" src={imageUrl} alt="" loading="lazy" />
+        ) : (
+          <>
+            <div className="full-audit-screenshot__hero-line" />
+            <div className="full-audit-screenshot__text-line" />
+            <div className="full-audit-screenshot__text-line is-short" />
+            <div className="full-audit-screenshot__cta" />
+          </>
+        )}
         {markers.map((marker, index) => (
           <span className={`full-audit-screenshot__marker is-${index + 1}`} key={`${marker}-${index}`}>{marker}</span>
         ))}

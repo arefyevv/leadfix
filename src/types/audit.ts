@@ -45,6 +45,15 @@ export type AuditIssue = {
   example: string;
   expectedResult: string;
   needsHumanReview: boolean;
+  screenshotId?: "desktop" | "mobile" | "none";
+};
+
+export type AuditScreenshot = {
+  id: "desktop" | "mobile";
+  url: string;
+  width: number;
+  height: number;
+  mimeType: "image/jpeg";
 };
 
 export type AuditResult = {
@@ -99,6 +108,7 @@ export type AuditAnalysis = {
   ctaSignals: string[];
   previewReport: PreviewReport;
   auditResult: AuditResult;
+  screenshots?: AuditScreenshot[];
   aiProvider?: "proxyapi";
   aiModel?: string;
 };

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
 import { readAuditReportByLeadId, saveAuditReportByLeadId } from "@/lib/auditReports";
 import { enhanceAuditWithAI } from "@/lib/openaiAudit";
+import { captureAuditScreenshots } from "@/lib/screenshotAudit";
 
 const REQUEST_TIMEOUT_MS = 12_000;
 
@@ -70,7 +71,15 @@ export async function POST(request: Request) {
     }
 
     const html = await response.text();
-    const analysis = await enhanceAuditWithAI(analyzeHtml(html, response.url || url.href));
+    const shouldCaptureScreenshots = body.requireAi === true;
+    const screenshots = shouldCaptureScreenshots
+      ? await captureAuditScreenshots({ url: response.url || url.href, leadId: body.leadId })
+      : [];
+    const baseAnalysis = {
+      ...analyzeHtml(html, response.url || url.href),
+      screenshots
+    };
+    const analysis = await enhanceAuditWithAI(baseAnalysis);
 
     if (body.requireAi === true && analysis.auditResult.metadata.generatedBy !== "proxyapi") {
       return NextResponse.json(

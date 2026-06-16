@@ -64,7 +64,8 @@ export const auditResultJsonSchema = {
           "recommendation",
           "example",
           "expectedResult",
-          "needsHumanReview"
+          "needsHumanReview",
+          "screenshotId"
         ],
         properties: {
           id: { type: "string", pattern: "^issue_[0-9]{3}$" },
@@ -82,7 +83,8 @@ export const auditResultJsonSchema = {
           recommendation: { type: "string", minLength: 30, maxLength: 360 },
           example: { type: "string", minLength: 10, maxLength: 260 },
           expectedResult: { type: "string", minLength: 20, maxLength: 220 },
-          needsHumanReview: { type: "boolean" }
+          needsHumanReview: { type: "boolean" },
+          screenshotId: { type: "string", enum: ["desktop", "mobile", "none"] }
         }
       }
     },

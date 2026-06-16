@@ -1,6 +1,8 @@
+import { readFile } from "node:fs/promises";
 import type { AuditAnalysis, AuditResult, PreviewReport } from "@/types/audit";
 import { buildAuditPrompt } from "@/lib/audit/prompt";
 import { reviewAuditResult } from "@/lib/audit/quality";
+import { getScreenshotFilePath } from "@/lib/screenshotAudit";
 
 const PROXYAPI_BASE_URL = "https://openai.api.proxyapi.ru/v1";
 const AI_TIMEOUT_MS = Number(process.env.PROXYAPI_AUDIT_TIMEOUT_MS || 240_000);
@@ -15,6 +17,10 @@ type OpenAIResponse = {
     }>;
   }>;
 };
+
+type ProxyApiContentItem =
+  | { type: "input_text"; text: string }
+  | { type: "input_image"; image_url: string };
 
 function extractOutputText(data: OpenAIResponse) {
   if (typeof data.output_text === "string") return data.output_text;
@@ -70,6 +76,35 @@ function isValidAuditResult(value: unknown): value is Omit<AuditResult, "metadat
   );
 }
 
+async function buildVisionContent(analysis: AuditAnalysis, promptText: string): Promise<ProxyApiContentItem[] | string> {
+  if (!analysis.screenshots?.length) return promptText;
+
+  const content: ProxyApiContentItem[] = [
+    {
+      type: "input_text",
+      text: `${promptText}\n\n# Visual evidence\nAnalyze the attached screenshots. Use screenshotId=\"desktop\" for desktop findings, screenshotId=\"mobile\" for mobile findings, and screenshotId=\"none\" when the finding is based only on text/HTML.`
+    }
+  ];
+
+  for (const screenshot of analysis.screenshots) {
+    const screenshotUrl = new URL(screenshot.url, "https://leadfix.local");
+    const filePath = getScreenshotFilePath(screenshotUrl.searchParams.get("lead") || "", screenshot.id);
+    if (!filePath) continue;
+
+    try {
+      const base64Image = await readFile(filePath, "base64");
+      content.push({
+        type: "input_image",
+        image_url: `data:${screenshot.mimeType};base64,${base64Image}`
+      });
+    } catch (error) {
+      console.error("Audit screenshot read failed", { screenshotId: screenshot.id, error });
+    }
+  }
+
+  return content.length > 1 ? content : promptText;
+}
+
 export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<AuditAnalysis> {
   const apiKey = process.env.PROXYAPI_API_KEY;
   if (!apiKey) return analysis;
@@ -77,6 +112,7 @@ export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<Audit
   const model = process.env.PROXYAPI_AUDIT_MODEL || process.env.OPENAI_AUDIT_MODEL || DEFAULT_MODEL;
   const baseUrl = (process.env.PROXYAPI_BASE_URL || PROXYAPI_BASE_URL).replace(/\/$/, "");
   const prompt = buildAuditPrompt(analysis);
+  const userContent = await buildVisionContent(analysis, prompt.user);
 
   try {
     const response = await fetch(`${baseUrl}/responses`, {
@@ -94,7 +130,7 @@ export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<Audit
           },
           {
             role: "user",
-            content: prompt.user
+            content: userContent
           }
         ],
         text: {

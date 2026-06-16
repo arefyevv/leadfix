@@ -7420,6 +7420,14 @@ h6 {
     repeating-linear-gradient(0deg, transparent 0 24px, rgba(227, 233, 240, .62) 24px 25px),
     #fbfcfe;
 }
+.full-audit-screenshot__image {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 10px;
+}
 .full-audit-screenshot__hero-line,
 .full-audit-screenshot__text-line,
 .full-audit-screenshot__cta {
