@@ -296,7 +296,7 @@ export function LandingSections() {
             <span>запуска рекламы</span>
           </h2>
           <p>Введите адрес страницы и получите предварительный разбор точек, где сайт может терять заявки.</p>
-          <a className="landing-final__button" href="#audit">Проверить сайт</a>
+          <a className="landing-final__button" href="#pricing">Проверить сайт</a>
         </div>
       </section>
 

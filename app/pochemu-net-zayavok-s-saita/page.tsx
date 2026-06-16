@@ -30,7 +30,7 @@ export default function NoLeadsPage() {
             Нужно проверить и трафик, и сам лендинг: оффер, CTA, форму, доверие, мобильную версию и путь к заявке.
           </p>
           <div className="seo-actions">
-            <a className="seo-button seo-button--primary" href="/#audit">Проверить сайт</a>
+            <a className="seo-button seo-button--primary" href="/#pricing">Проверить сайт</a>
             <a className="seo-button seo-button--ghost" href="/audit-lendinga-pered-reklamoy">Проверка перед рекламой</a>
           </div>
         </section>
