@@ -7,12 +7,15 @@ import tickAnimation from "../../public/animations/tick.json";
 
 function stripBackground<T>(animationData: T): T {
   const cloned = structuredClone(animationData) as {
-    assets?: Array<{ id?: string; layers?: Array<{ nm?: string }> }>;
+    assets?: Array<{ id?: string; layers?: Array<{ nm?: string; parent?: number }> }>;
   };
 
   cloned.assets?.forEach((asset) => {
     if (!asset.layers) return;
     asset.layers = asset.layers.filter((layer) => layer.nm !== "Shape Layer 4");
+    asset.layers.forEach((layer) => {
+      if (layer.parent === 1) delete layer.parent;
+    });
   });
 
   return cloned as T;

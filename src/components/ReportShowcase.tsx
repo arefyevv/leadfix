@@ -129,7 +129,10 @@ export function ReportShowcase() {
                 key={card.key}
                 onClick={() => setSelectedCard(card.key)}
                 onFocus={() => setSelectedCard(card.key)}
-                onMouseEnter={() => setHoveredCard(card.key)}
+                onMouseEnter={() => {
+                  setHoveredCard(card.key);
+                  setSelectedCard(card.key);
+                }}
                 tabIndex={0}
               >
                 <ReportShowcaseLottieIcon />
