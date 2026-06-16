@@ -82,7 +82,7 @@ async function buildVisionContent(analysis: AuditAnalysis, promptText: string): 
   const content: ProxyApiContentItem[] = [
     {
       type: "input_text",
-      text: `${promptText}\n\n# Visual evidence\nAnalyze the attached screenshots. Available screenshot ids may include: desktop, mobile, hero, cases, trust, form, pricing, faq, cta. Use the most specific screenshotId for each finding. If the finding is about cases, use screenshotId=\"cases\" only when that screenshot is attached. If it is about the form, use screenshotId=\"form\". If it is about prices, use screenshotId=\"pricing\". If no attached screenshot shows the relevant area, use screenshotId=\"none\". Do not use screenshotId=\"desktop\" as a generic fallback for findings about lower page blocks.`
+      text: `${promptText}\n\n# Visual evidence\nAnalyze the attached screenshots. Available screenshot ids may include: desktop, mobile, hero, cases, trust, form, pricing, faq, cta. Use the most specific screenshotId for each finding. If the finding is about cases, use screenshotId=\"cases\" only when that screenshot is attached. If it is about the form, use screenshotId=\"form\". If it is about prices, use screenshotId=\"pricing\". If no attached screenshot shows the relevant area, use screenshotId=\"none\". Do not use screenshotId=\"desktop\" as a generic fallback for findings about lower page blocks. Write issue text in simple Russian for a business owner: short, concrete, no jargon.`
     }
   ];
 
