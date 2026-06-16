@@ -10748,6 +10748,11 @@ h6,
   box-shadow: none;
 }
 
+.full-audit-document .full-audit-content .full-audit__implementation article {
+  box-shadow: none !important;
+  filter: none;
+}
+
 .full-audit-document .full-audit-content .full-audit-issue.is-critical {
   border-color: rgba(255, 91, 91, .22);
   background: linear-gradient(90deg, rgba(255, 91, 91, .055), var(--report-card-soft) 54%);

@@ -474,9 +474,12 @@ function getQualityReviewNote(result: AuditResult) {
 }
 
 function formatReportText(text: string) {
-  return text
-    .replace(/\bCTA\b/g, "кнопка / призыв к действию (CTA)")
-    .replace(/\bHTML\b/g, "код страницы (HTML)");
+  const formatted = text
+    .replace(/\bCTA\b/g, "Кнопка / призыв к действию (CTA)")
+    .replace(/\bHTML\b/g, "Код страницы (HTML)")
+    .replace(/слишком общо/gi, "слишком общее");
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 function getIssueScreenshot(
