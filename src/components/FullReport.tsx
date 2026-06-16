@@ -477,7 +477,7 @@ function formatReportText(text: string) {
   const formatted = text
     .replace(/\bCTA\b/g, "Кнопка / призыв к действию (CTA)")
     .replace(/\bHTML\b/g, "Код страницы (HTML)")
-    .replace(/слишком общо/gi, "слишком общее");
+    .replace(/слишком общо/gi, "слишком обще");
 
   return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
@@ -667,7 +667,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section">
             <SectionHeading eyebrow="Что исправить первым" title="Приоритетные проблемы" />
-            <p className="full-audit__lead">Короткий список главных проблем. Подробный разбор и примеры решений находятся ниже.</p>
             <div className="full-audit__priority-list">
               {priorityIssues.map((issue, index) => (
                 <article className={`full-audit-priority is-${getSeverityTone(issue.severity)}`} key={issue.id}>
@@ -702,7 +701,6 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
 
           <section className="full-audit__section">
             <SectionHeading eyebrow="Карта отчёта" title="8 зон, где лендинг может терять заявки" />
-            <p className="full-audit__lead">Навигация по зонам проверки: оценка, статус и найденные слабые места.</p>
             <div className="full-audit__categories">
               {auditDirections.map((direction, index) => (
                 <article className="full-audit-category" key={direction.categoryId}>
