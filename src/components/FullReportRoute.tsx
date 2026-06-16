@@ -6,6 +6,7 @@ import { FullReport } from "@/components/FullReport";
 import { Header } from "@/components/Header";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { fetchAudit, getAuditCache, isAiAudit, normalizeClientUrl } from "@/lib/clientAudit";
+import { demoAuditAnalysis } from "@/lib/demoAudit";
 import type { AuditAnalysis } from "@/types/audit";
 
 export function FullReportRoute() {
@@ -22,9 +23,15 @@ export function FullReportRoute() {
 
   useEffect(() => {
     let normalizedUrl = "";
+    const rawUrl = searchParams.get("url") ?? "";
+
+    if (!rawUrl) {
+      setAnalysis(demoAuditAnalysis);
+      return;
+    }
 
     try {
-      normalizedUrl = normalizeClientUrl(searchParams.get("url") ?? "");
+      normalizedUrl = normalizeClientUrl(rawUrl);
     } catch {
       setError("В ссылке отчёта указан некорректный адрес сайта.");
       return;
