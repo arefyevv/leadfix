@@ -63,6 +63,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               <p>Оффер</p>
               <p>Кнопки</p>
               <p>Доверие</p>
+              <p>Формы</p>
               <p>Мобильная версия</p>
             </aside>
 
@@ -82,9 +83,9 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
 
               <div className="dash-grid">
                 <article>
-                  <small>Оценка</small>
+                  <small>Готовность</small>
                   <strong>61/100</strong>
-                  <em>+32% потенциал</em>
+                  <em>требует правок</em>
                 </article>
                 <article>
                   <small>Критично</small>
@@ -97,9 +98,9 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                   <em>следующий этап</em>
                 </article>
                 <article>
-                  <small>Быстрые победы</small>
+                  <small>План правок</small>
                   <strong>4</strong>
-                  <em>1 день</em>
+                  <em>сначала</em>
                 </article>
               </div>
 

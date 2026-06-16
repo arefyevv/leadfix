@@ -29,27 +29,27 @@ const reportIssues = [
 ];
 
 const quickWins = [
-  "Упростить заголовок",
-  "Добавить повторный CTA",
-  "Поднять отзывы выше",
-  "Убрать лишние поля формы"
+  "Переписать оффер",
+  "Уточнить главный CTA",
+  "Добавить доверие у формы",
+  "Упростить мобильную форму"
 ];
 
 const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = [
   {
     key: "offer",
-    title: "Ошибки оффера",
-    text: "Показываем, понятно ли пользователю, что он получит и почему стоит оставить заявку."
+    title: "Оффер и первый экран",
+    text: "Показываем, понятно ли за первые секунды, что предлагают, кому это нужно и зачем оставлять заявку."
   },
   {
     key: "cta",
-    title: "CTA и формы",
-    text: "Проверяем заметность кнопок, следующий шаг и лишние поля в форме."
+    title: "Кнопки и формы",
+    text: "Проверяем путь к заявке: кнопки, следующий шаг, форму и лишнее трение перед отправкой."
   },
   {
     key: "trust",
-    title: "Доверие",
-    text: "Находим места, где не хватает цифр, кейсов, отзывов или гарантий."
+    title: "Доверие и доказательства",
+    text: "Находим места, где не хватает фактов, цифр, кейсов, отзывов или понятных гарантий."
   },
   {
     key: "mobile",
@@ -58,8 +58,8 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
   },
   {
     key: "wins",
-    title: "Быстрые победы",
-    text: "Отдельно выделяем правки, которые можно внедрить без редизайна."
+    title: "План правок",
+    text: "Собираем найденные проблемы в понятный порядок: что исправить сначала и что можно отложить."
   }
 ];
 
@@ -73,8 +73,8 @@ export function ReportShowcase() {
           <span className="report-showcase__badge">Пример отчёта</span>
           <h2>Посмотрите, что покажет аудит</h2>
           <p>
-            Отчёт показывает критичные ошибки, быстрые улучшения и рекомендации по офферу,
-            CTA, доверию, структуре, формам и мобильной версии.
+            Отчёт показывает оценку по зонам, приоритетные проблемы и порядок правок:
+            оффер, кнопки, доверие, формы, структура, мобильная версия, техника и соответствие рекламе.
           </p>
         </div>
 
@@ -112,9 +112,9 @@ export function ReportShowcase() {
 
             <div className="audit-report-mockup__summary">
               <div className="audit-report-score">
-                <span>Оценка конверсии</span>
+                <span>Готовность к платному трафику</span>
                 <strong>61/100</strong>
-                <i>+32% потенциал роста</i>
+                <i>Требует правок перед запуском</i>
               </div>
 
               <div className="audit-report-metrics">
@@ -129,9 +129,9 @@ export function ReportShowcase() {
                   <small>Влияет на заявки</small>
                 </article>
                 <article>
-                  <span>Quick wins</span>
+                  <span>План</span>
                   <strong>4</strong>
-                  <small>Быстрые правки</small>
+                  <small>Правки в первую очередь</small>
                 </article>
               </div>
             </div>
@@ -140,7 +140,7 @@ export function ReportShowcase() {
               <div className="audit-report-issues">
                 <div className="audit-report-block-title">
                   <span>Найденные проблемы</span>
-                  <b>Карта приоритетов</b>
+                  <b>Что исправить сначала</b>
                 </div>
                 {reportIssues.map((issue) => (
                   <article
@@ -163,7 +163,7 @@ export function ReportShowcase() {
                   <li>Упростить мобильную форму</li>
                 </ol>
                 <div className="audit-report-quickwins">
-                  <b>Быстрые правки</b>
+                  <b>Первые правки</b>
                   {quickWins.map((item) => (
                     <small key={item}>{item}</small>
                   ))}
@@ -178,8 +178,8 @@ export function ReportShowcase() {
               <strong>План на 24 часа</strong>
             </div>
             <div className="audit-side-mockup__score">
-              <b>+32%</b>
-              <span>потенциал роста заявок</span>
+              <b>68/100</b>
+              <span>готовность сайта к трафику</span>
             </div>
             <div className="audit-side-mockup__list audit-area-wins">
               <p><i /> Переписать оффер</p>
