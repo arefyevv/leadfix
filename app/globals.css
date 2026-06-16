@@ -12476,13 +12476,14 @@ body:has(.full-audit-document) .cookie-notice {
 
 /* Compact audit map on the landing page. */
 #audit-checks .audit-accordion-layout {
-  max-width: 980px !important;
-  margin: 34px auto 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 38px auto 0 !important;
 }
 
 #audit-checks .audit-accordion {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 10px 14px !important;
+  gap: 16px 18px !important;
 }
 
 #audit-checks .audit-accordion__item {
@@ -12490,9 +12491,9 @@ body:has(.full-audit-document) .cookie-notice {
   display: grid !important;
   grid-template-columns: 42px 1fr !important;
   grid-template-rows: auto auto !important;
-  column-gap: 14px !important;
-  row-gap: 5px !important;
-  padding: 16px 18px !important;
+  column-gap: 18px !important;
+  row-gap: 7px !important;
+  padding: 20px 22px !important;
   border-radius: 16px !important;
   background: #fff !important;
   border-color: rgba(16, 16, 20, .09) !important;
@@ -12547,7 +12548,7 @@ body:has(.full-audit-document) .cookie-notice {
 
 @media (max-width: 760px) {
   #audit-checks .audit-accordion-layout {
-    margin-top: 26px !important;
+    margin-top: 28px !important;
   }
 
   #audit-checks .audit-accordion {
@@ -12555,7 +12556,7 @@ body:has(.full-audit-document) .cookie-notice {
   }
 
   #audit-checks .audit-accordion__item {
-    padding: 15px 16px !important;
+    padding: 18px 18px !important;
   }
 
   #audit-checks .audit-accordion__head h3 {
