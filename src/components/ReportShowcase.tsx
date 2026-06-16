@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ReportShowcaseLottieIcon } from "./ReportShowcaseLottieIcon";
 
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
@@ -135,7 +134,7 @@ export function ReportShowcase() {
                 }}
                 tabIndex={0}
               >
-                <ReportShowcaseLottieIcon />
+                <span className="report-showcase__marker" aria-hidden="true" />
                 <div className="report-showcase__card-copy">
                   <h3>{card.title}</h3>
                   <p>{card.text}</p>
