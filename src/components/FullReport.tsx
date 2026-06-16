@@ -675,9 +675,9 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
                       <b>{getSeverityLabel(issue.severity)}</b>
                     </div>
                     <h3>{formatReportText(issue.title)}</h3>
+                    <p className="full-audit-priority__action"><b>Что сделать:</b> {formatReportText(issue.recommendation)}</p>
                     <div className="full-audit-priority__meta">
                       <span>Где: {formatReportText(issue.location)}</span>
-                      <span>Приоритет: {issue.priorityScore}/10</span>
                     </div>
                   </div>
                 </article>

@@ -11643,6 +11643,16 @@ h6,
   line-height: 1.5;
 }
 
+.full-audit-document .full-audit-priority__action {
+  max-width: 760px;
+  font-size: 15px;
+}
+
+.full-audit-document .full-audit-priority__action b {
+  color: var(--report-text);
+  font-weight: 780;
+}
+
 .full-audit-document .full-audit-priority__meta {
   display: flex;
   flex-wrap: wrap;
