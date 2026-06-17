@@ -5,7 +5,11 @@ export function SiteFooter() {
         <div className="site-footer__main">
           <div className="site-footer__brand">
             <img src="/logo-black.svg" alt="LeadFix" />
-            <p>Аудит продающей способности лендингов под платный трафик.</p>
+            <p>
+              Аудит продающей способности лендингов
+              <br />
+              под платный трафик.
+            </p>
           </div>
 
           <nav className="site-footer__nav" aria-label="Навигация в футере">

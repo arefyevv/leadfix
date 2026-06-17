@@ -33,11 +33,11 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
 ];
 
 const zoneViewportPositions: Record<AnalysisKey, number> = {
-  offer: 0.02,
-  cta: 0.48,
-  trust: 0.48,
-  mobile: 0.62,
-  structure: 0.84
+  offer: 0.18,
+  cta: 0.27,
+  trust: 0.36,
+  mobile: 0.45,
+  structure: 0.55
 };
 
 export function ReportShowcase() {
@@ -127,10 +127,9 @@ export function ReportShowcase() {
                 className={activeCard === card.key ? "is-active" : undefined}
                 key={card.key}
                 onClick={() => setSelectedCard(card.key)}
-                onFocus={() => setSelectedCard(card.key)}
+                onFocus={() => setHoveredCard(card.key)}
                 onMouseEnter={() => {
                   setHoveredCard(card.key);
-                  setSelectedCard(card.key);
                 }}
                 tabIndex={0}
               >

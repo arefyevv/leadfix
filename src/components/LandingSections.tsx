@@ -295,8 +295,11 @@ export function LandingSections() {
             <span>Проверьте сайт до следующего</span>
             <span>запуска рекламы</span>
           </h2>
-          <p>Введите адрес страницы и получите предварительный разбор точек, где сайт может терять заявки.</p>
-          <a className="landing-final__button" href="#pricing">Проверить сайт</a>
+          <p>Запустите бесплатную проверку или сначала откройте демо-отчёт, чтобы понять формат аудита.</p>
+          <div className="landing-final__actions">
+            <a className="landing-final__button" href="#pricing">Запустить бесплатную проверку</a>
+            <a className="landing-final__secondary" href="/primer-audita-lendinga">Открыть демо-отчёт</a>
+          </div>
         </div>
       </section>
 
