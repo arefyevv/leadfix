@@ -21,8 +21,9 @@ export function SiteFooter() {
               <a href="/#faq">FAQ</a>
             </div>
             <div>
-              <b>SEO-страницы</b>
+              <b>Полезные страницы</b>
               <a href="/audit-lendinga-pered-reklamoy">Перед запуском рекламы</a>
+              <a href="/audit-konversii-saita">Аудит конверсии сайта</a>
               <a href="/pochemu-net-zayavok-s-saita">Почему нет заявок</a>
               <a href="/o-servise">О сервисе</a>
               <a href="/primer-audita-lendinga">Пример аудита</a>

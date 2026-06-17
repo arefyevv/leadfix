@@ -31,7 +31,7 @@ export default function NoLeadsPage() {
           </p>
           <div className="seo-actions">
             <a className="seo-button seo-button--primary" href="/#pricing">Проверить сайт</a>
-            <a className="seo-button seo-button--ghost" href="/audit-lendinga-pered-reklamoy">Проверка перед рекламой</a>
+            <a className="seo-button seo-button--ghost" href="/audit-konversii-saita">Аудит конверсии сайта</a>
           </div>
         </section>
 
