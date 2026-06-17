@@ -18,10 +18,10 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
 
   const metaContent = (format.length > 0 || plan.audience) && (
-    <details className="pricing-card__meta">
-      <summary className="pricing-card__meta-toggle" aria-label="Показать формат и кому подходит">
+    <div className="pricing-card__meta">
+      <span className="pricing-card__meta-toggle" tabIndex={0} aria-label="Показать формат и кому подходит">
         i
-      </summary>
+      </span>
       <div className="pricing-card__meta-panel">
         {format.length > 0 && (
           <div className="pricing-card__meta-block">
@@ -41,7 +41,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
           </div>
         )}
       </div>
-    </details>
+    </div>
   );
 
   const content = (
