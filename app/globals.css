@@ -8860,41 +8860,50 @@ h6 {
 }
 
 #pricing .landing-pricing .pricing-card {
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  align-items: start !important;
   min-height: 640px !important;
   height: 640px !important;
   padding: 26px 30px 30px !important;
 }
 
 #pricing .landing-pricing .pricing-card__intro {
+  display: grid !important;
+  grid-template-rows: minmax(44px, auto) minmax(36px, auto) minmax(82px, auto) !important;
+  align-content: start !important;
   margin-top: 6px !important;
   margin-bottom: 0 !important;
   padding-right: 34px !important;
 }
 
 #pricing .landing-pricing .pricing-card__group {
+  align-content: start !important;
   margin-top: 18px !important;
 }
 
 #pricing .landing-pricing .pricing-card__cta {
   position: static !important;
   margin-top: auto !important;
+  align-self: end !important;
 }
 
 #pricing .landing-pricing .pricing-card--recommended,
 #pricing .landing-pricing .pricing-card.is-selected {
-  min-height: 660px !important;
-  height: 660px !important;
+  min-height: 640px !important;
+  height: 640px !important;
 }
 
 @media (max-width: 760px) {
   #pricing .landing-pricing .pricing-card {
+    display: grid !important;
     height: auto !important;
     min-height: 0 !important;
     padding-bottom: 30px !important;
   }
 
   #pricing .landing-pricing .pricing-card__intro {
-    grid-template-rows: auto !important;
+    grid-template-rows: auto auto auto !important;
     margin-top: 0 !important;
   }
 
