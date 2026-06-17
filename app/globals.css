@@ -8820,16 +8820,17 @@ h6 {
 #pricing .landing-pricing .pricing-card--recommended .pricing-card__badge,
 #pricing .landing-pricing .pricing-card.is-selected .pricing-card__badge {
   position: absolute !important;
-  top: 0 !important;
+  top: 12px !important;
   left: 50% !important;
   right: auto !important;
-  transform: translate(-50%, -50%) !important;
-  padding: 5px 8px !important;
-  color: #0f241a !important;
-  background: rgba(255, 255, 255, .9) !important;
+  transform: translateX(-50%) !important;
+  padding: 6px 10px !important;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #3cdd99 0%, #26c986 100%) !important;
   border-radius: 999px !important;
   font-size: 10px !important;
   font-weight: 800 !important;
+  box-shadow: 0 10px 24px rgba(47, 208, 140, .24) !important;
 }
 
 #pricing .landing-pricing .pricing-card--recommended p,
