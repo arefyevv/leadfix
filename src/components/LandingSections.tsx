@@ -245,7 +245,7 @@ export function LandingSections() {
         </div>
         <div className="landing-inline-links">
           <a href="/o-servise">Как работает LeadFix</a>
-          <a href="/primer-audita-lendinga">Посмотреть HTML-пример аудита</a>
+          <a href="/primer-audita-lendinga">Посмотреть пример аудита</a>
         </div>
       </section>
 
