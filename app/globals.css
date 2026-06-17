@@ -8820,8 +8820,10 @@ h6 {
 #pricing .landing-pricing .pricing-card--recommended .pricing-card__badge,
 #pricing .landing-pricing .pricing-card.is-selected .pricing-card__badge {
   position: absolute !important;
-  top: 12px !important;
-  right: 12px !important;
+  top: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
   padding: 5px 8px !important;
   color: #0f241a !important;
   background: rgba(255, 255, 255, .9) !important;
