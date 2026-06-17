@@ -8481,6 +8481,7 @@ h6 {
   display: grid !important;
   grid-template-rows: auto auto auto 1fr auto !important;
   align-content: stretch !important;
+  overflow: visible !important;
   min-height: 744px !important;
   height: 744px !important;
   padding: 30px 30px 210px !important;
