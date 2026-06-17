@@ -8472,7 +8472,7 @@ h6 {
 /* Landing pricing uses the compact checkout card rhythm, with the middle plan still highlighted. */
 #pricing .landing-pricing {
   align-items: stretch !important;
-  gap: 22px !important;
+  gap: 14px !important;
   margin-top: 48px !important;
 }
 
