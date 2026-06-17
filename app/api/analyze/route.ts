@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
 import { readAuditReportByLeadId, saveAuditReportByLeadId } from "@/lib/auditReports";
+import { enforceFreeAuditLimit, readFreeAuditCache, saveFreeAuditCache } from "@/lib/freeAuditAccess";
 import { enhanceAuditWithAI } from "@/lib/openaiAudit";
 import { captureAuditScreenshots } from "@/lib/screenshotAudit";
 
@@ -36,11 +37,48 @@ function normalizeUrl(value: unknown) {
   return url;
 }
 
+function isInputError(error: unknown, message: string) {
+  return (
+    error instanceof SyntaxError ||
+    message === "Введите адрес сайта" ||
+    message === "Поддерживаются только http и https адреса" ||
+    message === "Локальные адреса недоступны для анализа" ||
+    message === "Invalid URL"
+  );
+}
+
+async function loadHtml(url: URL) {
+  const response = await fetch(url, {
+    headers: {
+      "Accept": "text/html,application/xhtml+xml",
+      "User-Agent": "LeadFixPreviewAudit/1.0"
+    },
+    redirect: "follow",
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(`Сайт ответил с ошибкой ${response.status}`);
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html") && !contentType.includes("application/xhtml+xml")) {
+    throw new Error("По этому адресу не найдена HTML-страница");
+  }
+
+  return {
+    html: await response.text(),
+    finalUrl: response.url || url.href
+  };
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as { url?: unknown; requireAi?: unknown; leadId?: unknown };
+    const requiresAi = body.requireAi === true;
 
-    if (body.requireAi === true) {
+    if (requiresAi) {
       const storedReport = await readAuditReportByLeadId(body.leadId);
       if (storedReport) {
         return NextResponse.json({
@@ -51,37 +89,31 @@ export async function POST(request: Request) {
     }
 
     const url = normalizeUrl(body.url);
-    const response = await fetch(url, {
-      headers: {
-        "Accept": "text/html,application/xhtml+xml",
-        "User-Agent": "LeadFixPreviewAudit/1.0"
-      },
-      redirect: "follow",
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-      cache: "no-store"
-    });
 
-    if (!response.ok) {
-      throw new Error(`Сайт ответил с ошибкой ${response.status}`);
+    if (!requiresAi) {
+      const cachedAnalysis = await readFreeAuditCache(url);
+      if (cachedAnalysis) {
+        return NextResponse.json({
+          analysis: cachedAnalysis,
+          previewReport: cachedAnalysis.previewReport,
+          cached: true
+        });
+      }
+
+      await enforceFreeAuditLimit(request, url);
     }
 
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!contentType.includes("text/html") && !contentType.includes("application/xhtml+xml")) {
-      throw new Error("По этому адресу не найдена HTML-страница");
-    }
-
-    const html = await response.text();
-    const shouldCaptureScreenshots = body.requireAi === true;
-    const screenshots = shouldCaptureScreenshots
-      ? await captureAuditScreenshots({ url: response.url || url.href, leadId: body.leadId })
+    const { html, finalUrl } = await loadHtml(url);
+    const screenshots = requiresAi
+      ? await captureAuditScreenshots({ url: finalUrl, leadId: body.leadId })
       : [];
     const baseAnalysis = {
-      ...analyzeHtml(html, response.url || url.href),
+      ...analyzeHtml(html, finalUrl),
       screenshots
     };
-    const analysis = await enhanceAuditWithAI(baseAnalysis);
+    const analysis = requiresAi ? await enhanceAuditWithAI(baseAnalysis) : baseAnalysis;
 
-    if (body.requireAi === true && analysis.auditResult.metadata.generatedBy !== "proxyapi") {
+    if (requiresAi && analysis.auditResult.metadata.generatedBy !== "proxyapi") {
       return NextResponse.json(
         {
           error: "AI audit did not complete. Check ProxyAPI key, model, balance and server logs."
@@ -90,8 +122,10 @@ export async function POST(request: Request) {
       );
     }
 
-    if (body.requireAi === true) {
+    if (requiresAi) {
       await saveAuditReportByLeadId(body.leadId, analysis);
+    } else {
+      await saveFreeAuditCache(url, analysis);
     }
 
     return NextResponse.json({
@@ -100,20 +134,17 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Не удалось проанализировать сайт";
-    const isInputError =
-      error instanceof SyntaxError ||
-      message === "Введите адрес сайта" ||
-      message === "Поддерживаются только http и https адреса" ||
-      message === "Локальные адреса недоступны для анализа" ||
-      message === "Invalid URL";
+    const freeLimitError = message === "FREE_AUDIT_IP_LIMIT" || message === "FREE_AUDIT_URL_LIMIT";
 
     return NextResponse.json(
       {
-        error: isInputError
-          ? "Введите корректный публичный адрес сайта"
-          : "Не удалось открыть сайт. Проверьте адрес или попробуйте позже."
+        error: freeLimitError
+          ? "Бесплатный лимит проверок исчерпан. Попробуйте позже или оформите полный аудит."
+          : isInputError(error, message)
+            ? "Введите корректный публичный адрес сайта"
+            : "Не удалось открыть сайт. Проверьте адрес или попробуйте позже."
       },
-      { status: isInputError ? 400 : 502 }
+      { status: freeLimitError ? 429 : isInputError(error, message) ? 400 : 502 }
     );
   }
 }

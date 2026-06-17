@@ -7,4 +7,9 @@ tsconfig.tsbuildinfo
 data/*.jsonl
 data/audit-reports/
 data/audit-screenshots/
+data/free-audit-cache/
+data/free-audit-usage/
 tmp/
+graphify-out/
+.graphify_chunks.json
+.graphify_labels.json
