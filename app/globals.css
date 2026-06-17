@@ -8868,6 +8868,7 @@ h6 {
   color: #0f241a !important;
   background: linear-gradient(180deg, #49e6a2 0%, #2fd08c 100%) !important;
   box-shadow: 0 12px 28px rgba(47, 208, 140, .24), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
+  transform: translateY(-6px) !important;
 }
 
 #pricing .landing-pricing .pricing-card {
