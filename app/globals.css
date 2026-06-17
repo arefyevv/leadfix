@@ -8643,11 +8643,112 @@ h6 {
   transform: translateY(0);
 }
 
+.pricing-card__meta {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 4;
+}
+
+.pricing-card__meta summary {
+  list-style: none;
+}
+
+.pricing-card__meta summary::-webkit-details-marker {
+  display: none;
+}
+
+.pricing-card__meta-toggle {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: #167650;
+  background: #dff8eb;
+  border: 1px solid rgba(47, 208, 140, .34);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pricing-card__meta-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(320px, calc(100vw - 48px));
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  color: #1f2f46;
+  background: rgba(255, 255, 255, .98);
+  border: 1px solid #dce5ef;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, .16);
+}
+
+.pricing-card__meta-block {
+  display: grid;
+  gap: 8px;
+}
+
+.pricing-card__meta-block > span {
+  color: #2877da;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.pricing-card__meta-block ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-card__meta-block li,
+.pricing-card__meta-block p {
+  margin: 0;
+  color: #56657c;
+  font-size: 13px;
+  line-height: 1.42;
+}
+
 #pricing .landing-pricing .pricing-card--recommended .pricing-card__info,
 #pricing .landing-pricing .pricing-card.is-selected .pricing-card__info {
   color: #06130d;
   background: #ffffff;
   border-color: rgba(255, 255, 255, .36);
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__meta-toggle,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__meta-toggle {
+  color: #0f241a;
+  background: rgba(255, 255, 255, .92);
+  border-color: rgba(255, 255, 255, .36);
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__meta-panel,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__meta-panel {
+  color: #e8efff;
+  background: rgba(10, 24, 46, .96);
+  border-color: rgba(174, 205, 255, .22);
+  box-shadow: 0 18px 40px rgba(5, 12, 24, .34);
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__meta-block > span,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__meta-block > span {
+  color: #5ce4aa;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__meta-block li,
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__meta-block p,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__meta-block li,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__meta-block p {
+  color: rgba(255, 255, 255, .76);
 }
 
 #pricing .landing-pricing .pricing-card__fit {
@@ -8756,6 +8857,33 @@ h6 {
   color: #0f241a !important;
   background: linear-gradient(180deg, #49e6a2 0%, #2fd08c 100%) !important;
   box-shadow: 0 12px 28px rgba(47, 208, 140, .24), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
+}
+
+#pricing .landing-pricing .pricing-card {
+  min-height: 640px !important;
+  height: 640px !important;
+  padding: 26px 30px 30px !important;
+}
+
+#pricing .landing-pricing .pricing-card__intro {
+  margin-top: 6px !important;
+  margin-bottom: 0 !important;
+  padding-right: 34px !important;
+}
+
+#pricing .landing-pricing .pricing-card__group {
+  margin-top: 18px !important;
+}
+
+#pricing .landing-pricing .pricing-card__cta {
+  position: static !important;
+  margin-top: auto !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended,
+#pricing .landing-pricing .pricing-card.is-selected {
+  min-height: 660px !important;
+  height: 660px !important;
 }
 
 @media (max-width: 760px) {

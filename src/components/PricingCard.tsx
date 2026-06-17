@@ -8,14 +8,41 @@ type PricingCardProps = {
 };
 
 export function PricingCard({ plan, selected, onSelect, variant = "default" }: PricingCardProps) {
-  const features = plan.features ?? ["Аудит сайта", "Рекомендации", "web-отчет"];
-  const format = plan.format ?? ["web-отчет"];
+  const features = plan.features ?? ["Аудит сайта", "Рекомендации", "web-отчёт"];
+  const format = plan.format ?? ["web-отчёт"];
   const featureDetails = plan.featureDetails ?? {};
   const isCheckout = variant === "checkout";
-  const isFreePlan = plan.name === "Тест сайта";
+  const isFreePlan = plan.name === "Старт";
   const ctaHref = isFreePlan ? "/#audit" : `/checkout?plan=${encodeURIComponent(plan.name)}`;
   const ctaLabel = isFreePlan ? "Запустить тест" : "Получить отчёт";
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
+
+  const metaContent = (format.length > 0 || plan.audience) && (
+    <details className="pricing-card__meta">
+      <summary className="pricing-card__meta-toggle" aria-label="Показать формат и кому подходит">
+        i
+      </summary>
+      <div className="pricing-card__meta-panel">
+        {format.length > 0 && (
+          <div className="pricing-card__meta-block">
+            <span>Формат</span>
+            <ul>
+              {format.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {plan.audience && (
+          <div className="pricing-card__meta-block">
+            <span>Кому подходит</span>
+            <p>{plan.audience}</p>
+          </div>
+        )}
+      </div>
+    </details>
+  );
 
   const content = (
     <>
@@ -26,6 +53,9 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
           <img src="/logo-black.svg" alt="" />
         </span>
       )}
+
+      {metaContent}
+
       <div className="pricing-card__intro">
         <h3>{plan.name}</h3>
         <strong>{plan.price}</strong>
@@ -39,7 +69,12 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
             <li key={feature}>
               <span>{feature}</span>
               {featureDetails[feature] && (
-                <span className="pricing-card__info" tabIndex={0} aria-label={featureDetails[feature]} data-tooltip={featureDetails[feature]}>
+                <span
+                  className="pricing-card__info"
+                  tabIndex={0}
+                  aria-label={featureDetails[feature]}
+                  data-tooltip={featureDetails[feature]}
+                >
                   i
                 </span>
               )}
@@ -48,26 +83,12 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
         </ul>
       </div>
 
-      <div className="pricing-card__group pricing-card__group--muted">
-        <span>Формат</span>
-        <ul>
-          {format.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      {plan.audience && (
-        <div className="pricing-card__fit">
-          <span>Кому подходит</span>
-          <p>{plan.audience}</p>
-        </div>
-      )}
-
       {isCheckout ? (
         <span className="pricing-card__cta">{ctaLabel}</span>
       ) : (
-        <a className="pricing-card__cta" href={ctaHref}>{ctaLabel}</a>
+        <a className="pricing-card__cta" href={ctaHref}>
+          {ctaLabel}
+        </a>
       )}
     </>
   );
@@ -80,9 +101,5 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
     );
   }
 
-  return (
-    <article className={className}>
-      {content}
-    </article>
-  );
+  return <article className={className}>{content}</article>;
 }
