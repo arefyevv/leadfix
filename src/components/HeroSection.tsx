@@ -30,6 +30,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
 
             <p className="hero__subtitle">
               <span>Находим слабые места в оффере, CTA, доверии, формах и мобильной версии.</span>
+              {" "}
               <span>Даём понятный план правок.</span>
             </p>
 
@@ -39,7 +40,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                 onChange={(event) => onUrlChange(event.target.value)}
                 type="url"
                 inputMode="url"
-                placeholder="site.ru"
+                placeholder="https://site.ru"
                 aria-label="Адрес сайта"
               />
               <button type="submit">Проверить лендинг</button>
