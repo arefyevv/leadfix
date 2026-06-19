@@ -2,7 +2,7 @@ import type { Plan } from "./types";
 
 export const auditPlans: Plan[] = [
   {
-    name: "Старт",
+    name: "Тест сайта",
     price: "0 ₽",
     description: "Быстрая бесплатная проверка первых явных причин потери заявок.",
     features: [
@@ -62,7 +62,7 @@ export const auditPlans: Plan[] = [
   {
     name: "LeadFix Pro",
     price: "5 900 ₽ / 1 сайт",
-    description: "Расширенный аудит с ручной проверкой и готовым списком правок для внедрения.",
+    description: "AI-аудит с ручной проверкой и готовым списком правок для внедрения.",
     recommended: true,
     features: [
       "Всё из тарифа «Экспресс»",
@@ -92,4 +92,4 @@ export const auditPlans: Plan[] = [
   },
 ];
 
-export const paidAuditPlans = auditPlans.filter((plan) => plan.name !== "Старт");
+export const paidAuditPlans = auditPlans.filter((plan) => plan.name !== "Тест сайта");

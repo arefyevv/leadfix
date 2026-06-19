@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
+const reportScreenshot = "/screenshots/report-demo-full.png";
+
 const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = [
   {
     key: "offer",
@@ -32,12 +34,12 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
   }
 ];
 
-const zoneViewportPositions: Record<AnalysisKey, number> = {
-  offer: 0.18,
-  cta: 0.27,
-  trust: 0.36,
-  mobile: 0.45,
-  structure: 0.55
+const zoneScrollPositions: Record<AnalysisKey, number> = {
+  offer: 0.405,
+  cta: 0.405,
+  trust: 0.475,
+  mobile: 0.545,
+  structure: 0.545
 };
 
 export function ReportShowcase() {
@@ -53,7 +55,7 @@ export function ReportShowcase() {
     const canvas = shotCanvasRef.current;
     if (!viewport || !canvas) return;
 
-    if (!selectedCard) {
+    if (!activeCard) {
       setCanvasOffset(0);
       return;
     }
@@ -64,10 +66,10 @@ export function ReportShowcase() {
       return;
     }
 
-    const targetTop = zoneViewportPositions[selectedCard] * canvas.scrollHeight;
+    const targetTop = zoneScrollPositions[activeCard] * canvas.scrollHeight;
     const nextOffset = Math.max(0, Math.min(maxOffset, targetTop - viewport.clientHeight * 0.16));
     setCanvasOffset(nextOffset);
-  }, [selectedCard]);
+  }, [activeCard]);
 
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
@@ -94,20 +96,20 @@ export function ReportShowcase() {
               >
                 <img
                   className="report-showcase__image report-showcase__image--base"
-                  src="/screenshots/report-real-overview.png"
+                  src={reportScreenshot}
                   alt="Фрагмент полного отчёта LeadFix с оценкой и выводом"
                   loading="lazy"
                 />
                 <img
                   className="report-showcase__image report-showcase__image--blur"
-                  src="/screenshots/report-real-overview.png"
+                  src={reportScreenshot}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
                 />
                 <img
                   className="report-showcase__image report-showcase__image--focus"
-                  src="/screenshots/report-real-overview.png"
+                  src={reportScreenshot}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"

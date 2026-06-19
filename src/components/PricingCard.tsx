@@ -12,7 +12,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
   const format = plan.format ?? ["web-отчёт"];
   const featureDetails = plan.featureDetails ?? {};
   const isCheckout = variant === "checkout";
-  const isFreePlan = plan.name === "Старт";
+  const isFreePlan = plan.name === "Тест сайта";
   const ctaHref = isFreePlan ? "/#audit" : `/checkout?plan=${encodeURIComponent(plan.name)}`;
   const ctaLabel = isFreePlan ? "Запустить тест" : "Получить отчёт";
   const className = `pricing-card ${!isCheckout && plan.recommended ? "pricing-card--recommended" : ""} ${selected ? "is-selected" : ""}`;
