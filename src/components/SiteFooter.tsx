@@ -41,7 +41,7 @@ export function SiteFooter() {
         <div className="site-footer__bottom">
           <div className="site-footer__details">
             <span>© 2026 LeadFix</span>
-            <span>НПД Арефьев В.О.</span>
+            <span>ИП Арефьев В.О.</span>
             <span>ИНН 910907646492</span>
           </div>
           <div className="site-footer__contacts">
