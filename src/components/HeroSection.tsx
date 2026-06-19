@@ -20,17 +20,17 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
           <div className="hero__inner">
             <div className="hero__label">
               <span className="hero__label-icon" aria-hidden="true" />
-              <span>Проверка лендинга перед трафиком</span>
+              <span>Аудит лендинга перед запуском рекламы</span>
             </div>
 
             <h1 className="hero__title" id="leadfix-hero-title">
-              <span>Покажем, где лендинг теряет</span>
-              <span>заявки из рекламы</span>
+              <span>Аудит лендинга:</span>
+              <span>покажем, где страница теряет заявки</span>
             </h1>
 
             <p className="hero__subtitle">
-              <span>Находим слабые места в оффере, CTA, доверии, формах и мобильной версии.</span>
-              <span>Даём понятный план правок.</span>
+              Проверяем оффер, CTA, доверие, формы, структуру и мобильную версию лендинга.
+              На выходе вы получаете понятный список проблем и приоритет правок перед запуском рекламы.
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
@@ -39,10 +39,10 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
                 onChange={(event) => onUrlChange(event.target.value)}
                 type="url"
                 inputMode="url"
-                placeholder="https://site.ru"
+                placeholder="https://vash-sajt.ru"
                 aria-label="Адрес сайта"
               />
-              <button type="submit">Проверить лендинг</button>
+              <button type="submit">Найти ошибки</button>
             </form>
 
             <div className="hero__proof-row">
