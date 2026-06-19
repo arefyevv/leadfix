@@ -13519,3 +13519,801 @@ body:has(.full-audit-document) .cookie-notice {
     width: 100%;
   }
 }
+
+/* Experimental SaaS report page: /primer-audita-lendinga-v2 */
+.demo-report-v2-shell {
+  min-height: 100vh;
+  background: #f6f8fc;
+}
+
+.demo-report-v2-shell .site-footer {
+  margin-top: 64px !important;
+}
+
+.saas-report {
+  min-height: 100vh;
+  padding: 132px 20px 40px;
+  color: #0f172a;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(76, 119, 230, .14), transparent 34%),
+    linear-gradient(180deg, #f6f8fc 0%, #eef3fb 100%);
+  font-family: var(--font-body), var(--font-body-fallback);
+}
+
+.saas-report__shell {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+.saas-report__eyebrow {
+  margin: 0 0 10px;
+  color: #4c77e6;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.saas-report-hero,
+.saas-report-score,
+.saas-report-section,
+.saas-report-final {
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 22px 70px rgba(22, 42, 86, .08);
+}
+
+.saas-report-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: end;
+  padding: clamp(28px, 4vw, 46px);
+}
+
+.saas-report-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #0b1220;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: .95;
+  letter-spacing: 0;
+}
+
+.saas-report-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.saas-report-hero__meta span {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  color: #475569;
+  background: #f5f7fb;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.saas-report-hero__actions {
+  display: grid;
+  gap: 10px;
+  min-width: 260px;
+}
+
+.saas-report-hero__actions button {
+  min-height: 52px;
+  border: 1px solid rgba(76, 119, 230, .18);
+  border-radius: 16px;
+  color: #fff;
+  background: #4c77e6;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 14px 34px rgba(76, 119, 230, .24);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.saas-report-hero__actions button.is-secondary {
+  color: #0f172a;
+  background: #fff;
+  box-shadow: none;
+}
+
+.saas-report-hero__actions button:hover,
+.saas-report-shot-thumb:hover,
+.saas-report-shot__thumbs button:hover,
+.saas-report-shot__frame:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(22, 42, 86, .14);
+}
+
+.saas-report-score {
+  display: grid;
+  grid-template-columns: 260px 1fr 240px;
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.saas-report-score__dial,
+.saas-report-score__summary,
+.saas-report-kpis article,
+.saas-report-zone,
+.saas-report-priority,
+.saas-report-plan-card,
+.saas-report-map-card,
+.saas-report-issue,
+.saas-report-issue__grid > div {
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 22px;
+  background: #fff;
+}
+
+.saas-report-score__dial {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.saas-report-score__ring {
+  --score: 68;
+  width: 172px;
+  height: 172px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #fff 0 57%, transparent 58%),
+    conic-gradient(#4c77e6 calc(var(--score) * 1%), #e6ebf3 0);
+}
+
+.saas-report-score__ring strong {
+  display: block;
+  color: #0f172a;
+  font-size: 56px;
+  line-height: .86;
+}
+
+.saas-report-score__ring span {
+  margin-top: -42px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.saas-report-score__dial p {
+  margin: 18px 0 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.saas-report-score__summary {
+  padding: 26px;
+}
+
+.saas-report-score__summary h2,
+.saas-report-section__title h2,
+.saas-report-final h2 {
+  margin: 0;
+  color: #0b1220;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.05;
+}
+
+.saas-report-score__summary > p:not(.saas-report__eyebrow),
+.saas-report-final p,
+.saas-report-map-card p,
+.saas-report-map-card small,
+.saas-report-issue__grid p {
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.saas-report-score__scale {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 24px;
+  padding-top: 18px;
+}
+
+.saas-report-score__scale span {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.saas-report-score__scale .is-critical { background: rgba(239, 68, 68, .16); border-radius: 999px 0 0 999px; }
+.saas-report-score__scale .is-medium { background: rgba(245, 158, 11, .18); }
+.saas-report-score__scale .is-good { background: rgba(34, 197, 94, .18); }
+.saas-report-score__scale .is-strong { background: rgba(53, 212, 145, .22); border-radius: 0 999px 999px 0; }
+.saas-report-score__scale i {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #0f172a;
+  transform: translateX(-50%);
+}
+
+.saas-report-kpis {
+  display: grid;
+  gap: 10px;
+}
+
+.saas-report-kpis article {
+  padding: 16px;
+}
+
+.saas-report-kpis strong {
+  display: block;
+  color: #0f172a;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.saas-report-kpis span {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.saas-report-section {
+  margin-top: 22px;
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.saas-report-section__title {
+  margin-bottom: 22px;
+}
+
+.saas-report-zone-grid,
+.saas-report-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.saas-report-zone {
+  padding: 18px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.saas-report-zone:hover,
+.saas-report-map-card:hover,
+.saas-report-priority:hover,
+.saas-report-plan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(22, 42, 86, .1);
+}
+
+.saas-report-zone__top,
+.saas-report-map-card__head,
+.saas-report-issue__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.saas-report-zone h3,
+.saas-report-map-card h3,
+.saas-report-priority h3,
+.saas-report-plan-card h3,
+.saas-report-issue h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1.18;
+}
+
+.saas-report-zone strong,
+.saas-report-map-card__head strong {
+  color: #0f172a;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.saas-report-progress {
+  height: 9px;
+  overflow: hidden;
+  margin: 18px 0 12px;
+  background: #e8edf5;
+  border-radius: 999px;
+}
+
+.saas-report-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.saas-report-progress .is-critical { background: #ef4444; }
+.saas-report-progress .is-medium { background: #f59e0b; }
+.saas-report-progress .is-good { background: #22c55e; }
+.saas-report-progress .is-strong { background: #35d491; }
+
+.saas-report-status {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.saas-report-status.is-critical { color: #b91c1c; background: rgba(239, 68, 68, .12); }
+.saas-report-status.is-medium { color: #9a6100; background: rgba(245, 158, 11, .14); }
+.saas-report-status.is-good,
+.saas-report-status.is-strong { color: #0f7a45; background: rgba(34, 197, 94, .14); }
+
+.saas-report-priority-list,
+.saas-report-issues {
+  display: grid;
+  gap: 14px;
+}
+
+.saas-report-priority {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  padding: 20px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.saas-report-priority > span,
+.saas-report-map-card__head span,
+.saas-report-issue__head > span {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.saas-report-priority p,
+.saas-report-issue__head p {
+  margin: 0 0 8px;
+  color: #4c77e6;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.saas-report-priority b {
+  display: block;
+  margin-top: 12px;
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.saas-report-priority small {
+  display: block;
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.saas-report-priority em {
+  width: fit-content;
+  min-height: 30px;
+  padding: 7px 10px 0;
+  border-radius: 999px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.saas-report-priority.is-critical em,
+.saas-report-issue.is-critical .saas-report-issue__head b { color: #b91c1c; background: rgba(239, 68, 68, .12); }
+.saas-report-priority.is-high em,
+.saas-report-issue.is-high .saas-report-issue__head b { color: #9a6100; background: rgba(245, 158, 11, .14); }
+.saas-report-priority.is-medium em,
+.saas-report-priority.is-low em,
+.saas-report-issue.is-medium .saas-report-issue__head b,
+.saas-report-issue.is-low .saas-report-issue__head b { color: #0f7a45; background: rgba(34, 197, 94, .14); }
+
+.saas-report-plan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.saas-report-plan-card {
+  padding: 22px;
+}
+
+.saas-report-plan-card ul,
+.saas-report-final ul {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saas-report-plan-card li,
+.saas-report-final li {
+  position: relative;
+  padding-left: 18px;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.saas-report-plan-card li::before,
+.saas-report-final li::before {
+  content: "";
+  position: absolute;
+  top: .62em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #35d491;
+}
+
+.saas-report-map-card {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.saas-report-map-card small {
+  display: block;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, .08);
+}
+
+.saas-report-shot-thumb {
+  width: 100%;
+  height: 108px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 16px;
+  background: #eef3fb;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.saas-report-shot-thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.saas-report-shot-thumb.is-mobile {
+  width: min(120px, 100%);
+  margin: 0 auto;
+  border-radius: 24px;
+}
+
+.saas-report-issue {
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.saas-report-issue__head {
+  align-items: center;
+}
+
+.saas-report-issue__head b {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.saas-report-location {
+  margin: 20px 0 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.saas-report-location span {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.saas-report-location strong {
+  display: block;
+  margin-top: 5px;
+  color: #0f172a;
+}
+
+.saas-report-shot {
+  margin: 0 0 18px;
+}
+
+.saas-report-shot__frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 22px;
+  background: #f8fafc;
+  box-shadow: 0 18px 44px rgba(22, 42, 86, .08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.saas-report-shot__chrome {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  background: #f1f5f9;
+  border-bottom: 1px solid rgba(15, 23, 42, .08);
+}
+
+.saas-report-shot__chrome i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.saas-report-shot__frame img {
+  width: 100%;
+  max-height: 420px;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.saas-report-shot.is-mobile .saas-report-shot__frame {
+  width: min(330px, 100%);
+  margin: 0 auto;
+  border-radius: 28px;
+}
+
+.saas-report-shot.is-mobile .saas-report-shot__frame img {
+  max-height: 560px;
+}
+
+.saas-report-shot__highlight {
+  position: absolute;
+  inset: 23% 10% auto 10%;
+  height: 18%;
+  border: 2px solid rgba(76, 119, 230, .72);
+  border-radius: 16px;
+  background: rgba(76, 119, 230, .08);
+  box-shadow: 0 0 0 999px rgba(15, 23, 42, .10);
+  pointer-events: none;
+}
+
+.saas-report-shot figcaption {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.saas-report-shot figcaption b {
+  color: #0f172a;
+}
+
+.saas-report-shot__thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.saas-report-shot__thumbs button {
+  width: 92px;
+  height: 58px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: 12px;
+  background: #fff;
+  opacity: .7;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.saas-report-shot__thumbs button.is-active {
+  opacity: 1;
+  border-color: rgba(76, 119, 230, .55);
+  box-shadow: 0 0 0 3px rgba(76, 119, 230, .12);
+}
+
+.saas-report-shot__thumbs img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.saas-report-shot-placeholder {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 14px;
+  align-items: center;
+  min-height: 124px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px dashed rgba(100, 116, 139, .34);
+  border-radius: 18px;
+  background: #f8fafc;
+}
+
+.saas-report-shot-placeholder span {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(76, 119, 230, .16), rgba(53, 212, 145, .16));
+}
+
+.saas-report-shot-placeholder p {
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.saas-report-issue__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.saas-report-issue__grid > div {
+  padding: 16px;
+}
+
+.saas-report-issue__grid > div.is-wide {
+  grid-column: 1 / -1;
+}
+
+.saas-report-issue__grid b {
+  color: #4c77e6;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.saas-report-issue__grid p {
+  margin: 8px 0 0;
+}
+
+.saas-report-final {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 28px;
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.saas-report-final h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.saas-report-final h3 + ul {
+  margin-bottom: 22px;
+}
+
+.saas-report-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  border: 0;
+  background: rgba(4, 12, 24, .76);
+  cursor: zoom-out;
+}
+
+.saas-report-lightbox span {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  color: #fff;
+  font-size: 38px;
+  line-height: 1;
+}
+
+.saas-report-lightbox img {
+  max-width: min(1120px, 94vw);
+  max-height: 88vh;
+  display: block;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 0 32px 90px rgba(0, 0, 0, .34);
+}
+
+@media (max-width: 1040px) {
+  .saas-report-hero,
+  .saas-report-score,
+  .saas-report-final {
+    grid-template-columns: 1fr;
+  }
+
+  .saas-report-hero__actions {
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .saas-report-zone-grid,
+  .saas-report-map {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .saas-report {
+    padding: 112px 12px 28px;
+  }
+
+  .saas-report-hero,
+  .saas-report-section,
+  .saas-report-score,
+  .saas-report-final {
+    border-radius: 22px;
+  }
+
+  .saas-report-hero__actions,
+  .saas-report-zone-grid,
+  .saas-report-map,
+  .saas-report-plan,
+  .saas-report-issue__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .saas-report-priority,
+  .saas-report-issue__head {
+    grid-template-columns: 1fr;
+  }
+
+  .saas-report-priority {
+    display: grid;
+  }
+
+  .saas-report-hero__actions button,
+  .saas-report-hero__meta span,
+  .saas-report-score__summary > p:not(.saas-report__eyebrow),
+  .saas-report-zone h3,
+  .saas-report-map-card p,
+  .saas-report-issue__grid p,
+  .saas-report-shot-placeholder p {
+    font-size: 15px;
+  }
+
+  .saas-report-shot__frame img {
+    max-height: 300px;
+  }
+}
