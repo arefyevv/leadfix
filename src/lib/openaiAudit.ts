@@ -8,6 +8,10 @@ const PROXYAPI_BASE_URL = "https://openai.api.proxyapi.ru/v1";
 const AI_TIMEOUT_MS = Number(process.env.PROXYAPI_AUDIT_TIMEOUT_MS || 240_000);
 const DEFAULT_MODEL = "gpt-5.4-mini";
 
+type EnhanceAuditOptions = {
+  plan?: string;
+};
+
 type OpenAIResponse = {
   output_text?: string;
   output?: Array<{
@@ -109,11 +113,22 @@ async function buildVisionContent(analysis: AuditAnalysis, promptText: string): 
   return content.length > 1 ? content : promptText;
 }
 
-export async function enhanceAuditWithAI(analysis: AuditAnalysis): Promise<AuditAnalysis> {
+function getAuditModel(plan?: string) {
+  const normalizedPlan = (plan || "").toLocaleLowerCase("ru-RU");
+  const fallbackModel = process.env.PROXYAPI_AUDIT_MODEL || process.env.OPENAI_AUDIT_MODEL || DEFAULT_MODEL;
+
+  if (normalizedPlan.includes("pro")) {
+    return process.env.PROXYAPI_PRO_MODEL || fallbackModel;
+  }
+
+  return process.env.PROXYAPI_EXPRESS_MODEL || fallbackModel;
+}
+
+export async function enhanceAuditWithAI(analysis: AuditAnalysis, options: EnhanceAuditOptions = {}): Promise<AuditAnalysis> {
   const apiKey = process.env.PROXYAPI_API_KEY;
   if (!apiKey) return analysis;
 
-  const model = process.env.PROXYAPI_AUDIT_MODEL || process.env.OPENAI_AUDIT_MODEL || DEFAULT_MODEL;
+  const model = getAuditModel(options.plan);
   const baseUrl = (process.env.PROXYAPI_BASE_URL || PROXYAPI_BASE_URL).replace(/\/$/, "");
   const prompt = buildAuditPrompt(analysis);
   const userContent = await buildVisionContent(analysis, prompt.user);

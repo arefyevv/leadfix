@@ -38,6 +38,7 @@ export function FullReportRoute() {
     }
 
     const leadId = searchParams.get("lead") ?? "";
+    const plan = searchParams.get("plan") ?? "";
     const requiresAi = Boolean(leadId);
 
     setUrl(normalizedUrl);
@@ -47,7 +48,7 @@ export function FullReportRoute() {
       return;
     }
 
-    fetchAudit(normalizedUrl, { requireAi: requiresAi, leadId })
+    fetchAudit(normalizedUrl, { requireAi: requiresAi, leadId, plan })
       .then(setAnalysis)
       .catch((requestError: unknown) => setError(requestError instanceof Error ? requestError.message : "Не удалось загрузить отчёт."));
   }, [searchParams]);

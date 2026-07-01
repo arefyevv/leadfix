@@ -543,7 +543,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
   const criticalIssuesCount = auditResult.issues.filter((issue) => issue.severity === "critical").length;
   const siteHeading = analysis.h1[0] || "Главный заголовок не найден";
   const displayUrl = analysis.url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
-  const reportPlan = "Экспресс";
+  const reportPlan = analysis.plan || "Экспресс";
   const activeScoreLevel = getScoreLevel(reportScore);
   const gaugeSegments = getGaugeSegments(reportScore);
   const isDemoReport = displayUrl === "demo.leadfix.ru";

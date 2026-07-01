@@ -113,6 +113,7 @@ export type AuditAnalysis = {
   screenshots?: AuditScreenshot[];
   aiProvider?: "proxyapi";
   aiModel?: string;
+  plan?: string;
 };
 
 export type AnalyzeResponse = {

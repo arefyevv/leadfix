@@ -7,6 +7,7 @@ const CACHE_PREFIX = "leadfix:audit:";
 type FetchAuditOptions = {
   requireAi?: boolean;
   leadId?: string;
+  plan?: string;
 };
 
 export function normalizeClientUrl(value: string) {
@@ -44,7 +45,7 @@ export async function fetchAudit(url: string, options: FetchAuditOptions = {}) {
   const response = await fetch("/api/analyze", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, requireAi: options.requireAi === true, leadId: options.leadId })
+    body: JSON.stringify({ url, requireAi: options.requireAi === true, leadId: options.leadId, plan: options.plan })
   });
   const data = (await response.json()) as AnalyzeResponse | { error?: string };
 

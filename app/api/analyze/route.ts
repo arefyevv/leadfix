@@ -75,8 +75,9 @@ async function loadHtml(url: URL) {
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { url?: unknown; requireAi?: unknown; leadId?: unknown };
+    const body = (await request.json()) as { url?: unknown; requireAi?: unknown; leadId?: unknown; plan?: unknown };
     const requiresAi = body.requireAi === true;
+    const plan = typeof body.plan === "string" ? body.plan.trim() : "";
 
     if (requiresAi) {
       const storedReport = await readAuditReportByLeadId(body.leadId);
@@ -109,9 +110,10 @@ export async function POST(request: Request) {
       : [];
     const baseAnalysis = {
       ...analyzeHtml(html, finalUrl),
-      screenshots
+      screenshots,
+      plan
     };
-    const analysis = requiresAi ? await enhanceAuditWithAI(baseAnalysis) : baseAnalysis;
+    const analysis = requiresAi ? await enhanceAuditWithAI(baseAnalysis, { plan }) : baseAnalysis;
 
     if (requiresAi && analysis.auditResult.metadata.generatedBy !== "proxyapi") {
       return NextResponse.json(
