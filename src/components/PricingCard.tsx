@@ -46,7 +46,7 @@ export function PricingCard({ plan, selected, onSelect, variant = "default" }: P
 
   const content = (
     <>
-      {!isCheckout && plan.recommended && <span className="pricing-card__badge">Популярный выбор</span>}
+      {!isCheckout && plan.recommended && <span className="pricing-card__badge">Рекомендуем</span>}
       {isCheckout && selected && <span className="pricing-card__selected-badge">Выбрано</span>}
       {!isCheckout && (
         <span className="pricing-card__icon" aria-hidden="true">
