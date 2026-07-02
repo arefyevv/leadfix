@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
 import { readAuditReportByLeadId, saveAuditReportByLeadId } from "@/lib/auditReports";
+import { saveAuditToSheets } from "@/lib/auditSheets";
 import { enforceFreeAuditLimit, readFreeAuditCache, saveFreeAuditCache } from "@/lib/freeAuditAccess";
 import { enhanceAuditWithAI } from "@/lib/openaiAudit";
 import { captureAuditScreenshots } from "@/lib/screenshotAudit";
@@ -78,6 +79,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as { url?: unknown; requireAi?: unknown; leadId?: unknown; plan?: unknown };
     const requiresAi = body.requireAi === true;
     const plan = typeof body.plan === "string" ? body.plan.trim() : "";
+    const auditId = typeof body.leadId === "string" ? body.leadId.trim() : "";
 
     if (requiresAi) {
       const storedReport = await readAuditReportByLeadId(body.leadId);
@@ -126,6 +128,9 @@ export async function POST(request: Request) {
 
     if (requiresAi) {
       await saveAuditReportByLeadId(body.leadId, analysis);
+      await saveAuditToSheets(auditId, analysis).catch((sheetsError) => {
+        console.error("Google Sheets audit log failed", sheetsError);
+      });
     } else {
       await saveFreeAuditCache(url, analysis);
     }
