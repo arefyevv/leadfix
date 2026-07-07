@@ -47,7 +47,7 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
             </form>
 
             <div className="hero__proof-row">
-              <p className="hero__proof">Первые ошибки покажем бесплатно за 1 минуту</p>
+              <p className="hero__proof">Первые проблемы покажем бесплатно за 1 минуту</p>
             </div>
             <p className="form-error" aria-live="polite">
               {error}
