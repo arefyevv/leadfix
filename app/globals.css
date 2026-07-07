@@ -9688,6 +9688,10 @@ h6,
   text-decoration: none;
 }
 
+.processing-card .success-actions {
+  justify-content: center;
+}
+
 .processing-page {
   place-items: center;
   padding: 132px 20px 64px;

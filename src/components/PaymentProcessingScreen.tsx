@@ -110,12 +110,12 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
       <section className="success-card processing-card" aria-labelledby="processing-title">
         <p className="full-audit__eyebrow">Оплата прошла</p>
         <h1 id="processing-title">
-          {isExpertReview ? "Формируем AI-отчет для LeadFix Pro" : "Формируем аудит лендинга"}
+          {isExpertReview ? "Проводим аудит LeadFix Pro" : "Проводим аудит лендинга"}
         </h1>
         <p>
           {isExpertReview
-            ? "Сначала готовим автоматический AI-отчет. После этого результат уйдет в экспертную проверку, а вы сможете открыть базовый полный отчет сразу."
-            : "Запускаем анализ URL и готовим отчет. Не закрывайте страницу: когда проверка завершится, отчет откроется автоматически."}
+            ? "Проверяем страницу и готовим отчет. После автоматической проверки результат уйдет на экспертную доработку."
+            : "Проверяем страницу и собираем отчет. Когда аудит завершится, отчет откроется автоматически."}
         </p>
 
         <div className="success-meta processing-meta">
