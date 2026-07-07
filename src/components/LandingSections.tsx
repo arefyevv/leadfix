@@ -165,7 +165,7 @@ export function LandingSections() {
   return (
     <div className="landing-flow">
       <section className="landing-section" id="audience">
-        <div className="section-kicker">Для кого</div>
+        <div className="section-kicker">Для кого сервис</div>
         <div className="section-head">
           <h2>Когда сайт уже есть, но заявок мало</h2>
           <p>LeadFix покажет, где страница мешает оставить заявку: непонятное предложение, слабое доверие, сложная форма или неудобная мобильная версия.</p>
