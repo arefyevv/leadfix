@@ -35,7 +35,7 @@ const audienceUseCaseHighlights = [
 
 const auditChecks = [
   {
-    title: "Оффер и первый экран",
+    title: "Первый экран и предложение",
     summary: "Проверяем, понятно ли за первые секунды, что вы предлагаете, для кого это и какую пользу получит клиент.",
     details: [
       "Есть ли конкретное обещание результата, а не общий красивый слоган.",
@@ -210,7 +210,7 @@ export function LandingSections() {
         <div className="section-kicker">Что проверяет аудит</div>
         <div className="section-head">
           <h2>Не общий разбор сайта, а точки потери конверсии</h2>
-          <p>Каждый блок отчёта привязан к решению: что мешает заявке и что исправить в первую очередь.</p>
+          <p>Каждый блок отчёта показывает, что мешает заявке и что исправить в первую очередь.</p>
         </div>
         <div className="audit-accordion-layout">
           <div className="audit-accordion">
