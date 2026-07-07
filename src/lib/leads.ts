@@ -1,4 +1,4 @@
-import { mkdir, appendFile } from "node:fs/promises";
+import { mkdir, appendFile, readFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import nodemailer from "nodemailer";
@@ -36,6 +36,24 @@ export async function saveLead(lead: LeadRecord) {
     const fallbackFile = path.join(os.tmpdir(), "leadfix-leads.jsonl");
     await appendFile(fallbackFile, `${JSON.stringify(lead)}\n`, "utf8");
   }
+}
+
+export async function findLeadById(leadId: string) {
+  const normalizedLeadId = /^[a-zA-Z0-9_-]+$/.test(leadId) ? leadId : "";
+  if (!normalizedLeadId) return null;
+
+  try {
+    const lines = (await readFile(LEADS_FILE, "utf8")).split(/\r?\n/).filter(Boolean);
+
+    for (let index = lines.length - 1; index >= 0; index -= 1) {
+      const lead = JSON.parse(lines[index]) as LeadRecord;
+      if (lead.id === normalizedLeadId) return lead;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
 }
 
 export async function notifyLead(lead: LeadRecord) {

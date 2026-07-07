@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { buildReportUrl, generatePaidAudit } from "@/lib/paidAudit";
-import { markReportDeliverySent, wasReportDeliverySent } from "@/lib/reportDelivery";
-import { notifyOwnerReportReady, sendReportReadyEmail } from "@/lib/reportEmail";
+import { generatePaidAudit } from "@/lib/paidAudit";
+import { deliverReportNotification } from "@/lib/reportNotifications";
 
 type YooKassaWebhookBody = {
   event?: string;
@@ -42,15 +41,7 @@ async function processPaidAudit(body: YooKassaWebhookBody) {
 
   try {
     await generatePaidAudit({ leadId, plan, url });
-    const reportUrl = buildReportUrl({ leadId, plan, url });
-
-    if (await wasReportDeliverySent(leadId)) return;
-
-    await Promise.allSettled([
-      sendReportReadyEmail({ to: email, plan, reportUrl }),
-      notifyOwnerReportReady({ leadId, auditedUrl: url, to: email, plan, reportUrl })
-    ]);
-    await markReportDeliverySent(leadId);
+    await deliverReportNotification({ leadId, plan, url, email });
   } finally {
     runningJobs.delete(leadId);
   }

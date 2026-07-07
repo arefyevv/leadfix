@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { analyzeHtml } from "@/lib/analyzeHtml";
 import { enforceFreeAuditLimit, readFreeAuditCache, saveFreeAuditCache } from "@/lib/freeAuditAccess";
+import { findLeadById } from "@/lib/leads";
 import { generatePaidAudit, isAuditInputError, loadAuditHtml, normalizeAuditUrl } from "@/lib/paidAudit";
+import { deliverReportNotification } from "@/lib/reportNotifications";
 
 export async function POST(request: Request) {
   try {
@@ -10,10 +12,21 @@ export async function POST(request: Request) {
     const plan = typeof body.plan === "string" ? body.plan.trim() : "";
 
     if (requiresAi) {
+      const leadId = String(body.leadId || "");
       const analysis = await generatePaidAudit({
         url: String(body.url || ""),
-        leadId: String(body.leadId || ""),
+        leadId,
         plan
+      });
+      const lead = await findLeadById(leadId);
+
+      void deliverReportNotification({
+        leadId,
+        plan,
+        url: String(body.url || ""),
+        email: lead?.email || ""
+      }).catch((deliveryError) => {
+        console.error("Paid audit report delivery failed", deliveryError);
       });
 
       return NextResponse.json({
