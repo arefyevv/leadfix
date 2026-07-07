@@ -19,7 +19,7 @@ export async function deliverReportNotification({ leadId, plan, url, email = "" 
   ];
 
   if (email) {
-    deliveryTasks.push(sendReportReadyEmail({ to: email, plan, reportUrl }));
+    deliveryTasks.push(sendReportReadyEmail({ to: email, plan, reportUrl, auditedUrl: url }));
   }
 
   const results = await Promise.allSettled(deliveryTasks);

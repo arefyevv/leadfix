@@ -4,6 +4,7 @@ type SendReportReadyEmailInput = {
   to: string;
   plan: string;
   reportUrl: string;
+  auditedUrl: string;
 };
 
 type NotifyOwnerInput = SendReportReadyEmailInput & {
@@ -41,7 +42,7 @@ function createTransporter() {
   };
 }
 
-export async function sendReportReadyEmail({ to, plan, reportUrl }: SendReportReadyEmailInput) {
+export async function sendReportReadyEmail({ to, plan, reportUrl, auditedUrl }: SendReportReadyEmailInput) {
   const mailer = createTransporter();
   if (!mailer || !to) return;
 
@@ -52,9 +53,11 @@ export async function sendReportReadyEmail({ to, plan, reportUrl }: SendReportRe
     "Ваш аудит LeadFix готов:",
     reportUrl,
     "",
+    `Проверенный сайт: ${auditedUrl}`,
+    "",
     isPro
       ? "По тарифу LeadFix Pro автоматический AI-отчет доступен сразу. Финальная экспертная проверка будет подготовлена отдельно."
-      : "Отчет доступен по ссылке выше.",
+      : `Отчет по сайту ${auditedUrl} доступен по ссылке выше.`,
     "",
     "Если ссылка не открывается, напишите в Telegram: @LeadFixRu"
   ].join("\n");
