@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 
-const navItems = [
+type NavItem = {
+  label: string;
+  href: string;
+  opensCooperation?: boolean;
+};
+
+const navItems: NavItem[] = [
   { label: "Для кого", href: "/#audience" },
   { label: "Что проверяем", href: "/#audit-checks" },
   { label: "Пример аудита", href: "/#cases" },
   { label: "Тарифы", href: "/#pricing" },
+  { label: "Сотрудничество", href: "#cooperation", opensCooperation: true },
   { label: "FAQ", href: "/#faq" }
 ];
 
@@ -116,7 +123,13 @@ export function Header() {
           aria-hidden="true"
         />
         {navItems.map((item) => (
-          <a href={item.href} key={item.label} data-href={item.href} className={activeHref === item.href ? "is-active" : undefined}>
+          <a
+            href={item.href}
+            key={item.label}
+            data-href={item.href}
+            data-cooperation-trigger={item.opensCooperation ? "true" : undefined}
+            className={activeHref === item.href ? "is-active" : undefined}
+          >
             {item.label}
           </a>
         ))}
@@ -128,7 +141,12 @@ export function Header() {
 
       <nav className={menuOpen ? "mobile-menu-panel is-open" : "mobile-menu-panel"} aria-label="Мобильное меню">
         {navItems.map((item) => (
-          <a href={item.href} key={item.label} onClick={closeMobileMenu}>
+          <a
+            href={item.href}
+            key={item.label}
+            data-cooperation-trigger={item.opensCooperation ? "true" : undefined}
+            onClick={closeMobileMenu}
+          >
             {item.label}
           </a>
         ))}

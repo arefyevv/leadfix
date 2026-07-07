@@ -18,6 +18,7 @@ export function SiteFooter() {
               <a href="/#audit-checks">Что проверяем</a>
               <a href="/primer-audita-lendinga">Пример аудита</a>
               <a href="/#pricing">Тарифы</a>
+              <a href="#cooperation" data-cooperation-trigger="true">Сотрудничество</a>
               <a href="/#faq">FAQ</a>
             </div>
             <div>

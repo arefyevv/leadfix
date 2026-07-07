@@ -4008,6 +4008,7 @@ h6 {
   position: relative;
   display: flex;
   align-items: center;
+  gap: 4px;
   min-height: 52px;
   padding: 4px;
   background: linear-gradient(180deg, rgba(255, 255, 255, .105), rgba(255, 255, 255, .055));
@@ -4086,6 +4087,17 @@ h6 {
 .leadfix-fixed-nav .mobile-menu-button,
 .leadfix-fixed-nav .mobile-menu-panel {
   display: none;
+}
+
+@media (max-width: 1120px) {
+  .leadfix-fixed-nav .laptop-menu a {
+    padding: 0 11px;
+    font-size: 12px;
+  }
+
+  .leadfix-fixed-nav .laptop-cta {
+    padding: 0 16px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -9313,6 +9325,170 @@ body:has(.checkout-audit) .site-footer {
   width: 16px;
   height: 16px;
   fill: currentColor;
+}
+
+.cooperation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(8, 16, 28, .58);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.cooperation-modal__card {
+  position: relative;
+  width: min(100%, 560px);
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  padding: clamp(24px, 4vw, 34px);
+  color: #172033;
+  background: #fff;
+  border: 1px solid rgba(18, 31, 52, .1);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(8, 16, 28, .26);
+}
+
+.cooperation-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #667085;
+  background: #f3f6fa;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.cooperation-modal__close:hover {
+  color: #172033;
+  background: #eaf0f7;
+  transform: translateY(-1px);
+}
+
+.cooperation-modal__eyebrow {
+  margin: 0 0 12px;
+  color: #1f7a5a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.cooperation-modal__card h2 {
+  max-width: 420px;
+  margin: 0;
+  color: #0f172a;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.cooperation-modal__intro {
+  max-width: 450px;
+  margin: 16px 0 24px;
+  color: #5d6a7c;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.cooperation-form {
+  display: grid;
+  gap: 14px;
+}
+
+.cooperation-form label {
+  display: grid;
+  gap: 7px;
+}
+
+.cooperation-form span {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cooperation-form em {
+  color: #7a8494;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.cooperation-form input,
+.cooperation-form textarea {
+  width: 100%;
+  border: 1px solid #dce5ef;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #172033;
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.cooperation-form input {
+  height: 48px;
+  padding: 0 14px;
+}
+
+.cooperation-form textarea {
+  min-height: 128px;
+  resize: vertical;
+  padding: 13px 14px;
+  line-height: 1.5;
+}
+
+.cooperation-form input:focus,
+.cooperation-form textarea:focus {
+  background: #fff;
+  border-color: #37d68b;
+  box-shadow: 0 0 0 4px rgba(55, 214, 139, .14);
+}
+
+.cooperation-form button {
+  min-height: 52px;
+  margin-top: 6px;
+  color: #06131f;
+  background: linear-gradient(180deg, #47e39b 0%, #2ed08a 100%);
+  border: 0;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 34px rgba(47, 208, 138, .24);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.cooperation-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(47, 208, 138, .3);
+}
+
+@media (max-width: 620px) {
+  .cooperation-modal {
+    align-items: end;
+    padding: 10px;
+  }
+
+  .cooperation-modal__card {
+    width: 100%;
+    max-height: calc(100vh - 20px);
+    padding: 24px 18px 18px;
+    border-radius: 22px;
+  }
 }
 
 @media (max-width: 1180px) {

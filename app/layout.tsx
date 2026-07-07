@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CooperationModal } from "@/components/CooperationModal";
 import { CookieNotice } from "@/components/CookieNotice";
 import { Inter, Inter_Tight } from "next/font/google";
 import { Metrika } from "@/components/Metrika";
@@ -125,6 +126,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         {children}
         <SiteFooter />
+        <CooperationModal />
         <CookieNotice />
         <Metrika />
       </body>
