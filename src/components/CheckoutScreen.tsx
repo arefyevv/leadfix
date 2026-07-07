@@ -6,7 +6,6 @@ type CheckoutScreenProps = {
   urlValue: string;
   selectedPlan: string;
   email: string;
-  telegram: string;
   consent: boolean;
   error: string;
   success: boolean;
@@ -14,7 +13,6 @@ type CheckoutScreenProps = {
   onPlanChange: (plan: string) => void;
   onUrlChange: (url: string) => void;
   onEmailChange: (email: string) => void;
-  onTelegramChange: (telegram: string) => void;
   onConsentChange: (consent: boolean) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
@@ -23,7 +21,6 @@ export function CheckoutScreen({
   urlValue,
   selectedPlan,
   email,
-  telegram,
   consent,
   error,
   success,
@@ -31,7 +28,6 @@ export function CheckoutScreen({
   onPlanChange,
   onUrlChange,
   onEmailChange,
-  onTelegramChange,
   onConsentChange,
   onSubmit
 }: CheckoutScreenProps) {
@@ -59,7 +55,7 @@ export function CheckoutScreen({
               <aside className="checkout-audit__form-card">
                 <form className="checkout-form" onSubmit={onSubmit} noValidate>
                   <h3>Куда отправить аудит</h3>
-                  <p>Укажите контакты. После создания заявки откроется страница оплаты.</p>
+                  <p>Укажите сайт и email. После оплаты отчет придет на почту.</p>
 
                   <div className="field">
                     <label htmlFor="checkout-url">Сайт на проверку</label>
@@ -74,13 +70,8 @@ export function CheckoutScreen({
                   </div>
 
                   <div className="field">
-                    <label htmlFor="checkout-email">Email</label>
-                    <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="you@company.ru" />
-                  </div>
-
-                  <div className="field">
-                    <label htmlFor="checkout-telegram">Telegram</label>
-                    <input id="checkout-telegram" value={telegram} onChange={(event) => onTelegramChange(event.target.value)} type="text" placeholder="@username" />
+                    <label htmlFor="checkout-email">Email для получения отчета</label>
+                    <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="name@company.ru" />
                   </div>
 
                   <label className="checkout-consent">
@@ -92,13 +83,10 @@ export function CheckoutScreen({
 
                   <p className="checkout-error" aria-live="polite">{error}</p>
                   <button className="checkout-submit" type="submit" disabled={submitting}>
-                    {submitting ? "Создаем заявку..." : "Создать заявку"}
+                    {submitting ? "Открываем оплату..." : "Оплатить аудит"}
                   </button>
                 </form>
 
-                <div className="guarantee-block">
-                  Отчет носит информационно-аналитический характер и не гарантирует рост заявок.
-                </div>
                 {success && <div className="payment-placeholder">Заявка создана. Открываем оплату.</div>}
               </aside>
             </div>
