@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
@@ -34,42 +34,10 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
   }
 ];
 
-const zoneScrollPositions: Record<AnalysisKey, number> = {
-  offer: 0.405,
-  cta: 0.405,
-  trust: 0.475,
-  mobile: 0.545,
-  structure: 0.545
-};
-
 export function ReportShowcase() {
   const [hoveredCard, setHoveredCard] = useState<AnalysisKey | null>(null);
   const [selectedCard, setSelectedCard] = useState<AnalysisKey | null>(null);
   const activeCard = hoveredCard ?? selectedCard;
-  const shotViewportRef = useRef<HTMLDivElement | null>(null);
-  const shotCanvasRef = useRef<HTMLDivElement | null>(null);
-  const [canvasOffset, setCanvasOffset] = useState(0);
-
-  useEffect(() => {
-    const viewport = shotViewportRef.current;
-    const canvas = shotCanvasRef.current;
-    if (!viewport || !canvas) return;
-
-    if (!activeCard) {
-      setCanvasOffset(0);
-      return;
-    }
-
-    const maxOffset = Math.max(0, canvas.scrollHeight - viewport.clientHeight);
-    if (maxOffset <= 0) {
-      setCanvasOffset(0);
-      return;
-    }
-
-    const targetTop = zoneScrollPositions[activeCard] * canvas.scrollHeight;
-    const nextOffset = Math.max(0, Math.min(maxOffset, targetTop - viewport.clientHeight * 0.16));
-    setCanvasOffset(nextOffset);
-  }, [activeCard]);
 
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
@@ -88,12 +56,8 @@ export function ReportShowcase() {
           onMouseLeave={() => setHoveredCard(null)}
         >
           <figure className="report-showcase__shot report-showcase__shot--main">
-            <div className="report-showcase__shot-viewport" ref={shotViewportRef}>
-              <div
-                className="report-showcase__shot-canvas"
-                ref={shotCanvasRef}
-                style={{ transform: `translateY(-${canvasOffset}px)` }}
-              >
+            <div className="report-showcase__shot-viewport">
+              <div className="report-showcase__shot-canvas">
                 <img
                   className="report-showcase__image report-showcase__image--base"
                   src={reportScreenshot}
