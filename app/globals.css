@@ -8498,6 +8498,11 @@ body:has(.checkout-audit) .site-footer {
   font-size: 13px;
   font-weight: 800;
 }
+.checkout-pricing .pricing-card.is-selected .pricing-card__cta {
+  color: #16845a;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px #31c98d;
+}
 
 /* Landing pricing uses the compact checkout card rhythm, with the middle plan still highlighted. */
 #pricing .landing-pricing {
