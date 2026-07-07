@@ -29,9 +29,9 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
             </h1>
 
             <p className="hero__subtitle">
-              <span>Находим слабые места в оффере, CTA, доверии, формах и мобильной версии.</span>
+              <span>Сервис покажет, где лендинг мешает посетителю оставить заявку,</span>
               {" "}
-              <span>Даём понятный план правок.</span>
+              <span>и даст понятный список правок перед запуском рекламы.</span>
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
