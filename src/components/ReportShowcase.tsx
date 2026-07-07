@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
 
 const reportScreenshot = "/screenshots/report-demo-full.png";
@@ -35,10 +33,6 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
 ];
 
 export function ReportShowcase() {
-  const [hoveredCard, setHoveredCard] = useState<AnalysisKey | null>(null);
-  const [selectedCard, setSelectedCard] = useState<AnalysisKey | null>(null);
-  const activeCard = hoveredCard ?? selectedCard;
-
   return (
     <section className="landing-section result-showcase report-showcase" id="cases">
       <div className="report-showcase__inner">
@@ -51,10 +45,7 @@ export function ReportShowcase() {
           </p>
         </div>
 
-        <div
-          className={`report-showcase__stage report-showcase__stage--real${activeCard ? ` is-highlighting is-${activeCard}` : ""}`}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
+        <div className="report-showcase__stage report-showcase__stage--real">
           <figure className="report-showcase__shot report-showcase__shot--main">
             <div className="report-showcase__shot-viewport">
               <div className="report-showcase__shot-canvas">
@@ -89,16 +80,7 @@ export function ReportShowcase() {
 
           <div className="report-showcase__cards" aria-label="Типы анализа в отчёте">
             {analysisCards.map((card) => (
-              <article
-                className={activeCard === card.key ? "is-active" : undefined}
-                key={card.key}
-                onClick={() => setSelectedCard(card.key)}
-                onFocus={() => setHoveredCard(card.key)}
-                onMouseEnter={() => {
-                  setHoveredCard(card.key);
-                }}
-                tabIndex={0}
-              >
+              <article key={card.key}>
                 <span className="report-showcase__marker" aria-hidden="true" />
                 <div className="report-showcase__card-copy">
                   <h3>{card.title}</h3>

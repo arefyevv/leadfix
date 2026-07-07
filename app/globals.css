@@ -13479,6 +13479,17 @@ body:has(.full-audit-document) .cookie-notice {
   clip-path: inset(52.6% 4% 39.2% 4% round 16px) !important;
 }
 
+.report-showcase__stage--real .report-showcase__cards article,
+.report-showcase__stage--real .report-showcase__cards article:hover,
+.report-showcase__stage--real .report-showcase__cards article:focus-visible,
+.report-showcase__stage--real .report-showcase__cards article.is-active {
+  cursor: default !important;
+  transform: none !important;
+  border-color: rgba(255, 255, 255, .13) !important;
+  background: rgba(255, 255, 255, .075) !important;
+  box-shadow: none !important;
+}
+
 .site-footer {
   margin-top: clamp(132px, 11vw, 184px) !important;
 }
