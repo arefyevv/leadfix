@@ -20,6 +20,8 @@ const auditSteps = [
   "Собираем отчет и рекомендации"
 ];
 
+const REPORT_REDIRECT_TIMEOUT_MS = 150_000;
+
 function isProPlan(plan: string) {
   return plan.toLocaleLowerCase("ru-RU").includes("pro");
 }
@@ -93,6 +95,16 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
     return () => window.clearTimeout(redirectTimer);
   }, [isReady, normalizedUrl, reportHref, router]);
 
+  useEffect(() => {
+    if (!normalizedUrl || !leadId || isReady || error) return;
+
+    const fallbackTimer = window.setTimeout(() => {
+      router.push(reportHref);
+    }, REPORT_REDIRECT_TIMEOUT_MS);
+
+    return () => window.clearTimeout(fallbackTimer);
+  }, [error, isReady, leadId, normalizedUrl, reportHref, router]);
+
   return (
     <main className="success-page processing-page screen">
       <section className="success-card processing-card" aria-labelledby="processing-title">
@@ -145,6 +157,10 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
           {isReady ? (
             <a className="checkout-submit" href={reportHref}>
               Открыть отчет
+            </a>
+          ) : leadId && progressValue >= 95 ? (
+            <a className="checkout-submit" href={reportHref}>
+              Проверить отчет
             </a>
           ) : (
             <button className="checkout-submit" type="button" disabled>
