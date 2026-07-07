@@ -72,7 +72,7 @@ export function CooperationModal() {
         <p className="cooperation-modal__eyebrow">Сотрудничество</p>
         <h2 id="cooperation-title">Обсудим партнёрство</h2>
         <p className="cooperation-modal__intro">
-          Оставьте короткое описание: кто вы, какой сайт или проект хотите обсудить и что важно на старте.
+          Приглашаем к сотрудничеству директологов, маркетологов, веб-студии.
         </p>
 
         <form className="cooperation-form" onSubmit={handleSubmit}>
@@ -83,7 +83,7 @@ export function CooperationModal() {
 
           <label>
             <span>Представитель</span>
-            <input name="representative" type="text" autoComplete="name" required />
+            <input name="representative" type="text" autoComplete="name" />
           </label>
 
           <label>
