@@ -134,17 +134,10 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
           </div>
         </div>
 
-        <ol className="processing-steps">
-          {auditSteps.map((step, index) => (
-            <li
-              key={step}
-              className={index < stepIndex || isReady ? "is-done" : index === stepIndex ? "is-current" : ""}
-            >
-              <span aria-hidden="true" />
-              <p>{step}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="processing-current-step" aria-live="polite">
+          <span aria-hidden="true" />
+          <p>{isReady ? "Отчет готов" : auditSteps[stepIndex]}</p>
+        </div>
 
         <div className="processing-notice">
           {error ||
