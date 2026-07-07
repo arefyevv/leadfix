@@ -51,7 +51,7 @@ export function SiteFooter() {
               </svg>
               <span>Telegram</span>
             </a>
-            <a href="mailto:viktor-82rus@ya.ru">Написать на почту</a>
+            <a href="mailto:info@leadfix.ru">Написать на почту</a>
           </div>
         </div>
       </div>
