@@ -34,15 +34,21 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
               <span>и даст понятный список правок перед запуском рекламы.</span>
             </p>
 
-            <form className="site-form" onSubmit={onSubmit} noValidate>
-              <input
-                value={url}
-                onChange={(event) => onUrlChange(event.target.value)}
-                type="url"
-                inputMode="url"
-                placeholder="https://site.ru"
-                aria-label="Адрес сайта"
-              />
+            <form className={url ? "site-form has-value" : "site-form"} onSubmit={onSubmit} noValidate>
+              <label className="site-form__field">
+                <span className="site-form__visual-placeholder" aria-hidden="true">
+                  <span className="site-form__protocol">https://</span>
+                  {!url && <span className="site-form__typed">site.ru</span>}
+                </span>
+                <input
+                  value={url}
+                  onChange={(event) => onUrlChange(event.target.value.replace(/^https?:\/\//i, ""))}
+                  type="text"
+                  inputMode="url"
+                  placeholder=""
+                  aria-label="Адрес сайта"
+                />
+              </label>
               <button type="submit">Проверить лендинг</button>
             </form>
 
