@@ -78,15 +78,19 @@ export async function notifyOwnerReportReady({ leadId, auditedUrl, to, plan, rep
   await mailer.transporter.sendMail({
     from: mailer.config.from,
     to: ownerEmail,
-    subject: `LeadFix: отчет готов ${plan}`,
+    subject: `Новая заявка LeadFix: ${plan}`,
     text: [
-      "Отчет LeadFix готов.",
+      "Новая заявка LeadFix",
       "",
       `ID: ${leadId}`,
       `Тариф: ${plan}`,
       `URL: ${auditedUrl}`,
-      `Email клиента: ${to}`,
+      `Email: ${to || "-"}`,
+      "Telegram: -",
+      "Источник: checkout",
+      "Статус: report_ready",
       "",
+      "Ссылка на отчет:",
       reportUrl
     ].join("\n")
   });
