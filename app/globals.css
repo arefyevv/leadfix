@@ -8298,7 +8298,7 @@ body:has(.checkout-audit) .site-footer {
 }
 .checkout-audit__form-card {
   display: flex;
-  min-height: 560px;
+  min-height: 600px;
   flex-direction: column;
   padding: 24px;
   color: #16233d;
@@ -8387,7 +8387,7 @@ body:has(.checkout-audit) .site-footer {
 .checkout-pricing .pricing-card {
   position: relative;
   width: 100%;
-  min-height: 560px;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   padding: 24px;
@@ -8468,8 +8468,8 @@ body:has(.checkout-audit) .site-footer {
   position: relative;
   padding-left: 16px;
   color: #56657c;
-  font-size: 15px;
-  line-height: 1.52;
+  font-size: 14px;
+  line-height: 1.58;
 }
 .checkout-pricing .pricing-card li::before {
   content: "";
