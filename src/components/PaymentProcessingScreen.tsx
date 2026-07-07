@@ -151,10 +151,6 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
             <a className="checkout-submit" href={reportHref}>
               Открыть отчет
             </a>
-          ) : leadId && progressValue >= 95 ? (
-            <a className="checkout-submit" href={reportHref}>
-              Проверить отчет
-            </a>
           ) : (
             <button className="checkout-submit" type="button" disabled>
               Готовим отчет
