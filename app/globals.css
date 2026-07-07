@@ -244,47 +244,12 @@ h6 {
   min-width: 0;
   border: 0;
   outline: 0;
-  padding: 20px 18px 20px 76px;
+  padding: 20px 18px;
   color: var(--dark-ink);
   background: transparent;
   font-size: 17px;
 }
 .site-form input::placeholder { color: rgba(17, 24, 21, .42); }
-.site-form__field {
-  position: relative;
-  min-width: 0;
-  display: block;
-}
-.site-form__visual-placeholder {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: 18px;
-  display: inline-flex;
-  align-items: center;
-  color: rgba(17, 24, 21, .42);
-  font-size: 17px;
-  line-height: 1;
-  pointer-events: none;
-  transform: translateY(-50%);
-}
-.site-form__protocol {
-  color: #101312;
-}
-.site-form__typed {
-  display: inline-block;
-  width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  animation: siteFormTyping 1.15s steps(7, end) .25s forwards;
-}
-.site-form input {
-  position: relative;
-  z-index: 1;
-}
-.site-form.has-value .site-form__protocol {
-  color: #101312;
-}
 .site-form button {
   min-height: 64px;
   border: 0;
@@ -3454,7 +3419,7 @@ h6 {
 }
 
 .hero--reference .site-form input {
-  padding: 17px 18px 17px 76px;
+  padding: 17px 18px;
   font-size: 16px;
 }
 
@@ -13942,11 +13907,6 @@ body:has(.full-audit-document) .cookie-notice {
   color: #64748b;
   font-size: 14px;
   font-weight: 800;
-}
-
-@keyframes siteFormTyping {
-  from { width: 0; }
-  to { width: 46px; }
 }
 
 .saas-report-score__dial p {
