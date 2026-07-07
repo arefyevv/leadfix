@@ -57,7 +57,7 @@ export async function sendReportReadyEmail({ to, plan, reportUrl, auditedUrl }: 
     "",
     isPro
       ? "По тарифу LeadFix Pro автоматический AI-отчет доступен сразу. Финальная экспертная проверка будет подготовлена отдельно."
-      : `Отчет по сайту ${auditedUrl} доступен по ссылке выше.`,
+      : "Отчет доступен по ссылке выше.",
     "",
     "Если ссылка не открывается, напишите в Telegram: @LeadFixRu"
   ].join("\n");
