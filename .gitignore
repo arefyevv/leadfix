@@ -9,6 +9,7 @@ data/audit-reports/
 data/audit-screenshots/
 data/free-audit-cache/
 data/free-audit-usage/
+data/report-delivery/
 tmp/
 graphify-out/
 .graphify_chunks.json
