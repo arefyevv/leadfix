@@ -13312,6 +13312,23 @@ body:has(.full-audit-document) .cookie-notice {
   margin-top: auto !important;
   min-height: 58px !important;
   transform: none !important;
+  font-weight: 500 !important;
+  transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease, border-color .18s ease !important;
+}
+
+#pricing .landing-pricing .pricing-card__cta:hover,
+#pricing .landing-pricing .pricing-card__cta:focus-visible {
+  transform: translateY(-1px) !important;
+  background: #e8f0f7 !important;
+  box-shadow: inset 0 0 0 1px #cfdbe8, 0 10px 20px rgba(35, 54, 82, .08) !important;
+}
+
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__cta:hover,
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__cta:focus-visible,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta:hover,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta:focus-visible {
+  background: linear-gradient(180deg, #55ebb0 0%, #35d896 100%) !important;
+  box-shadow: 0 14px 26px rgba(47, 208, 140, .22), inset 0 1px 0 rgba(255, 255, 255, .34) !important;
 }
 
 #pricing .landing-pricing .pricing-card--recommended .pricing-card__badge,
