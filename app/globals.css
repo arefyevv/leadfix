@@ -8435,8 +8435,8 @@ body:has(.checkout-audit) .site-footer {
 }
 .checkout-pricing .pricing-card__intro {
   display: grid;
-  grid-template-rows: 24px 48px 56px;
-  gap: 10px;
+  grid-template-rows: 24px 34px auto;
+  gap: 6px;
   margin-top: 28px;
 }
 .checkout-pricing .pricing-card__intro h3,
@@ -8447,7 +8447,7 @@ body:has(.checkout-audit) .site-footer {
 .checkout-pricing .pricing-card__group {
   display: grid;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 .checkout-pricing .pricing-card__group > span,
 .checkout-pricing .pricing-card__fit > span {
