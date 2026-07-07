@@ -113,9 +113,7 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
           {isExpertReview ? "Проводим аудит LeadFix Pro" : "Проводим аудит лендинга"}
         </h1>
         <p>
-          {isExpertReview
-            ? "Проверяем страницу и готовим отчет. После автоматической проверки результат уйдет на экспертную доработку."
-            : "Проверяем страницу и собираем отчет. Когда аудит завершится, отчет откроется автоматически."}
+          Не закрывайте страницу. Когда аудит завершится, отчет откроется автоматически.
         </p>
 
         <div className="success-meta processing-meta">
@@ -135,15 +133,12 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
         </div>
 
         <div className="processing-current-step" aria-live="polite">
-          <span aria-hidden="true" />
           <p>{isReady ? "Отчет готов" : auditSteps[stepIndex]}</p>
         </div>
 
         <div className="processing-notice">
           {error ||
-            (isExpertReview
-              ? "AI-отчет откроется автоматически. Финальная экспертная версия будет подготовлена отдельно и продублирована на контакты из заказа."
-              : "Не закрывайте страницу. Отчет дополнительно продублируется на контакты, которые вы указали при заказе.")}
+            "Ссылка на отчет будет направлена на указанную почту"}
         </div>
 
         <div className="success-actions">
