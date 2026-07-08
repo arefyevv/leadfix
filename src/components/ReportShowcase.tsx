@@ -1,6 +1,6 @@
 "use client";
 
-type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "structure";
+type AnalysisKey = "offer" | "cta" | "trust" | "mobile" | "team";
 
 const reportScreenshot = "/screenshots/report-demo-full.png";
 
@@ -26,9 +26,9 @@ const analysisCards: Array<{ key: AnalysisKey; title: string; text: string }> = 
     text: "В конце есть список задач для дизайнера, маркетолога или разработчика."
   },
   {
-    key: "structure",
-    title: "Пример результата",
-    text: "Можно заранее посмотреть формат отчёта и понять, что будет после проверки."
+    key: "team",
+    title: "Ссылка или PDF для команды",
+    text: "Отчёт можно открыть по ссылке или сохранить в PDF для обсуждения правок."
   }
 ];
 
