@@ -14614,3 +14614,10 @@ body:has(.full-audit-document) .cookie-notice {
   color: #ffffff !important;
   background: rgba(255, 255, 255, .1) !important;
 }
+
+#pricing .landing-pricing .pricing-card__cta,
+#pricing .landing-pricing .pricing-card--recommended .pricing-card__cta,
+#pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta {
+  min-height: 65px !important;
+  height: 65px !important;
+}
