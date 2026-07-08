@@ -14631,4 +14631,10 @@ body:has(.full-audit-document) .cookie-notice {
   #pricing .landing-pricing {
     gap: 28px !important;
   }
+
+  #pricing .landing-pricing .pricing-card__cta,
+  #pricing .landing-pricing .pricing-card--recommended .pricing-card__cta,
+  #pricing .landing-pricing .pricing-card.is-selected .pricing-card__cta {
+    margin-top: 24px !important;
+  }
 }
