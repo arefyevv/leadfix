@@ -36,9 +36,9 @@ export function CheckoutScreen({
       <div className="full-report__inner full-audit__layout checkout-audit__layout">
         <main className="full-audit-content checkout-audit__content">
           <header className="checkout-audit__heading">
-            <h2>Выберите формат аудита и оставьте заявку</h2>
+            <h2>Оформите аудит лендинга</h2>
             <p>
-              После оплаты запустим проверку лендинга и отправим ссылку на отчет на указанную почту.
+              После оплаты запустим проверку и пришлём ссылку на отчёт на вашу почту.
             </p>
           </header>
 
@@ -52,8 +52,8 @@ export function CheckoutScreen({
 
               <aside className="checkout-audit__form-card">
                 <form className="checkout-form" onSubmit={onSubmit} noValidate>
-                  <h3>Куда отправить аудит</h3>
-                  <p>Укажите сайт и email. После оплаты отчет придет на почту.</p>
+                  <h3>Куда отправить отчёт</h3>
+                  <p>Укажите сайт для проверки и email, на который отправить отчёт.</p>
 
                   <div className="field">
                     <label htmlFor="checkout-url">Сайт на проверку</label>
