@@ -14580,6 +14580,35 @@ body:has(.full-audit-document) .cookie-notice {
   border-radius: 15px !important;
 }
 
+.report-showcase__cta a.report-showcase__cta-primary {
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 12px 28px rgba(47, 208, 140, .28),
+    inset 0 1px 0 rgba(255, 255, 255, .38) !important;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
+}
+
+.report-showcase__cta a.report-showcase__cta-primary::after {
+  content: "";
+  position: absolute;
+  inset: -28% auto -28% -46%;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .58), transparent);
+  transform: skewX(-18deg);
+  animation: leadfixCtaFlash 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.report-showcase__cta a.report-showcase__cta-primary:hover,
+.report-showcase__cta a.report-showcase__cta-primary:focus-visible {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.04) !important;
+  box-shadow:
+    0 16px 34px rgba(47, 208, 140, .36),
+    inset 0 1px 0 rgba(255, 255, 255, .42) !important;
+}
+
 .report-showcase__cta a.report-showcase__cta-secondary:hover,
 .report-showcase__cta a.report-showcase__cta-secondary:focus-visible {
   color: #ffffff !important;
