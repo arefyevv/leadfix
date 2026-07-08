@@ -14626,3 +14626,9 @@ body:has(.full-audit-document) .cookie-notice {
 .report-showcase__shot-viewport {
   touch-action: pan-y !important;
 }
+
+@media (max-width: 760px) {
+  #pricing .landing-pricing {
+    gap: 28px !important;
+  }
+}
