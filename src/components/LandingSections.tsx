@@ -253,7 +253,7 @@ export function LandingSections() {
         <div className="section-kicker">Тарифы</div>
         <div className="section-head">
           <h2>Выберите формат аудита</h2>
-          <p>От быстрой бесплатной проверки до подробного отчёта с ручной проверкой.</p>
+          <p>От быстрой бесплатной проверки до подробного отчёта с ручным экспертным анализом</p>
         </div>
         <div className="pricing-grid landing-pricing">
           {auditPlans.map((plan) => (
