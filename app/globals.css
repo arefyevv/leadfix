@@ -14538,3 +14538,23 @@ body:has(.full-audit-document) .cookie-notice {
     max-height: 300px;
   }
 }
+
+/* Report showcase final typography tuning. */
+.report-showcase__stage--real .report-showcase__cards article h3 {
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+}
+
+.report-showcase__stage--real .report-showcase__cards article p {
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+
+@media (min-width: 1024px) {
+  .report-showcase__head h2 {
+    max-width: none !important;
+    white-space: nowrap !important;
+    text-wrap: nowrap !important;
+    font-size: clamp(44px, 3.9vw, 56px) !important;
+  }
+}
