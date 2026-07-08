@@ -14573,6 +14573,13 @@ body:has(.full-audit-document) .cookie-notice {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12) !important;
 }
 
+.report-showcase__cta a.report-showcase__cta-primary,
+.report-showcase__cta a.report-showcase__cta-secondary {
+  height: 65px !important;
+  min-height: 65px !important;
+  border-radius: 15px !important;
+}
+
 .report-showcase__cta a.report-showcase__cta-secondary:hover,
 .report-showcase__cta a.report-showcase__cta-secondary:focus-visible {
   color: #ffffff !important;
