@@ -56,19 +56,19 @@ export function CheckoutScreen({
                   <p>Укажите сайт для проверки и email, на который отправить отчёт.</p>
 
                   <div className="field">
-                    <label htmlFor="checkout-url">Сайт на проверку</label>
+                    <label htmlFor="checkout-url">Сайт на проверку:</label>
                     <input id="checkout-url" value={urlValue} onChange={(event) => onUrlChange(event.target.value)} type="url" placeholder="https://site.ru" />
                   </div>
 
                   <div className="field">
-                    <label htmlFor="checkout-plan">Выбранный тариф</label>
+                    <label htmlFor="checkout-plan">Выбранный тариф:</label>
                     <select id="checkout-plan" value={selectedPlan} onChange={(event) => onPlanChange(event.target.value)}>
                       {paidAuditPlans.map((plan) => <option key={plan.name} value={plan.name}>{plan.name} — {plan.price}</option>)}
                     </select>
                   </div>
 
                   <div className="field">
-                    <label htmlFor="checkout-email">Email для получения отчета</label>
+                    <label htmlFor="checkout-email">Email для получения отчета:</label>
                     <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="name@company.ru" />
                   </div>
 

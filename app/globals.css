@@ -8345,6 +8345,7 @@ body:has(.checkout-audit) .site-footer {
 }
 .checkout-audit__form-card .field label {
   color: #69758d;
+  font-weight: 300;
 }
 .checkout-audit__form-card .field input,
 .checkout-audit__form-card .field select {
