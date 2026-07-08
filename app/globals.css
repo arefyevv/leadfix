@@ -5300,8 +5300,8 @@ h6 {
 
   #faq .faq-item summary {
     grid-template-columns: 34px 1fr 18px !important;
-    min-height: 64px !important;
-    padding: 0 18px !important;
+    min-height: 74px !important;
+    padding: 14px 18px !important;
     font-size: 16px !important;
   }
 
