@@ -14622,3 +14622,7 @@ body:has(.full-audit-document) .cookie-notice {
   min-height: 65px !important;
   height: 65px !important;
 }
+
+.report-showcase__shot-viewport {
+  touch-action: pan-y !important;
+}
