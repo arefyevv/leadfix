@@ -5702,6 +5702,13 @@ h6 {
   font-size: 14px;
 }
 
+.report-showcase__cta a.report-showcase__cta-secondary {
+  color: rgba(236, 244, 255, .86);
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+
 @media (max-width: 980px) {
   .report-showcase__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -14557,4 +14564,17 @@ body:has(.full-audit-document) .cookie-notice {
     text-wrap: nowrap !important;
     font-size: clamp(44px, 3.9vw, 56px) !important;
   }
+}
+
+.report-showcase__cta a.report-showcase__cta-secondary {
+  color: rgba(236, 244, 255, .86) !important;
+  background: rgba(255, 255, 255, .06) !important;
+  border: 1px solid rgba(255, 255, 255, .16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12) !important;
+}
+
+.report-showcase__cta a.report-showcase__cta-secondary:hover,
+.report-showcase__cta a.report-showcase__cta-secondary:focus-visible {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, .1) !important;
 }

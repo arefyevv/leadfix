@@ -91,8 +91,8 @@ export function ReportShowcase() {
         </div>
 
         <div className="report-showcase__cta">
-          <a href="/primer-audita-lendinga">Посмотреть пример аудита</a>
-          <p>Первые проблемы покажем бесплатно</p>
+          <a className="report-showcase__cta-primary" href="#pricing">Заказать аудит</a>
+          <a className="report-showcase__cta-secondary" href="/primer-audita-lendinga">Смотреть демо-отчёт</a>
         </div>
       </div>
     </section>
