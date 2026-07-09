@@ -8381,7 +8381,7 @@ body:has(.checkout-audit) .site-footer {
   width: fit-content;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-self: start;
   padding: 0;
   color: #69758d;
   background: transparent;
@@ -8395,21 +8395,8 @@ body:has(.checkout-audit) .site-footer {
 .checkout-audit__form-card .checkout-promo-toggle span {
   border-bottom: 1px dashed currentColor;
 }
-.checkout-audit__form-card .checkout-promo-toggle::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  margin-top: -2px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-}
 .checkout-audit__form-card .checkout-promo-toggle.is-open {
   margin-bottom: 6px;
-}
-.checkout-audit__form-card .checkout-promo-toggle.is-open::after {
-  margin-top: 2px;
-  transform: rotate(225deg);
 }
 .checkout-audit__form-card .checkout-promo-toggle:hover {
   color: #2877da;
@@ -8430,6 +8417,8 @@ body:has(.checkout-audit) .site-footer {
   background: #fff;
 }
 .checkout-audit__form-card .checkout-consent {
+  justify-self: start;
+  margin-left: 0;
   color: #526078;
 }
 .checkout-audit__form-card .checkout-consent a {
