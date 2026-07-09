@@ -28,6 +28,7 @@ export function CheckoutRoute() {
     }
   });
   const [email, setEmail] = useState("");
+  const [orderCode, setOrderCode] = useState("");
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -70,6 +71,7 @@ export function CheckoutRoute() {
           url: normalizedUrl,
           plan: selectedPlan,
           email,
+          orderCode,
           telegram: "",
           source: "checkout"
         })
@@ -101,6 +103,7 @@ export function CheckoutRoute() {
           urlValue={urlValue}
           selectedPlan={selectedPlan}
           email={email}
+          orderCode={orderCode}
           consent={consent}
           error={error}
           success={success}
@@ -108,6 +111,7 @@ export function CheckoutRoute() {
           onPlanChange={setSelectedPlan}
           onUrlChange={setUrlValue}
           onEmailChange={setEmail}
+          onOrderCodeChange={setOrderCode}
           onConsentChange={setConsent}
           onSubmit={handleSubmit}
         />

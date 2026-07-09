@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { PricingCard } from "./PricingCard";
 import { paidAuditPlans } from "./plans";
 
@@ -6,6 +6,7 @@ type CheckoutScreenProps = {
   urlValue: string;
   selectedPlan: string;
   email: string;
+  orderCode: string;
   consent: boolean;
   error: string;
   success: boolean;
@@ -13,6 +14,7 @@ type CheckoutScreenProps = {
   onPlanChange: (plan: string) => void;
   onUrlChange: (url: string) => void;
   onEmailChange: (email: string) => void;
+  onOrderCodeChange: (orderCode: string) => void;
   onConsentChange: (consent: boolean) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
@@ -21,6 +23,7 @@ export function CheckoutScreen({
   urlValue,
   selectedPlan,
   email,
+  orderCode,
   consent,
   error,
   success,
@@ -28,9 +31,12 @@ export function CheckoutScreen({
   onPlanChange,
   onUrlChange,
   onEmailChange,
+  onOrderCodeChange,
   onConsentChange,
   onSubmit
 }: CheckoutScreenProps) {
+  const [isOrderCodeVisible, setIsOrderCodeVisible] = useState(false);
+
   return (
     <section className="full-report full-audit checkout checkout-audit screen">
       <div className="full-report__inner full-audit__layout checkout-audit__layout">
@@ -70,6 +76,19 @@ export function CheckoutScreen({
                   <div className="field">
                     <label htmlFor="checkout-email">Email для получения отчета:</label>
                     <input id="checkout-email" value={email} onChange={(event) => onEmailChange(event.target.value)} type="email" placeholder="name@company.ru" />
+                  </div>
+
+                  <div className="field checkout-promo-field">
+                    {!isOrderCodeVisible ? (
+                      <button className="checkout-promo-toggle" type="button" onClick={() => setIsOrderCodeVisible(true)}>
+                        Есть промокод?
+                      </button>
+                    ) : (
+                      <>
+                        <label htmlFor="checkout-order-code">Код заказа:</label>
+                        <input id="checkout-order-code" value={orderCode} onChange={(event) => onOrderCodeChange(event.target.value)} type="text" placeholder="если есть" />
+                      </>
+                    )}
                   </div>
 
                   <label className="checkout-consent">
