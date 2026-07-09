@@ -81,11 +81,14 @@ export function CheckoutScreen({
                   <div className="field checkout-promo-field">
                     {!isOrderCodeVisible ? (
                       <button className="checkout-promo-toggle" type="button" onClick={() => setIsOrderCodeVisible(true)}>
-                        Есть промокод?
+                        <span>Есть промокод?</span>
                       </button>
                     ) : (
                       <>
-                        <label htmlFor="checkout-order-code">Код заказа:</label>
+                        <button className="checkout-promo-toggle is-open" type="button" onClick={() => setIsOrderCodeVisible(false)}>
+                          <span>Есть промокод?</span>
+                        </button>
+                        <label htmlFor="checkout-order-code">Промокод:</label>
                         <input id="checkout-order-code" value={orderCode} onChange={(event) => onOrderCodeChange(event.target.value)} type="text" placeholder="если есть" />
                       </>
                     )}
