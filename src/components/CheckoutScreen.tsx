@@ -89,7 +89,7 @@ export function CheckoutScreen({
                           <span>Есть промокод?</span>
                         </button>
                         <label htmlFor="checkout-order-code">Промокод:</label>
-                        <input id="checkout-order-code" value={orderCode} onChange={(event) => onOrderCodeChange(event.target.value)} type="text" placeholder="если есть" />
+                        <input id="checkout-order-code" value={orderCode} onChange={(event) => onOrderCodeChange(event.target.value)} type="text" placeholder="Введите промокод" />
                       </>
                     )}
                   </div>
