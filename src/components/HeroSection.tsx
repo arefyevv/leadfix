@@ -29,9 +29,9 @@ export function HeroSection({ url, error, onUrlChange, onSubmit }: HeroSectionPr
             </h1>
 
             <p className="hero__subtitle">
-              <span>Сервис покажет, где лендинг мешает посетителю оставить заявку,</span>
+              <span>Сервис покажет, где лендинг теряет заявки,</span>
               {" "}
-              <span>и даст понятный список правок перед запуском рекламы.</span>
+              <span>и даст понятный список правок перед запуском Яндекс Директа.</span>
             </p>
 
             <form className="site-form" onSubmit={onSubmit} noValidate>
