@@ -9,12 +9,26 @@ import { fetchAudit, getAuditCache, isAiAudit, normalizeClientUrl } from "@/lib/
 import { demoAuditAnalysis } from "@/lib/demoAudit";
 import type { AuditAnalysis } from "@/types/audit";
 
+const DESKTOP_SCREENSHOT_SIZE = { width: 1366, height: 768 } as const;
+
+function normalizeReportScreenshotSizes(analysis: AuditAnalysis): AuditAnalysis {
+  if (!analysis.screenshots?.length) return analysis;
+
+  return {
+    ...analysis,
+    screenshots: analysis.screenshots.map((screenshot) => screenshot.id === "mobile"
+      ? screenshot
+      : { ...screenshot, ...DESKTOP_SCREENSHOT_SIZE })
+  };
+}
+
 export function FullReportRoute() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [analysis, setAnalysis] = useState<AuditAnalysis | null>(null);
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
+  const displayAnalysis = useMemo(() => analysis ? normalizeReportScreenshotSizes(analysis) : null, [analysis]);
   const reportDate = useMemo(() => new Intl.DateTimeFormat("ru-RU", {
     day: "2-digit",
     month: "long",
@@ -65,8 +79,8 @@ export function FullReportRoute() {
               <button className="report-button report-button--primary" type="button" onClick={() => router.push("/")}>Проверить другой сайт</button>
             </div>
           </section>
-        ) : analysis ? (
-          <FullReport analysis={analysis} reportDate={reportDate} />
+        ) : displayAnalysis ? (
+          <FullReport analysis={displayAnalysis} reportDate={reportDate} />
         ) : (
           <LoadingScreen url={url} steps={["Загружаем данные отчёта", "Готовим полный аудит"]} stepIndex={0} />
         )}
