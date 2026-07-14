@@ -13084,6 +13084,27 @@ body:has(.full-audit-document) .cookie-notice {
   font-weight: 400;
 }
 
+.full-audit-document .full-audit__status.status-good,
+.full-audit-document .score-status.is-good {
+  color: #167650;
+  border-color: rgba(31, 191, 120, .14);
+  background: #e1f7ed;
+}
+
+.full-audit-document .full-audit__status.status-attention,
+.full-audit-document .score-status.is-attention {
+  color: #9a6a12;
+  border-color: rgba(245, 158, 11, .2);
+  background: #fff2cb;
+}
+
+.full-audit-document .full-audit__status.status-critical,
+.full-audit-document .score-status.is-weak {
+  color: #c93434;
+  border-color: rgba(241, 79, 79, .2);
+  background: #ffe1e1;
+}
+
 .full-audit-document .full-audit-content .full-audit__implementation article,
 .full-audit-document .full-audit-content .full-audit__implementation article.is-high,
 .full-audit-document .full-audit-content .full-audit__implementation article.is-medium {
