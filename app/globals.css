@@ -7459,6 +7459,18 @@ h6 {
   object-position: top center;
   border-radius: 10px;
 }
+.full-audit-document .full-audit-screenshot__canvas:has(.full-audit-screenshot__image) {
+  height: auto;
+  aspect-ratio: 1366 / 768;
+  min-height: 0;
+  padding: 0;
+  background: #0b1220;
+}
+.full-audit-document .full-audit-screenshot__image {
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+}
 .full-audit-screenshot__hero-line,
 .full-audit-screenshot__text-line,
 .full-audit-screenshot__cta {

@@ -4,6 +4,7 @@ import type { AuditScreenshot, AuditScreenshotId } from "@/types/audit";
 
 const SCREENSHOTS_DIR = path.join(process.cwd(), "data", "audit-screenshots");
 const SCREENSHOT_TIMEOUT_MS = Number(process.env.AUDIT_SCREENSHOT_TIMEOUT_MS || 35_000);
+const DESKTOP_SCREENSHOT_SIZE = { width: 1366, height: 768 } as const;
 
 type CaptureAuditScreenshotsInput = {
   url: string;
@@ -25,8 +26,8 @@ type BlockScreenshotTarget = {
 };
 
 const TARGETS: ScreenshotTarget[] = [
-  { id: "desktop", width: 1440, height: 1200, isMobile: false, deviceScaleFactor: 1 },
-  { id: "mobile", width: 390, height: 1400, isMobile: true, deviceScaleFactor: 2 }
+  { id: "desktop", ...DESKTOP_SCREENSHOT_SIZE, isMobile: false, deviceScaleFactor: 1 },
+  { id: "mobile", width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 }
 ];
 
 const SCREENSHOT_IDS: AuditScreenshotId[] = ["desktop", "mobile", "hero", "cases", "trust", "form", "pricing", "faq", "cta"];
@@ -113,7 +114,7 @@ export async function captureAuditScreenshots({ url, leadId }: CaptureAuditScree
       }
 
       const blockPage = await browser.newPage({
-        viewport: { width: 1440, height: 1200 },
+        viewport: DESKTOP_SCREENSHOT_SIZE,
         deviceScaleFactor: 1,
         userAgent: "LeadFixAuditScreenshot/1.0 Desktop"
       });
@@ -220,29 +221,28 @@ async function captureBlockScreenshot(
     const box = await locator.boundingBox();
     if (!box || box.width < 260 || box.height < 120) return null;
 
+    await locator.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      const visibleHeight = Math.min(rect.height, window.innerHeight);
+      const topOffset = Math.max(24, (window.innerHeight - visibleHeight) / 2);
+      window.scrollTo(0, Math.max(0, window.scrollY + rect.top - topOffset));
+    });
+    await page.waitForTimeout(100);
+
     const filePath = path.join(targetDir, `${target.id}.jpg`);
-    if (box.height <= 1500) {
-      await locator.screenshot({
-        path: filePath,
-        type: "jpeg",
-        quality: 72,
-        animations: "disabled"
-      });
-    } else {
-      await page.screenshot({
-        path: filePath,
-        type: "jpeg",
-        quality: 72,
-        fullPage: false,
-        animations: "disabled"
-      });
-    }
+    await page.screenshot({
+      path: filePath,
+      type: "jpeg",
+      quality: 72,
+      fullPage: false,
+      animations: "disabled"
+    });
 
     return {
       id: target.id,
       url: `/api/audit-screenshots?lead=${encodeURIComponent(leadId)}&type=${target.id}`,
-      width: Math.round(Math.min(box.width, 1440)),
-      height: Math.round(Math.min(box.height, 1500)),
+      width: DESKTOP_SCREENSHOT_SIZE.width,
+      height: DESKTOP_SCREENSHOT_SIZE.height,
       mimeType: "image/jpeg"
     };
   } catch (error) {
