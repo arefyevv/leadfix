@@ -20,6 +20,7 @@ export type LeadRecord = LeadRequest & {
   status: LeadStatus;
   createdAt: string;
   paymentLink: string;
+  paymentId?: string;
   userAgent?: string;
 };
 

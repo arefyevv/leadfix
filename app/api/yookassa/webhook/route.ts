@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { generatePaidAudit } from "@/lib/paidAudit";
-import { deliverReportNotification } from "@/lib/reportNotifications";
+import { processPaidAuditAfterPayment } from "@/lib/paidAuditJobs";
 
 type YooKassaWebhookBody = {
   event?: string;
@@ -16,8 +15,6 @@ type YooKassaWebhookBody = {
     };
   };
 };
-
-const runningJobs = new Set<string>();
 
 function getMetadata(body: YooKassaWebhookBody) {
   const metadata = body.object?.metadata ?? {};
@@ -36,15 +33,7 @@ async function processPaidAudit(body: YooKassaWebhookBody) {
     throw new Error(`YooKassa webhook metadata is incomplete. paymentId=${paymentId || "-"}`);
   }
 
-  if (runningJobs.has(leadId)) return;
-  runningJobs.add(leadId);
-
-  try {
-    await generatePaidAudit({ leadId, plan, url });
-    await deliverReportNotification({ leadId, plan, url, email });
-  } finally {
-    runningJobs.delete(leadId);
-  }
+  await processPaidAuditAfterPayment({ id: leadId, plan, url, email });
 }
 
 export async function POST(request: Request) {

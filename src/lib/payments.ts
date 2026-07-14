@@ -6,9 +6,16 @@ type CreatePaymentInput = {
 };
 
 type YooKassaPaymentResponse = {
+  id?: string;
+  status?: string;
   confirmation?: {
     confirmation_url?: string;
   };
+};
+
+type YooKassaPaymentStatusResponse = {
+  id?: string;
+  status?: string;
 };
 
 function formatAmount(value: number) {
@@ -88,7 +95,7 @@ export async function createYooKassaPayment({ lead, amount }: CreatePaymentInput
 
   const data = (await response.json()) as YooKassaPaymentResponse | { description?: string; error?: string };
 
-  if (!response.ok || !("confirmation" in data) || !data.confirmation?.confirmation_url) {
+  if (!response.ok || !("confirmation" in data) || !data.confirmation?.confirmation_url || !("id" in data) || !data.id) {
     const message = "description" in data ? data.description : "YooKassa payment URL was not returned";
     console.error("YooKassa payment response rejected", {
       status: response.status,
@@ -102,7 +109,36 @@ export async function createYooKassaPayment({ lead, amount }: CreatePaymentInput
     status: response.status
   });
 
-  return data.confirmation.confirmation_url;
+  return {
+    confirmationUrl: data.confirmation.confirmation_url,
+    paymentId: data.id,
+    status: data.status || ""
+  };
+}
+
+export async function getYooKassaPaymentStatus(paymentId: string) {
+  if (!/^[a-zA-Z0-9_-]+$/.test(paymentId)) {
+    throw new Error("Invalid YooKassa payment id");
+  }
+
+  const { shopId, secretKey } = getYooKassaCredentials();
+  const response = await fetch(`https://api.yookassa.ru/v3/payments/${paymentId}`, {
+    method: "GET",
+    headers: {
+      "Authorization": getBasicAuthHeader(shopId, secretKey),
+      "Content-Type": "application/json"
+    },
+    cache: "no-store"
+  });
+
+  const data = (await response.json()) as YooKassaPaymentStatusResponse | { description?: string; error?: string };
+
+  if (!response.ok || !("status" in data)) {
+    const message = "description" in data ? data.description : "YooKassa payment status was not returned";
+    throw new Error(message || "YooKassa payment status was not returned");
+  }
+
+  return data.status || "";
 }
 
 export function isYooKassaConfigured() {

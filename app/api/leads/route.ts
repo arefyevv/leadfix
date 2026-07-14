@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auditPlans } from "@/components/plans";
 import { createLead, notifyLead, saveLead } from "@/lib/leads";
+import { startPaidAuditPaymentWatcher } from "@/lib/paidAuditJobs";
 import { createYooKassaPayment, getPlanAmount, isYooKassaConfigured } from "@/lib/payments";
 import type { LeadRequest } from "@/types/lead";
 
@@ -50,10 +51,12 @@ export async function POST(request: Request) {
     );
     if (isYooKassaConfigured()) {
       try {
-        lead.paymentLink = await createYooKassaPayment({
+        const payment = await createYooKassaPayment({
           lead,
           amount: getPlanAmount(selectedPlan.price)
         });
+        lead.paymentLink = payment.confirmationUrl;
+        lead.paymentId = payment.paymentId;
       } catch (paymentError) {
         console.error("YooKassa payment failed, using fallback payment link", {
           leadId: lead.id,
@@ -73,6 +76,7 @@ export async function POST(request: Request) {
     }
 
     await saveLead(lead);
+    startPaidAuditPaymentWatcher(lead);
     await notifyLead(lead).catch((notifyError) => {
       console.error("Lead notification failed", notifyError);
     });
