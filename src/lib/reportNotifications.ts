@@ -24,7 +24,7 @@ export async function deliverReportNotification({ leadId, plan, url, email = "" 
 
   const results = await Promise.allSettled(deliveryTasks);
 
-  const delivered = results.some((result) => result.status === "fulfilled");
+  const delivered = results.every((result) => result.status === "fulfilled");
   if (delivered) {
     await markReportDeliverySent(leadId);
     return;
