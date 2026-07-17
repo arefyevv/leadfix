@@ -11,7 +11,7 @@ function priorityScore(impact: number, complexity: number, confidence: number, m
 
 function issueFromPreview(analysis: AuditAnalysis, index: number): AuditIssue {
   const insight = analysis.previewReport.insights[index];
-  const title = insight?.title ?? "Требуется ручная проверка ключевого сценария";
+  const title = insight?.title ?? "Требуется дополнительная проверка ключевого сценария";
   const isCritical = insight?.priority === "Критично";
   const categoryId = title.toLocaleLowerCase("ru-RU").includes("довер") ? "trust" : title.toLocaleLowerCase("ru-RU").includes("форм") || title.toLocaleLowerCase("ru-RU").includes("контакт") ? "forms" : title.toLocaleLowerCase("ru-RU").includes("призыв") || title.toLocaleLowerCase("ru-RU").includes("cta") ? "cta" : "offer";
   const impact = isCritical ? 5 : 4;
@@ -25,13 +25,13 @@ function issueFromPreview(analysis: AuditAnalysis, index: number): AuditIssue {
     title,
     location: categoryId === "offer" ? "Первый экран" : categoryId === "cta" ? "Кнопки и путь к заявке" : categoryId === "forms" ? "Форма и контакты" : "Блоки доверия",
     problem: insight?.description ?? "Автоматическая проверка нашла недостаточно данных для уверенного вывода по этому критерию.",
-    evidence: insight ? `Найдено rule-based проверкой: ${insight.title}.` : "Нужны скриншоты, рекламный контекст или ручная проверка страницы.",
+    evidence: insight ? `Найдено rule-based проверкой: ${insight.title}.` : "Нужны скриншоты, рекламный контекст или дополнительная проверка страницы.",
     impact,
     complexity,
     priorityScore: priorityScore(impact, complexity, confidence, isCritical ? 1.25 : 1),
     severity: isCritical ? "critical" : "high",
     confidence,
-    recommendation: insight?.description ?? "Проверить критерий вручную и добавить доказательство в отчёт перед выдачей клиенту.",
+    recommendation: insight?.description ?? "Проверить критерий дополнительно и добавить доказательство в отчёт перед выдачей клиенту.",
     example: categoryId === "offer" ? "Найдём, где лендинг теряет заявки, и покажем план исправлений за 48 часов." : "Получить аудит лендинга",
     expectedResult: "Пользователь быстрее понимает ценность предложения и следующий шаг к заявке.",
     needsHumanReview: confidence < 0.7,
@@ -64,7 +64,7 @@ export function createAuditResultFromAnalysis(analysis: Omit<AuditAnalysis, "aud
       status: getCategoryStatus(score),
       summary: hasIssue
         ? "В этой зоне найдены барьеры, которые могут снижать путь пользователя к заявке."
-        : "Критичных автоматических замечаний в этой зоне не найдено, но нужна ручная проверка."
+        : "Критичных автоматических замечаний в этой зоне не найдено, но нужна дополнительная проверка."
     };
   });
 
@@ -84,13 +84,13 @@ export function createAuditResultFromAnalysis(analysis: Omit<AuditAnalysis, "aud
     overallScore,
     categoryScores,
     issues,
-    quickWins: quickWins.length ? quickWins : ["Проверить первый экран, CTA и форму заявки вручную."],
+    quickWins: quickWins.length ? quickWins : ["Проверить первый экран, CTA и форму заявки дополнительно."],
     highImpactFixes: issues.filter((issue) => issue.impact >= 4).map((issue) => issue.title).slice(0, 5),
     structuralImprovements: ["Сверить порядок блоков с логикой: оффер, польза, доказательства, условия, CTA."],
     implementationPlan: {
       first24h: quickWins.slice(0, 3).length ? quickWins.slice(0, 3) : ["Собрать список критичных правок первого экрана и CTA."],
       firstWeek: ["Усилить доказательства, форму заявки и блоки возражений."],
-      nextMonth: ["Проверить внедрение по Метрике, заявкам и ручному прохождению мобильного сценария."]
+      nextMonth: ["Проверить внедрение по Метрике, заявкам и дополнительному прохождению мобильного сценария."]
     },
     rewrittenExamples: ["Заменить общий оффер на формулу: кому + какой результат + за счёт чего."],
     limitations: [
@@ -100,7 +100,7 @@ export function createAuditResultFromAnalysis(analysis: Omit<AuditAnalysis, "aud
     ],
     humanReviewNeeded: ["Проверить мобильный первый экран, клики по CTA, отправку формы и цели аналитики."],
     finalSummary: {
-      mainConversionLoss: issues[0]?.title ?? "Нужна ручная проверка главного сценария заявки.",
+      mainConversionLoss: issues[0]?.title ?? "Нужна дополнительная проверка главного сценария заявки.",
       topPriority: issues[0]?.recommendation ?? "Проверить первый экран, CTA и форму.",
       expectedBusinessEffect: "Правки должны снизить трение на пути к заявке, но фактический эффект зависит от трафика, ниши и внедрения."
     },
