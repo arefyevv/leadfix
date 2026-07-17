@@ -283,7 +283,7 @@ export function SaasDemoReport({ analysis, reportDate }: SaasDemoReportProps) {
             <div>
               <h3>Ограничения проверки</h3>
               <ul>{audit.limitations.map((item) => <li key={item}>{item}</li>)}</ul>
-              <h3>Нужна ручная проверка</h3>
+              <h3>Нужна дополнительная проверка</h3>
               <ul>{audit.humanReviewNeeded.map((item) => <li key={item}>{item}</li>)}</ul>
             </div>
           </div>

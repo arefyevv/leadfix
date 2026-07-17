@@ -107,13 +107,13 @@ function getCategories(analysis: AuditAnalysis): Category[] {
     {
       name: "Конверсионные действия",
       status: hasLeadAction ? "Хорошо" : "Критично",
-      comment: analysis.hasForm ? "Форма заявки присутствует на странице." : hasContacts ? "Контакты найдены, но форму и CTA стоит проверить вручную." : "Не найдены форма и доступные контакты.",
+      comment: analysis.hasForm ? "Форма заявки присутствует на странице." : hasContacts ? "Контакты найдены, но форму и CTA стоит проверить дополнительно." : "Не найдены форма и доступные контакты.",
       scope: "CTA, формы захвата, мотивация к действию, барьеры"
     },
     {
       name: "Структура, текст и визуал",
       status: hasContentStructure ? "Хорошо" : "Требует внимания",
-      comment: hasContentStructure ? "Базовая текстовая структура страницы присутствует." : "Структуру, иерархию и объём контента нужно проверить вручную.",
+      comment: hasContentStructure ? "Базовая текстовая структура страницы присутствует." : "Структуру, иерархию и объём контента нужно проверить дополнительно.",
       scope: "Структура лендинга, читаемость, визуальная логика"
     },
     {
@@ -231,7 +231,7 @@ export function PreviewReport({ analysis, onCheckout, onReset }: PreviewReportPr
                     <p>{insight.description}</p>
                     <div className="preview-issue__details">
                       <div><b>Почему это влияет на заявки</b><span>{getIssueImpact(insight)}</span></div>
-                      <div><b>Что проверить вручную</b><span>{getManualCheck(insight)}</span></div>
+                      <div><b>Что проверить дополнительно</b><span>{getManualCheck(insight)}</span></div>
                     </div>
                   </div>
                 </article>

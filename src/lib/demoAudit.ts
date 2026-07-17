@@ -183,7 +183,7 @@ export const demoAuditAnalysis: AuditAnalysis = {
         id: "demo-issue-4",
         criterionId: "mobile-01",
         categoryId: "mobile",
-        title: "Мобильный сценарий требует ручной проверки",
+        title: "Мобильный сценарий требует дополнительной проверки",
         location: "Мобильный первый экран и форма",
         problem: "Нужно проверить, видны ли оффер, CTA и форма без лишней прокрутки на 360-390 px.",
         evidence: "Значимая часть рекламного трафика приходит со смартфонов.",

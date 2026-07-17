@@ -220,7 +220,7 @@ const auditDirections: AuditDirection[] = [
     title: "UX и техническое качество",
     score: 71,
     status: "Требует внимания",
-    summary: "Главный риск находится в мобильном сценарии: его нужно проверить вручную до масштабирования рекламы.",
+    summary: "Главный риск находится в мобильном сценарии: его нужно дополнительно проверить до масштабирования рекламы.",
     categories: ["Мобильная версия", "Скорость загрузки", "UX и удобство взаимодействия", "Технические ошибки"],
     recommendation: "Пройти путь заявки на смартфоне, проверить скорость загрузки и работу интерактивных элементов."
   },
@@ -288,7 +288,7 @@ function getDetailedIssues(): DetailedIssue[] {
       }
     },
     {
-      title: "Мобильный сценарий требует ручной проверки",
+      title: "Мобильный сценарий требует дополнительной проверки",
       priority: "Важно",
       category: "Мобильная версия",
       location: "Мобильный первый экран и форма",
@@ -336,7 +336,7 @@ function getDetailedIssuesFromAuditResult(auditResult: AuditResult, screenshots:
     effect: issue.expectedResult,
     screenshot: {
       title: `Зона проверки: ${issue.location}`,
-      note: issue.needsHumanReview ? "Нужна ручная проверка или скриншот этой зоны." : issue.evidence,
+      note: issue.needsHumanReview ? "Нужна дополнительная проверка или скриншот этой зоны." : issue.evidence,
       markers: [issue.criterionId, issue.severity === "critical" ? "Критично" : "Проверить"],
       imageUrl: screenshots?.find((screenshot) => screenshot.id === issue.screenshotId)?.url
     }
@@ -794,7 +794,7 @@ export function FullReport({ analysis, reportDate }: FullReportProps) {
           </section>
 
           <footer className="full-audit__disclaimer">
-            <p><b>Как формируется отчёт.</b> LeadFix проверяет 8 зон лендинга и расставляет проблемы по влиянию на заявку. Отчёт помогает понять, что исправить сначала, но не заменяет ручную проверку и не гарантирует рост продаж.</p>
+            <p><b>Как формируется отчёт.</b> LeadFix проверяет 8 зон лендинга и расставляет проблемы по влиянию на заявку. Отчёт помогает понять, что исправить сначала, но не гарантирует рост продаж.</p>
           </footer>
         </main>
       </div>

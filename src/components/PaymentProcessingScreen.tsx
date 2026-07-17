@@ -28,7 +28,7 @@ function isProPlan(plan: string) {
 
 export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessingScreenProps) {
   const router = useRouter();
-  const isExpertReview = isProPlan(plan);
+  const isProAudit = isProPlan(plan);
   const [stepIndex, setStepIndex] = useState(0);
   const [progressValue, setProgressValue] = useState(8);
   const [isReady, setIsReady] = useState(false);
@@ -110,7 +110,7 @@ export function PaymentProcessingScreen({ leadId, plan, url }: PaymentProcessing
       <section className="success-card processing-card" aria-labelledby="processing-title">
         <p className="full-audit__eyebrow">Оплата прошла</p>
         <h1 id="processing-title">
-          {isExpertReview ? "Проводим аудит LeadFix Pro" : "Проводим аудит лендинга"}
+          {isProAudit ? "Проводим глубокий аудит LeadFix Pro" : "Проводим аудит лендинга"}
         </h1>
         <p>
           Не закрывайте страницу. Когда аудит завершится, отчет откроется автоматически.
