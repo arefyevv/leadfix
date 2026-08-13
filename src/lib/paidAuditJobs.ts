@@ -1,4 +1,4 @@
-import type { LeadRecord } from "@/types/lead";
+import type { LeadRecord, PaymentMode } from "@/types/lead";
 import { generatePaidAudit } from "@/lib/paidAudit";
 import { getYooKassaPaymentStatus } from "@/lib/payments";
 import { deliverReportNotification } from "@/lib/reportNotifications";
@@ -42,6 +42,10 @@ export async function processPaidAuditAfterPayment(lead: Pick<LeadRecord, "id" |
   }
 }
 
+function normalizePaymentMode(mode?: PaymentMode) {
+  return mode || "live";
+}
+
 export function startPaidAuditPaymentWatcher(lead: LeadRecord) {
   if (!lead.paymentId || activeWatchers.has(lead.id)) return;
 
@@ -57,7 +61,7 @@ export function startPaidAuditPaymentWatcher(lead: LeadRecord) {
 
   const tick = async () => {
     try {
-      const status = await getYooKassaPaymentStatus(lead.paymentId || "");
+      const status = await getYooKassaPaymentStatus(lead.paymentId || "", normalizePaymentMode(lead.paymentMode));
 
       if (status === "succeeded") {
         stop();

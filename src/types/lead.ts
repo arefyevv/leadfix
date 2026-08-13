@@ -12,8 +12,11 @@ export type LeadRequest = {
   plan: string;
   email: string;
   telegram?: string;
+  orderCode?: string;
   source?: string;
 };
+
+export type PaymentMode = "live" | "test";
 
 export type LeadRecord = LeadRequest & {
   id: string;
@@ -21,6 +24,7 @@ export type LeadRecord = LeadRequest & {
   createdAt: string;
   paymentLink: string;
   paymentId?: string;
+  paymentMode?: PaymentMode;
   userAgent?: string;
 };
 

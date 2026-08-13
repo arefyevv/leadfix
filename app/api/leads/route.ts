@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auditPlans } from "@/components/plans";
 import { createLead, notifyLead, saveLead } from "@/lib/leads";
 import { startPaidAuditPaymentWatcher } from "@/lib/paidAuditJobs";
-import { createYooKassaPayment, getPlanAmount, isYooKassaConfigured } from "@/lib/payments";
+import { createYooKassaPayment, getPlanAmount, getYooKassaPaymentMode, isYooKassaConfigured } from "@/lib/payments";
 import type { LeadRequest } from "@/types/lead";
 
 function isValidEmail(value: string) {
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
     const plan = String(body.plan || "").trim();
     const email = String(body.email || "").trim().toLowerCase();
     const telegram = String(body.telegram || "").trim();
+    const orderCode = String(body.orderCode || "").trim();
     const source = String(body.source || "checkout").trim();
     const url = normalizeUrl(String(body.url || "").trim());
 
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Введите корректный email" }, { status: 400 });
     }
 
+    const paymentMode = getYooKassaPaymentMode(orderCode);
     const lead = createLead(
       {
         url,
@@ -49,7 +51,9 @@ export async function POST(request: Request) {
       },
       request.headers.get("user-agent") || undefined
     );
-    if (isYooKassaConfigured()) {
+    lead.paymentMode = paymentMode;
+
+    if (isYooKassaConfigured(paymentMode)) {
       try {
         const payment = await createYooKassaPayment({
           lead,
@@ -58,16 +62,26 @@ export async function POST(request: Request) {
         lead.paymentLink = payment.confirmationUrl;
         lead.paymentId = payment.paymentId;
       } catch (paymentError) {
+        if (paymentMode === "test") {
+          return NextResponse.json({ error: "Тестовая YooKassa не создала ссылку на оплату" }, { status: 500 });
+        }
+
         console.error("YooKassa payment failed, using fallback payment link", {
           leadId: lead.id,
           plan,
+          paymentMode,
           error: paymentError instanceof Error ? paymentError.message : paymentError
         });
       }
     } else {
+      if (paymentMode === "test") {
+        return NextResponse.json({ error: "Тестовая YooKassa не настроена" }, { status: 500 });
+      }
+
       console.warn("YooKassa is not configured, using fallback payment link", {
         leadId: lead.id,
-        plan
+        plan,
+        paymentMode
       });
     }
 
