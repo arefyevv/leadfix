@@ -52,6 +52,7 @@ export async function POST(request: Request) {
       request.headers.get("user-agent") || undefined
     );
     lead.paymentMode = paymentMode;
+    lead.paymentLink = "";
 
     if (isYooKassaConfigured(paymentMode)) {
       try {
@@ -66,23 +67,25 @@ export async function POST(request: Request) {
           return NextResponse.json({ error: "Тестовая YooKassa не создала ссылку на оплату" }, { status: 500 });
         }
 
-        console.error("YooKassa payment failed, using fallback payment link", {
+        console.error("YooKassa payment failed", {
           leadId: lead.id,
           plan,
           paymentMode,
           error: paymentError instanceof Error ? paymentError.message : paymentError
         });
+        return NextResponse.json({ error: "ЮKassa не создала ссылку на оплату. Проверьте боевой ShopID и secret key." }, { status: 502 });
       }
     } else {
       if (paymentMode === "test") {
         return NextResponse.json({ error: "Тестовая YooKassa не настроена" }, { status: 500 });
       }
 
-      console.warn("YooKassa is not configured, using fallback payment link", {
+      console.warn("YooKassa is not configured", {
         leadId: lead.id,
         plan,
         paymentMode
       });
+      return NextResponse.json({ error: "ЮKassa не настроена" }, { status: 500 });
     }
 
     if (!lead.paymentLink) {
