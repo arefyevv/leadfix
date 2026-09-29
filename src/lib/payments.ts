@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import type { LeadRecord, PaymentMode } from "@/types/lead";
 
 type CreatePaymentInput = {
@@ -39,16 +39,39 @@ function hashValue(value: string) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+function matchesCode(value: string, expectedValue: string) {
+  const valueHash = Buffer.from(hashValue(value), "hex");
+  const expectedHash = Buffer.from(hashValue(expectedValue), "hex");
+  return timingSafeEqual(valueHash, expectedHash);
+}
+
 function getBasicAuthHeader(shopId: string, secretKey: string) {
   return `Basic ${Buffer.from(`${shopId}:${secretKey}`).toString("base64")}`;
 }
 
 export function getYooKassaPaymentMode(orderCode?: string): PaymentMode {
   const normalizedCode = String(orderCode || "").trim().toLocaleLowerCase("ru-RU");
+
+  if (isInternalTestModeEnabled() && normalizedCode) {
+    const internalCode = process.env.LEADFIX_INTERNAL_TEST_CODE?.trim().toLocaleLowerCase("ru-RU") || "";
+    if (matchesCode(normalizedCode, internalCode)) return "internal";
+  }
+
   return normalizedCode && hashValue(normalizedCode) === TEST_PAYMENT_CODE_HASH ? "test" : "live";
 }
 
+export function isInternalTestModeEnabled() {
+  return (
+    process.env.LEADFIX_INTERNAL_TEST_MODE === "true" &&
+    Boolean(process.env.LEADFIX_INTERNAL_TEST_CODE?.trim())
+  );
+}
+
 function getYooKassaCredentials(mode: PaymentMode = "live") {
+  if (mode === "internal") {
+    throw new Error("Internal test payments cannot use YooKassa");
+  }
+
   const shopId = mode === "test" ? process.env.YOOKASSA_TEST_SHOP_ID?.trim() : process.env.YOOKASSA_SHOP_ID?.trim();
   const secretKey = mode === "test" ? process.env.YOOKASSA_TEST_SECRET_KEY?.trim() : process.env.YOOKASSA_SECRET_KEY?.trim();
 
@@ -181,6 +204,8 @@ export async function getYooKassaPaymentStatus(paymentId: string, mode: PaymentM
 }
 
 export function isYooKassaConfigured(mode: PaymentMode = "live") {
+  if (mode === "internal") return false;
+
   return mode === "test"
     ? Boolean(process.env.YOOKASSA_TEST_SHOP_ID?.trim() && process.env.YOOKASSA_TEST_SECRET_KEY?.trim())
     : Boolean(process.env.YOOKASSA_SHOP_ID?.trim() && process.env.YOOKASSA_SECRET_KEY?.trim());

@@ -54,7 +54,16 @@ export async function POST(request: Request) {
     lead.paymentMode = paymentMode;
     lead.paymentLink = "";
 
-    if (isYooKassaConfigured(paymentMode)) {
+    if (paymentMode === "internal") {
+      const returnUrl = new URL("/checkout/success", request.url);
+      returnUrl.searchParams.set("lead", lead.id);
+      returnUrl.searchParams.set("plan", lead.plan);
+      returnUrl.searchParams.set("url", lead.url);
+
+      lead.status = "paid";
+      lead.paymentId = `internal_${lead.id}`;
+      lead.paymentLink = returnUrl.toString();
+    } else if (isYooKassaConfigured(paymentMode)) {
       try {
         const payment = await createYooKassaPayment({
           lead,
@@ -93,7 +102,9 @@ export async function POST(request: Request) {
     }
 
     await saveLead(lead);
-    startPaidAuditPaymentWatcher(lead);
+    if (paymentMode !== "internal") {
+      startPaidAuditPaymentWatcher(lead);
+    }
     await notifyLead(lead).catch((notifyError) => {
       console.error("Lead notification failed", notifyError);
     });

@@ -16,7 +16,7 @@ export type LeadRequest = {
   source?: string;
 };
 
-export type PaymentMode = "live" | "test";
+export type PaymentMode = "live" | "test" | "internal";
 
 export type LeadRecord = LeadRequest & {
   id: string;
